@@ -1,14 +1,18 @@
 package abdulmanov.eduard.timetable.presentation.login.sign_in
 
+import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.FragmentSignInBinding
 import abdulmanov.eduard.timetable.presentation.App
+import abdulmanov.eduard.timetable.presentation._common.extensions.focus
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
@@ -37,6 +41,8 @@ class SignInFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
+
+        viewModel.showMessageErrorEvent.observe(viewLifecycleOwner, Observer(::showMessageError))
     }
 
     override fun onDestroyView() {
@@ -45,12 +51,38 @@ class SignInFragment: Fragment() {
     }
 
     private fun initUI(){
-        binding.entryTextView.setOnClickListener {
+        binding.passwordTextInputEditText.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_DONE){
+                signIn()
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
 
+        binding.entryTextView.setOnClickListener {
+            signIn()
         }
 
         binding.registerNowTextView.setOnClickListener {
             viewModel.openSignUp()
+        }
+    }
+
+    private fun signIn(){
+        val login = binding.loginTextInputEditText.text.toString()
+        binding.loginTextInputEditText.focus(false)
+
+        val password = binding.passwordTextInputEditText.text.toString()
+        binding.passwordTextInputEditText.focus(false)
+
+        viewModel.signIn(login, password)
+    }
+
+    private fun showMessageError(show:Boolean){
+        if(show){
+            binding.messageErrorLinearLayout.visibility = View.VISIBLE
+        }else{
+            binding.messageErrorLinearLayout.visibility = View.GONE
         }
     }
 

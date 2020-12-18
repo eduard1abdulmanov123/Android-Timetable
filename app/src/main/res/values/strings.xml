@@ -5,6 +5,8 @@
     <string name="sign_in_login">Логин</string>
     <string name="sign_in_password">Пароль</string>
     <string name="sign_in_entry">Вход</string>
+    <string name="sign_in_error">Не правильный логин или пароль!</string>
+    <string name="sign_in_check_correct">Проверьте правильность введенных данных.</string>
     <string name="sign_in_register_now">У вас еще нет аккаунта? Зарегистрируйтесь.</string>
     
     <!--sign_up-->

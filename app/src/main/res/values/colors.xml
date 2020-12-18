@@ -11,4 +11,7 @@
     <color name="colorSeparate">#99BFBFBF</color>
 
     <color name="colorIconLight">#99B5B5B5</color>
+
+    <color name="colorErrorText">#FB1E1E</color>
+    <color name="colorErrorBackground">#FFD7D7</color>
 </resources>
