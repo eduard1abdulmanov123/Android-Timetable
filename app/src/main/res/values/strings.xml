@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Timetable</string>
+
+    <!--sign_in-->
+    <string name="sign_in_login">Логин</string>
+    <string name="sign_in_password">Пароль</string>
+    <string name="sign_in_entry">Вход</string>
+    <string name="sign_in_register_now">У вас еще нет аккаунта? Зарегистрируйтесь.</string>
+    
+    <!--sign_up-->
+    <string name="sign_up_to_sing_in">Уже есть аккаунт? Войдите.</string>
+</resources>
