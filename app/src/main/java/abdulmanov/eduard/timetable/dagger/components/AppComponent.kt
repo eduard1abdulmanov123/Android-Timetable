@@ -1,7 +1,6 @@
 package abdulmanov.eduard.timetable.dagger.components
 
-import abdulmanov.eduard.timetable.dagger.modules.NavigationModule
-import abdulmanov.eduard.timetable.dagger.modules.ViewModelModule
+import abdulmanov.eduard.timetable.dagger.modules.*
 import abdulmanov.eduard.timetable.presentation.login.LoginActivity
 import abdulmanov.eduard.timetable.presentation.login.sign_in.SignInFragment
 import abdulmanov.eduard.timetable.presentation.login.sign_up.SignUpFragment
@@ -14,7 +13,11 @@ import javax.inject.Singleton
 @Component(
     modules = [
         NavigationModule::class,
-        ViewModelModule::class
+        ViewModelModule::class,
+        SharedPreferencesModule::class,
+        NetworkModule::class,
+        DataModule::class,
+        DomainModule::class
     ]
 )
 interface AppComponent{

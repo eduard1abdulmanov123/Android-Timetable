@@ -52,5 +52,6 @@ ext {
     rxVersion = "2.1.1"
     rxRelayVersion = "2.1.1"
     retrofitVersion = "2.9.0"
+    loggingInterceptorVersion = "4.4.0"
     roomVersion = "2.2.6"
 }
