@@ -16,4 +16,15 @@
     <string name="sign_up_error">Пользователь с таким логином уже существует!</string>
     <string name="sign_up_correct">Поменяйте логин и попробуйте снова.</string>
     <string name="sign_up_registration">Зарегистрироваться</string>
+    
+    <!--one_time_class-->
+    <string name="one_time_class_subject">Предмет</string>
+    <string name="one_time_class_teacher">Преподаватель</string>
+    <string name="one_time_class_audience">Аудитория</string>
+    <string name="one_time_class_type_class">Тип занятия</string>
+    <string name="one_time_class_start">Начало</string>
+    <string name="one_time_class_end">Конец</string>
+    <string name="one_time_class_date">Дата занятия</string>
+    <string name="one_time_class_create">Создать</string>
+    <string name="one_time_class_save">Сохранить</string>
 </resources>

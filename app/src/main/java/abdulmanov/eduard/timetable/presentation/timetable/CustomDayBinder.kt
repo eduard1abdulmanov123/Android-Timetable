@@ -3,8 +3,9 @@ package abdulmanov.eduard.timetable.presentation.timetable
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.ItemCalendarDayBinding
 import abdulmanov.eduard.timetable.presentation._common.extensions.setTextColorRes
-import android.util.Log
 import android.view.View
+import android.widget.TextView
+import androidx.core.view.updateLayoutParams
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
@@ -12,13 +13,14 @@ import com.kizitonwose.calendarview.ui.ViewContainer
 import java.time.LocalDate
 
 class CustomDayBinder(
+    private val size: Int,
     private val clickListener: (CalendarDay) -> Unit
 ) : DayBinder<CustomDayBinder.DayViewContainer>{
 
     var selectedDate: LocalDate = LocalDate.now()
 
     override fun create(view: View): DayViewContainer {
-        return DayViewContainer(view, clickListener)
+        return DayViewContainer(view, size, clickListener)
     }
 
     override fun bind(container: DayViewContainer, day: CalendarDay) {
@@ -41,13 +43,18 @@ class CustomDayBinder(
         }
     }
 
-    class DayViewContainer(view: View, clickListener: (CalendarDay) -> Unit): ViewContainer(view) {
+    class DayViewContainer(view: View, size:Int, clickListener: (CalendarDay) -> Unit): ViewContainer(view) {
 
-        val textView = ItemCalendarDayBinding.bind(view).oneDayTextView
+        val textView = (ItemCalendarDayBinding.bind(view).oneDayFrameLayout.getChildAt(0) as TextView)
 
         lateinit var day: CalendarDay
 
         init {
+            textView.updateLayoutParams {
+                height = size
+                width = size
+            }
+
             view.setOnClickListener {
                 if(day.owner == DayOwner.THIS_MONTH) {
                     clickListener.invoke(day)

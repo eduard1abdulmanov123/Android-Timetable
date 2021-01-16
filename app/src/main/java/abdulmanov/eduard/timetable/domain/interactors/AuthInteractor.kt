@@ -14,4 +14,8 @@ class AuthInteractor(private val authRepository: AuthRepository) {
         return authRepository.signIn(login, password)
             .flatMapCompletable { authRepository.saveToken(it.token) }
     }
+
+    fun getToken(): String? {
+        return authRepository.getToken()
+    }
 }

@@ -1,6 +1,7 @@
 package abdulmanov.eduard.timetable.presentation.login
 
 import abdulmanov.eduard.timetable.R
+import abdulmanov.eduard.timetable.domain.interactors.AuthInteractor
 import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation.Screens
 import android.content.Context
@@ -13,6 +14,9 @@ import com.github.terrakok.cicerone.androidx.AppNavigator
 import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var authInteractor: AuthInteractor
 
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
@@ -28,7 +32,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         if(savedInstanceState == null){
-            router.replaceScreen(Screens.signIn())
+            if(authInteractor.getToken() != null){
+                router.replaceScreen(Screens.main())
+            }else {
+                router.replaceScreen(Screens.signIn())
+            }
         }
     }
 

@@ -11,4 +11,6 @@ interface AuthRepository {
     fun signIn(login: String, password: String): Single<User>
 
     fun saveToken(token: String): Completable
+
+    fun getToken(): String?
 }

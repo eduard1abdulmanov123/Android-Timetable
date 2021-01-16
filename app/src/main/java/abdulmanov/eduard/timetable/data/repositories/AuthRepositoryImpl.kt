@@ -40,4 +40,8 @@ class AuthRepositoryImpl(
             sharedPreferences.setToken(token)
         }
     }
+
+    override fun getToken(): String? {
+        return sharedPreferences.getToken()
+    }
 }

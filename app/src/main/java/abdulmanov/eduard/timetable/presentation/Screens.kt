@@ -4,6 +4,7 @@ import abdulmanov.eduard.timetable.presentation.login.LoginActivity
 import abdulmanov.eduard.timetable.presentation.login.sign_in.SignInFragment
 import abdulmanov.eduard.timetable.presentation.login.sign_up.SignUpFragment
 import abdulmanov.eduard.timetable.presentation.main.MainActivity
+import abdulmanov.eduard.timetable.presentation.onetimeclass.OneTimeClassFragment
 import abdulmanov.eduard.timetable.presentation.timetable.TimetableFragment
 import com.github.terrakok.cicerone.androidx.ActivityScreen
 import com.github.terrakok.cicerone.androidx.FragmentScreen
@@ -28,5 +29,9 @@ object Screens {
 
     fun timetable() = FragmentScreen{
         TimetableFragment.newInstance()
+    }
+
+    fun oneTimeClass() = FragmentScreen{
+        OneTimeClassFragment.newInstance()
     }
 }

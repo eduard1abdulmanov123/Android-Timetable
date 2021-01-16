@@ -2,7 +2,9 @@ package abdulmanov.eduard.timetable.presentation._common.extensions
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Point
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
@@ -31,4 +33,11 @@ fun EditText.focus(show: Boolean) {
 
 fun TextView.setTextColorRes(@ColorRes color:Int){
     setTextColor(ContextCompat.getColor(context, color))
+}
+
+fun Context.getScreenSize(): Point {
+    val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    return Point().apply {
+        wm.defaultDisplay.getSize(this)
+    }
 }
