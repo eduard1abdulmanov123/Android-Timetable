@@ -4,6 +4,8 @@ import abdulmanov.eduard.timetable.dagger.modules.*
 import abdulmanov.eduard.timetable.presentation.login.LoginActivity
 import abdulmanov.eduard.timetable.presentation.login.sign_in.SignInFragment
 import abdulmanov.eduard.timetable.presentation.login.sign_up.SignUpFragment
+import abdulmanov.eduard.timetable.presentation.main.MainActivity
+import abdulmanov.eduard.timetable.presentation.timetable.TimetableFragment
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
@@ -32,4 +34,8 @@ interface AppComponent{
     fun inject(signInFragment: SignInFragment)
 
     fun inject(signUpFragment: SignUpFragment)
+
+    fun inject(mainActivity: MainActivity)
+
+    fun inject(timetableFragment: TimetableFragment)
 }

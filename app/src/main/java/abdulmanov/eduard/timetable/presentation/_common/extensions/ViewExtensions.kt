@@ -5,6 +5,9 @@ import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextView
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 
 fun Context.showKeyboard() {
     val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -24,4 +27,8 @@ fun EditText.focus(show: Boolean) {
         clearFocus()
         context.hideKeyboard(this)
     }
+}
+
+fun TextView.setTextColorRes(@ColorRes color:Int){
+    setTextColor(ContextCompat.getColor(context, color))
 }

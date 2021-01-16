@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.fragment.app.FragmentContainerView
+<TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainFragmentContainerView"
+    android:id="@+id/oneDayTextView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.login.LoginActivity"
-    tools:viewBindingIgnore="true" >
+    android:layout_margin="5dp"
+    android:gravity="center"
+    android:textSize="@dimen/font_normal"
+    android:textColor="@color/colorTextPrimary"
+    tools:text="22">
 
-</androidx.fragment.app.FragmentContainerView>
+</TextView>

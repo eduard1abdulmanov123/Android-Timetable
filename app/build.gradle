@@ -26,6 +26,7 @@ android {
     }
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -40,6 +41,7 @@ android {
 }
 
 dependencies {
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugarJdkLibsVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinStdlibJdk7"
 
@@ -55,6 +57,7 @@ dependencies {
 
     //ui
     implementation "com.google.android.material:material:$materialVersion"
+    implementation "com.github.kizitonwose:CalendarView:$calendarViewVersion"
 
     //singleLiveEvent
     implementation "com.github.hadilq.liveevent:liveevent:$liveEventVersion"

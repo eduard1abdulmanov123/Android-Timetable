@@ -14,4 +14,10 @@
 
     <color name="colorErrorText">#FB1E1E</color>
     <color name="colorErrorBackground">#FFD7D7</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+
+    <!--calendar_view-->
+    <color name="colorCalendarView">#FCFCFC</color>
+    <color name="colorDayNotCurrentMonth">#C8C8C8</color>
 </resources>
