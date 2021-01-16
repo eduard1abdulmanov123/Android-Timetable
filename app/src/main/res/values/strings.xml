@@ -16,7 +16,12 @@
     <string name="sign_up_error">Пользователь с таким логином уже существует!</string>
     <string name="sign_up_correct">Поменяйте логин и попробуйте снова.</string>
     <string name="sign_up_registration">Зарегистрироваться</string>
-    
+
+    <!--timetable-->
+    <string name="timetable_note">Заметка</string>
+    <string name="timetable_one_time_class">Одноразовое занятие</string>
+    <string name="timetable_multiple_class">Многоразовое занятие</string>
+
     <!--one_time_class-->
     <string name="one_time_class_subject">Предмет</string>
     <string name="one_time_class_teacher">Преподаватель</string>

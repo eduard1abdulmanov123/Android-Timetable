@@ -5,25 +5,19 @@ import abdulmanov.eduard.timetable.databinding.FragmentTimetableBinding
 import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation._common.extensions.daysOfWeekFromLocale
 import abdulmanov.eduard.timetable.presentation._common.extensions.getScreenSize
-import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.animation.doOnEnd
-import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
-import androidx.core.view.postDelayed
-import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.InDateStyle
 import com.kizitonwose.calendarview.model.OutDateStyle
 import com.kizitonwose.calendarview.utils.Size
 import com.kizitonwose.calendarview.utils.yearMonth
+import com.leinardi.android.speeddial.SpeedDialActionItem
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -40,7 +34,6 @@ class TimetableFragment: Fragment() {
 
     private val selectionFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
     private var isCollapse = true
-    private var isFirstCalendarShow = true
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -64,9 +57,11 @@ class TimetableFragment: Fragment() {
     }
 
     private fun initUI(){
-        binding.dateTextView.text = selectionFormatter.format(LocalDate.now())
-        binding.dateTextView.setOnClickListener {
-            collapseOrExpandCalendar()
+        binding.dateTextView.run {
+            text = selectionFormatter.format(LocalDate.now())
+            setOnClickListener {
+                collapseOrExpandCalendar()
+            }
         }
 
         binding.calendarView.run {
@@ -81,6 +76,38 @@ class TimetableFragment: Fragment() {
             dayBinder = CustomDayBinder(daySize.height) { selectDate(it.date) }
             monthHeaderBinder = CustomMonthHeaderBinder(daysOfWeek)
             setMonthScrollListener()
+        }
+
+        binding.speedDialView.run {
+            addActionItem(
+                SpeedDialActionItem.Builder(R.id.multipleClass, R.drawable.ic_multiple)
+                    .setFabImageTintColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+                    .setLabel(R.string.timetable_multiple_class)
+                    .setLabelColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+                    .setLabelBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
+                    .setLabelClickable(false)
+                    .create()
+            )
+
+            addActionItem(
+                SpeedDialActionItem.Builder(R.id.oneTimeClass, R.drawable.ic_one_time)
+                    .setFabImageTintColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+                    .setLabel(R.string.timetable_one_time_class)
+                    .setLabelColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+                    .setLabelBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
+                    .setLabelClickable(false)
+                    .create()
+            )
+
+            addActionItem(
+                SpeedDialActionItem.Builder(R.id.note, R.drawable.ic_note)
+                    .setLabel(R.string.timetable_note)
+                    .setLabelColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+                    .setLabelBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
+                    .setFabImageTintColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+                    .setLabelClickable(false)
+                    .create()
+            )
         }
     }
 
@@ -114,7 +141,7 @@ class TimetableFragment: Fragment() {
             binding.dateTextView.setCompoundDrawablesWithIntrinsicBounds(
                 null,
                 null,
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_keyboard_arrow_up),
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_up),
                 null
             )
         }else{
@@ -128,7 +155,7 @@ class TimetableFragment: Fragment() {
             binding.dateTextView.setCompoundDrawablesWithIntrinsicBounds(
                 null,
                 null,
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_keyboard_arrow_down),
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_down),
                 null
             )
         }

@@ -49,6 +49,7 @@ ext {
     appCompatVersion = "1.2.0"
     materialVersion = "1.2.1"
     calendarViewVersion = "1.0.1"
+    speedDialVersion = "3.1.1"
     ciceroneVersion = "6.4"
     daggerVersion = "2.29.1"
     liveEventVersion = "1.2.0"

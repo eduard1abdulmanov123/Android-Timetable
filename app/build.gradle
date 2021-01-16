@@ -58,6 +58,7 @@ dependencies {
     //ui
     implementation "com.google.android.material:material:$materialVersion"
     implementation "com.github.kizitonwose:CalendarView:$calendarViewVersion"
+    implementation "com.leinardi.android:speed-dial:$speedDialVersion"
 
     //singleLiveEvent
     implementation "com.github.hadilq.liveevent:liveevent:$liveEventVersion"
