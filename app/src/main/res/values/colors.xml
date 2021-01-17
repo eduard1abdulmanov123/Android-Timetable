@@ -25,4 +25,7 @@
     <color name="colorCalendarView">#FCFCFC</color>
     <color name="colorDayNotCurrentMonth">#C8C8C8</color>
 
+    <!--speed_dial-->
+    <color name="sd_overlay_color">#C3FFFFFF</color>
+
 </resources>

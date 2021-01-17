@@ -9,6 +9,8 @@ class TimetableViewModel @Inject constructor(
     private val router: Router
 ):BaseViewModel() {
 
+    fun onBackCommandClick() = router.exit()
+
     fun openScreenMultipleClass() = router.navigateTo(Screens.multipleClass())
 
     fun openScreenOneTimeClass() = router.navigateTo(Screens.oneTimeClass())

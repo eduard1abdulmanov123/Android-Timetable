@@ -3,6 +3,7 @@ package abdulmanov.eduard.timetable.presentation.timetable
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.FragmentTimetableBinding
 import abdulmanov.eduard.timetable.presentation.App
+import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
 import abdulmanov.eduard.timetable.presentation._common.extensions.daysOfWeekFromLocale
 import abdulmanov.eduard.timetable.presentation._common.extensions.getScreenSize
 import android.content.Context
@@ -41,6 +42,7 @@ class TimetableFragment: Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity().application as App).appComponent.inject(this)
+        addOnBackPressedCallback(::onBackPressed)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -57,6 +59,14 @@ class TimetableFragment: Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun onBackPressed(){
+        if(binding.speedDialView.isOpen){
+            binding.speedDialView.close()
+        }else{
+            viewModel.onBackCommandClick()
+        }
     }
 
     private fun initUI(){
