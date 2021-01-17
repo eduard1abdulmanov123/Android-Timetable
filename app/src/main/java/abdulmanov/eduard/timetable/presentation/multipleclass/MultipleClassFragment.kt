@@ -1,9 +1,11 @@
-package abdulmanov.eduard.timetable.presentation.onetimeclass
+package abdulmanov.eduard.timetable.presentation.multipleclass
 
 import abdulmanov.eduard.timetable.R
-import abdulmanov.eduard.timetable.databinding.FragmentOneTimeClassBinding
+import abdulmanov.eduard.timetable.databinding.FragmentMultipleClassBinding
+import abdulmanov.eduard.timetable.databinding.FragmentNoteBinding
 import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
+import abdulmanov.eduard.timetable.presentation.note.NoteViewModel
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,15 +16,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
-class OneTimeClassFragment: Fragment() {
+class MultipleClassFragment: Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<OneTimeClassViewModel> { viewModelFactory }
+    private val viewModel by viewModels<MultipleClassViewModel> { viewModelFactory }
 
-    private var _binding: FragmentOneTimeClassBinding? = null
-    private val binding: FragmentOneTimeClassBinding
+    private var _binding: FragmentMultipleClassBinding? = null
+    private val binding: FragmentMultipleClassBinding
         get() = _binding!!
 
     override fun onAttach(context: Context) {
@@ -32,7 +34,7 @@ class OneTimeClassFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentOneTimeClassBinding.inflate(inflater, container,false)
+        _binding = FragmentMultipleClassBinding.inflate(inflater, container,false)
         return binding.root
     }
 
@@ -48,14 +50,14 @@ class OneTimeClassFragment: Fragment() {
     }
 
     private fun initUI() {
-        binding.oneTimeClassToolbar.run {
-            setTitle(R.string.one_time_class_new_class)
+        binding.multipleClassToolbar.run {
+            setTitle(R.string.multiple_class_new_class)
             setNavigationIcon(R.drawable.ic_arrow_back)
             setNavigationOnClickListener { viewModel.onBackCommandClick() }
         }
     }
 
     companion object{
-        fun newInstance() = OneTimeClassFragment()
+        fun newInstance() = MultipleClassFragment()
     }
 }

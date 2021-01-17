@@ -4,6 +4,10 @@ import abdulmanov.eduard.timetable.dagger.annotations.ViewModelKey
 import abdulmanov.eduard.timetable.presentation._common.viewmodel.ViewModelFactory
 import abdulmanov.eduard.timetable.presentation.login.sign_in.SignInViewModel
 import abdulmanov.eduard.timetable.presentation.login.sign_up.SignUpViewModel
+import abdulmanov.eduard.timetable.presentation.multipleclass.MultipleClassViewModel
+import abdulmanov.eduard.timetable.presentation.note.NoteViewModel
+import abdulmanov.eduard.timetable.presentation.onetimeclass.OneTimeClassViewModel
+import abdulmanov.eduard.timetable.presentation.timetable.TimetableViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
@@ -25,4 +29,24 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SignUpViewModel::class)
     abstract fun bindSignUpViewModel(viewModel: SignUpViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TimetableViewModel::class)
+    abstract fun bindTimetableViewModel(viewModel: TimetableViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MultipleClassViewModel::class)
+    abstract fun bindMultipleClassViewModel(viewModel:MultipleClassViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(OneTimeClassViewModel::class)
+    abstract fun bindOneTimeClassViewModel(viewModel: OneTimeClassViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NoteViewModel::class)
+    abstract fun bindNoteViewModel(viewModel: NoteViewModel): ViewModel
 }

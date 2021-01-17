@@ -1,7 +1,7 @@
-package abdulmanov.eduard.timetable.presentation.onetimeclass
+package abdulmanov.eduard.timetable.presentation.note
 
 import abdulmanov.eduard.timetable.R
-import abdulmanov.eduard.timetable.databinding.FragmentOneTimeClassBinding
+import abdulmanov.eduard.timetable.databinding.FragmentNoteBinding
 import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
 import android.content.Context
@@ -14,15 +14,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
-class OneTimeClassFragment: Fragment() {
+class NoteFragment: Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<OneTimeClassViewModel> { viewModelFactory }
+    private val viewModel by viewModels<NoteViewModel> { viewModelFactory }
 
-    private var _binding: FragmentOneTimeClassBinding? = null
-    private val binding: FragmentOneTimeClassBinding
+    private var _binding: FragmentNoteBinding? = null
+    private val binding: FragmentNoteBinding
         get() = _binding!!
 
     override fun onAttach(context: Context) {
@@ -32,7 +32,7 @@ class OneTimeClassFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentOneTimeClassBinding.inflate(inflater, container,false)
+        _binding = FragmentNoteBinding.inflate(inflater, container,false)
         return binding.root
     }
 
@@ -48,14 +48,14 @@ class OneTimeClassFragment: Fragment() {
     }
 
     private fun initUI() {
-        binding.oneTimeClassToolbar.run {
-            setTitle(R.string.one_time_class_new_class)
+        binding.noteToolbar.run {
+            setTitle(R.string.note_new_note)
             setNavigationIcon(R.drawable.ic_arrow_back)
             setNavigationOnClickListener { viewModel.onBackCommandClick() }
         }
     }
 
     companion object{
-        fun newInstance() = OneTimeClassFragment()
+        fun newInstance() = NoteFragment()
     }
 }

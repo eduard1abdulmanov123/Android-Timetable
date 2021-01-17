@@ -7,12 +7,12 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/oneTimeClassToolbar"
+        android:id="@+id/multipleClassToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/oneTimeClassNestedScrollView"
+        android:id="@+id/multipleClassNestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground">
@@ -29,7 +29,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/one_time_class_subject"
+                android:hint="@string/multiple_class_subject"
                 android:theme="@style/TextInputLayout"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/colorIconLight"
@@ -53,7 +53,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/one_time_class_teacher"
+                android:hint="@string/multiple_class_teacher"
                 android:theme="@style/TextInputLayout"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/colorIconLight"
@@ -77,7 +77,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/one_time_class_type_class"
+                android:hint="@string/multiple_class_type_class"
                 android:theme="@style/TextInputLayout"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/colorIconLight"
@@ -101,7 +101,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/one_time_class_audience"
+                android:hint="@string/multiple_class_audience"
                 android:theme="@style/TextInputLayout"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/colorIconLight"
@@ -132,7 +132,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/one_time_class_start"
+                android:hint="@string/multiple_class_start"
                 android:theme="@style/TextInputLayout"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/colorIconLight"
@@ -156,7 +156,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/one_time_class_end"
+                android:hint="@string/multiple_class_end"
                 android:theme="@style/TextInputLayout"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/colorIconLight"
@@ -179,30 +179,6 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.7" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/dateTextInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/one_time_class_date"
-                android:theme="@style/TextInputLayout"
-                app:endIconMode="clear_text"
-                app:endIconTint="@color/colorIconLight"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintTop_toBottomOf="@id/startTextInputLayout">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/dateTextInputEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorTextPrimary" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
             <FrameLayout
                 android:id="@+id/applyContainer"
                 android:layout_width="match_parent"
@@ -214,7 +190,7 @@
                 android:background="@drawable/bg_button_ripple"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dateTextInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/startTextInputLayout"
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <TextView

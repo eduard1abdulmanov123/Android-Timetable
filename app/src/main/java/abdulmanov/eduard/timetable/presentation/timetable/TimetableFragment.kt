@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.kizitonwose.calendarview.model.InDateStyle
 import com.kizitonwose.calendarview.model.OutDateStyle
@@ -27,6 +28,8 @@ class TimetableFragment: Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<TimetableViewModel> { viewModelFactory }
 
     private var _binding: FragmentTimetableBinding? = null
     private val binding: FragmentTimetableBinding
@@ -108,6 +111,15 @@ class TimetableFragment: Fragment() {
                     .setLabelClickable(false)
                     .create()
             )
+
+            setOnActionSelectedListener {
+                when(it.id){
+                    R.id.multipleClass -> viewModel.openScreenMultipleClass()
+                    R.id.oneTimeClass -> viewModel.openScreenOneTimeClass()
+                    R.id.note -> viewModel.openScreenNote()
+                }
+                false
+            }
         }
     }
 

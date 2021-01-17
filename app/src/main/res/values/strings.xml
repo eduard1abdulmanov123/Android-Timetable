@@ -22,7 +22,21 @@
     <string name="timetable_one_time_class">Одноразовое занятие</string>
     <string name="timetable_multiple_class">Многоразовое занятие</string>
 
+    <!--multiple_class-->
+    <string name="multiple_class_new_class">Новое занятие</string>
+    <string name="multiple_class_edit_class">Редактирование занятия</string>
+    <string name="multiple_class_subject">Предмет</string>
+    <string name="multiple_class_teacher">Преподаватель</string>
+    <string name="multiple_class_audience">Аудитория</string>
+    <string name="multiple_class_type_class">Тип занятия</string>
+    <string name="multiple_class_start">Начало</string>
+    <string name="multiple_class_end">Конец</string>
+    <string name="multiple_class_create">Создать</string>
+    <string name="multiple_class_save">Сохранить</string>
+
     <!--one_time_class-->
+    <string name="one_time_class_new_class">Новое занятие</string>
+    <string name="one_time_class_edit_class">Редактирование занятия</string>
     <string name="one_time_class_subject">Предмет</string>
     <string name="one_time_class_teacher">Преподаватель</string>
     <string name="one_time_class_audience">Аудитория</string>
@@ -32,4 +46,12 @@
     <string name="one_time_class_date">Дата занятия</string>
     <string name="one_time_class_create">Создать</string>
     <string name="one_time_class_save">Сохранить</string>
+
+    <!--note-->
+    <string name="note_new_note">Новая заметка</string>
+    <string name="note_edit_note">Редактирование заметки</string>
+    <string name="note_content">Текст заметки</string>
+    <string name="note_date">Дата</string>
+    <string name="note_create">Создать</string>
+    <string name="note_save">Сохранить</string>
 </resources>
