@@ -52,6 +52,7 @@
     <string name="note_edit_note">Редактирование заметки</string>
     <string name="note_content">Текст заметки</string>
     <string name="note_date">Дата</string>
+    <string name="note_time">Время</string>
     <string name="note_create">Создать</string>
     <string name="note_save">Сохранить</string>
 </resources>

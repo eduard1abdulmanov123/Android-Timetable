@@ -1,10 +1,10 @@
-package abdulmanov.eduard.timetable.presentation.onetimeclass
+package abdulmanov.eduard.timetable.presentation.events.multipleclass
 
 import abdulmanov.eduard.timetable.presentation._common.viewmodel.BaseViewModel
 import com.github.terrakok.cicerone.Router
 import javax.inject.Inject
 
-class OneTimeClassViewModel @Inject constructor(
+class MultipleClassViewModel @Inject constructor(
     private val router: Router
 ): BaseViewModel() {
 

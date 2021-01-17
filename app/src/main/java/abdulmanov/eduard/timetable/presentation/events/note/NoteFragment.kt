@@ -1,11 +1,9 @@
-package abdulmanov.eduard.timetable.presentation.multipleclass
+package abdulmanov.eduard.timetable.presentation.events.note
 
 import abdulmanov.eduard.timetable.R
-import abdulmanov.eduard.timetable.databinding.FragmentMultipleClassBinding
 import abdulmanov.eduard.timetable.databinding.FragmentNoteBinding
 import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
-import abdulmanov.eduard.timetable.presentation.note.NoteViewModel
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,15 +14,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
-class MultipleClassFragment: Fragment() {
+class NoteFragment: Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<MultipleClassViewModel> { viewModelFactory }
+    private val viewModel by viewModels<NoteViewModel> { viewModelFactory }
 
-    private var _binding: FragmentMultipleClassBinding? = null
-    private val binding: FragmentMultipleClassBinding
+    private var _binding: FragmentNoteBinding? = null
+    private val binding: FragmentNoteBinding
         get() = _binding!!
 
     override fun onAttach(context: Context) {
@@ -34,7 +32,7 @@ class MultipleClassFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentMultipleClassBinding.inflate(inflater, container,false)
+        _binding = FragmentNoteBinding.inflate(inflater, container,false)
         return binding.root
     }
 
@@ -50,14 +48,18 @@ class MultipleClassFragment: Fragment() {
     }
 
     private fun initUI() {
-        binding.multipleClassToolbar.run {
-            setTitle(R.string.multiple_class_new_class)
+        binding.noteToolbar.run {
+            setTitle(R.string.note_new_note)
             setNavigationIcon(R.drawable.ic_arrow_back)
             setNavigationOnClickListener { viewModel.onBackCommandClick() }
+        }
+
+        binding.applyContainer.setOnClickListener {
+
         }
     }
 
     companion object{
-        fun newInstance() = MultipleClassFragment()
+        fun newInstance() = NoteFragment()
     }
 }

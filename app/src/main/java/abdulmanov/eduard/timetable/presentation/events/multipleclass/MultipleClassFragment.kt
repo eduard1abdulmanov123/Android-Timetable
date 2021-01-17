@@ -1,7 +1,7 @@
-package abdulmanov.eduard.timetable.presentation.note
+package abdulmanov.eduard.timetable.presentation.events.multipleclass
 
 import abdulmanov.eduard.timetable.R
-import abdulmanov.eduard.timetable.databinding.FragmentNoteBinding
+import abdulmanov.eduard.timetable.databinding.FragmentMultipleClassBinding
 import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
 import android.content.Context
@@ -14,15 +14,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
-class NoteFragment: Fragment() {
+class MultipleClassFragment: Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<NoteViewModel> { viewModelFactory }
+    private val viewModel by viewModels<MultipleClassViewModel> { viewModelFactory }
 
-    private var _binding: FragmentNoteBinding? = null
-    private val binding: FragmentNoteBinding
+    private var _binding: FragmentMultipleClassBinding? = null
+    private val binding: FragmentMultipleClassBinding
         get() = _binding!!
 
     override fun onAttach(context: Context) {
@@ -32,7 +32,7 @@ class NoteFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentNoteBinding.inflate(inflater, container,false)
+        _binding = FragmentMultipleClassBinding.inflate(inflater, container,false)
         return binding.root
     }
 
@@ -48,14 +48,14 @@ class NoteFragment: Fragment() {
     }
 
     private fun initUI() {
-        binding.noteToolbar.run {
-            setTitle(R.string.note_new_note)
+        binding.multipleClassToolbar.run {
+            setTitle(R.string.multiple_class_new_class)
             setNavigationIcon(R.drawable.ic_arrow_back)
             setNavigationOnClickListener { viewModel.onBackCommandClick() }
         }
     }
 
     companion object{
-        fun newInstance() = NoteFragment()
+        fun newInstance() = MultipleClassFragment()
     }
 }

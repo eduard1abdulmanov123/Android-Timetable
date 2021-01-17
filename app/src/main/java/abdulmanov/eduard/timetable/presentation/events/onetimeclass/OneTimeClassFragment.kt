@@ -1,4 +1,4 @@
-package abdulmanov.eduard.timetable.presentation.onetimeclass
+package abdulmanov.eduard.timetable.presentation.events.onetimeclass
 
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.FragmentOneTimeClassBinding
