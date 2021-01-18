@@ -1,7 +1,7 @@
-package abdulmanov.eduard.timetable.presentation.timetable
+package abdulmanov.eduard.timetable.presentation.events.dialogs.helpercalendar
 
 import abdulmanov.eduard.timetable.R
-import abdulmanov.eduard.timetable.databinding.ItemCalendarDayBinding
+import abdulmanov.eduard.timetable.databinding.ItemDatePickerCalendarDayBinding
 import abdulmanov.eduard.timetable.presentation._common.extensions.setTextColorRes
 import android.view.View
 import android.widget.TextView
@@ -12,12 +12,12 @@ import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
 import java.time.LocalDate
 
-class CustomDayBinder(
+class DatePickerDayBinder(
     private val size: Int,
     private val clickListener: (CalendarDay) -> Unit
-) : DayBinder<CustomDayBinder.DayViewContainer>{
+) : DayBinder<DatePickerDayBinder.DayViewContainer> {
 
-    var selectedDate: LocalDate = LocalDate.now()
+    var selectedDate: LocalDate? = null
 
     override fun create(view: View): DayViewContainer {
         return DayViewContainer(view, size, clickListener)
@@ -36,6 +36,10 @@ class CustomDayBinder(
                 container.textView.setBackgroundResource(R.drawable.bg_selected_day)
                 container.textView.setTextColorRes(R.color.colorWhite)
             }
+            day.date == LocalDate.now() -> {
+                container.textView.setBackgroundResource(R.drawable.bg_current_day)
+                container.textView.setTextColorRes(R.color.colorAccent)
+            }
             else -> {
                 container.textView.background = null
                 container.textView.setTextColorRes(R.color.colorTextPrimary)
@@ -45,7 +49,7 @@ class CustomDayBinder(
 
     class DayViewContainer(view: View, size:Int, clickListener: (CalendarDay) -> Unit): ViewContainer(view) {
 
-        val textView = (ItemCalendarDayBinding.bind(view).oneDayFrameLayout.getChildAt(0) as TextView)
+        val textView = (ItemDatePickerCalendarDayBinding.bind(view).oneDayFrameLayout.getChildAt(0) as TextView)
 
         lateinit var day: CalendarDay
 

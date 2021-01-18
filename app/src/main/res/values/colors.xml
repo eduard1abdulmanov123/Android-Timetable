@@ -14,6 +14,8 @@
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorSeparate">#99BFBFBF</color>
 
+    <color name="colorSeparator">#99bfbfbf</color>
+
     <color name="colorIconLight">#99B5B5B5</color>
 
     <color name="colorErrorText">#FB1E1E</color>
@@ -24,6 +26,7 @@
     <!--calendar_view-->
     <color name="colorCalendarView">#FCFCFC</color>
     <color name="colorDayNotCurrentMonth">#C8C8C8</color>
+    <color name="colorCurrentDay">#400075EE</color>
 
     <!--speed_dial-->
     <color name="sd_overlay_color">#C3FFFFFF</color>

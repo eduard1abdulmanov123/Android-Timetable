@@ -2,6 +2,7 @@ package abdulmanov.eduard.timetable.presentation._common.extensions
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Point
 import android.view.View
 import android.view.WindowManager
@@ -41,3 +42,5 @@ fun Context.getScreenSize(): Point {
         wm.defaultDisplay.getSize(this)
     }
 }
+
+fun Int.dpToPx() = this * Resources.getSystem().displayMetrics.density

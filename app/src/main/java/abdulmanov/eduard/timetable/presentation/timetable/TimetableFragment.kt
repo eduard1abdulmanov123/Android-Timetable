@@ -6,6 +6,8 @@ import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
 import abdulmanov.eduard.timetable.presentation._common.extensions.daysOfWeekFromLocale
 import abdulmanov.eduard.timetable.presentation._common.extensions.getScreenSize
+import abdulmanov.eduard.timetable.presentation.timetable.helpercalendar.TimetableDayBinder
+import abdulmanov.eduard.timetable.presentation.timetable.helpercalendar.TimetableMonthHeaderBinder
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -86,8 +88,8 @@ class TimetableFragment: Fragment() {
 
             setup(currentMonth.minusMonths(10), currentMonth.plusMonths(10), daysOfWeek.first())
             scrollToDate(LocalDate.now())
-            dayBinder = CustomDayBinder(daySize.height) { selectDate(it.date) }
-            monthHeaderBinder = CustomMonthHeaderBinder(daysOfWeek)
+            dayBinder = TimetableDayBinder(daySize.height) { selectDate(it.date) }
+            monthHeaderBinder = TimetableMonthHeaderBinder(daysOfWeek)
             setMonthScrollListener()
         }
 
@@ -134,7 +136,7 @@ class TimetableFragment: Fragment() {
     }
 
     private fun selectDate(date: LocalDate){
-        val dayBinder = binding.calendarView.dayBinder as CustomDayBinder
+        val dayBinder = binding.calendarView.dayBinder as TimetableDayBinder
 
         if(date != dayBinder.selectedDate){
             val oldDate = dayBinder.selectedDate
@@ -150,7 +152,7 @@ class TimetableFragment: Fragment() {
 
         isCollapse = !isCollapse
 
-        val selectedDate = (binding.calendarView.dayBinder as CustomDayBinder).selectedDate
+        val selectedDate = (binding.calendarView.dayBinder as TimetableDayBinder).selectedDate
 
         if(!isCollapse){
             binding.calendarView.updateMonthConfiguration(

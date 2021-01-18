@@ -53,6 +53,13 @@
     <string name="note_content">Текст заметки</string>
     <string name="note_date">Дата</string>
     <string name="note_time">Время</string>
+    <string name="note_group">Групповая заметка</string>
+    <string name="note_group_description">Заметка будет видна всем участникам данного расписания</string>
     <string name="note_create">Создать</string>
     <string name="note_save">Сохранить</string>
+
+    <!--date_picker-->
+    <string name="date_picker_select_date">Выберите дату</string>
+    <string name="date_picker_throw_off">Сбросить</string>
+    <string name="date_picker_to_apply">Применить</string>
 </resources>
