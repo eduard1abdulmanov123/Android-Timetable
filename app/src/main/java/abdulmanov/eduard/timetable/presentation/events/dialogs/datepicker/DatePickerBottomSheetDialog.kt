@@ -28,7 +28,6 @@ class DatePickerBottomSheetDialog: BottomSheetDialogFragment() {
 
     private var callback: DatePickerCallback? = null
 
-    private val currentSelectedDateFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")
     private val selectedDateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
     override fun onAttach(context: Context) {
@@ -49,19 +48,6 @@ class DatePickerBottomSheetDialog: BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initUI()
-
-    }
-
-    private fun initUI(){
-        binding.throwOffTextView.setOnClickListener {
-            selectDate(null)
-            closeDatePicker()
-        }
-
-        binding.applyTextView.setOnClickListener {
-            closeDatePicker()
-        }
 
         binding.calendarView.run {
             val screenSize = context.getScreenSize()
@@ -71,15 +57,25 @@ class DatePickerBottomSheetDialog: BottomSheetDialogFragment() {
             val currentMonth = YearMonth.now()
 
             setup(currentMonth.minusMonths(10), currentMonth.plusMonths(10), daysOfWeek.first())
-            scrollToDate(LocalDate.now())
             dayBinder = DatePickerDayBinder(daySize.height) { selectDate(it.date) }
             monthHeaderBinder = DatePickerMonthHeaderBinder(daysOfWeek)
 
-            requireArguments().getString(ARG_CURRENT_SELECTED_DATE, null)?.let {
-                if(it.isNotEmpty()) {
-                    selectDate(LocalDate.parse(it, currentSelectedDateFormatter))
-                }
+            requireArguments().getString(ARG_CURRENT_SELECTED_DATE, null)?.run {
+                scrollToDate(DatePickerDelegate.getDateAsLocalDate(this))
+                selectDate(DatePickerDelegate.getDateAsLocalDate(this))
             }
+        }
+
+        binding.throwOffTextView.setOnClickListener {
+            selectDate(null)
+            callback?.onChangeDate(DatePickerDelegate.getDateAsString(null))
+            dismiss()
+        }
+
+        binding.applyTextView.setOnClickListener {
+            val dayBinder = binding.calendarView.dayBinder as DatePickerDayBinder
+            callback?.onChangeDate(DatePickerDelegate.getDateAsString(dayBinder.selectedDate))
+            dismiss()
         }
     }
 
@@ -100,12 +96,6 @@ class DatePickerBottomSheetDialog: BottomSheetDialogFragment() {
         }
     }
 
-    private fun closeDatePicker(){
-        val dayBinder = binding.calendarView.dayBinder as DatePickerDayBinder
-        callback?.onChangeDate(dayBinder.selectedDate)
-        dismiss()
-    }
-
     companion object{
         const val TAG = "DatePickerBottomSheetDialog"
 
@@ -119,6 +109,6 @@ class DatePickerBottomSheetDialog: BottomSheetDialogFragment() {
     }
 
     interface DatePickerCallback {
-        fun onChangeDate(date: LocalDate?)
+        fun onChangeDate(date: String)
     }
 }

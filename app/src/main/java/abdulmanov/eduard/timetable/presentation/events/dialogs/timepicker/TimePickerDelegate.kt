@@ -5,7 +5,7 @@ import android.widget.TimePicker
 import java.util.*
 
 @Suppress("DEPRECATION")
-object TimeDelegate {
+object TimePickerDelegate {
 
     fun setTime(timePicker: TimePicker, time: String?) {
         val hour: Int

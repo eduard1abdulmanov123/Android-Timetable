@@ -39,21 +39,21 @@ class TimePickerBottomSheetDialog: BottomSheetDialogFragment() {
 
         binding.timePicker.run {
             setIs24HourView(true)
-            TimeDelegate.setTime(binding.timePicker, requireArguments().getString(ARG_TIME, null))
+            TimePickerDelegate.setTime(binding.timePicker, requireArguments().getString(ARG_TIME, null))
         }
 
         binding.throwOffTextView.setOnClickListener {
-            TimeDelegate.setTime(binding.timePicker,null)
-            callback?.onChangeTime(null)
+            TimePickerDelegate.setTime(binding.timePicker,null)
+            callback?.onChangeTime("")
             dismiss()
         }
 
         binding.applyTextView.setOnClickListener {
-            callback?.onChangeTime(TimeDelegate.getTime(binding.timePicker))
+            callback?.onChangeTime(TimePickerDelegate.getTime(binding.timePicker))
             dismiss()
         }
     }
-    
+
     companion object{
         const val TAG = "TimePickerBottomSheetDialog"
 
@@ -67,6 +67,6 @@ class TimePickerBottomSheetDialog: BottomSheetDialogFragment() {
     }
 
     interface TimePickerCallback{
-        fun onChangeTime(time: String?)
+        fun onChangeTime(time: String)
     }
 }

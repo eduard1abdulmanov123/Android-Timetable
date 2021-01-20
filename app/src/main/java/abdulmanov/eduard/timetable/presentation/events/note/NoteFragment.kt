@@ -14,8 +14,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class NoteFragment: Fragment(), DatePickerBottomSheetDialog.DatePickerCallback, TimePickerBottomSheetDialog.TimePickerCallback {
@@ -28,8 +26,6 @@ class NoteFragment: Fragment(), DatePickerBottomSheetDialog.DatePickerCallback, 
     private var _binding: FragmentNoteBinding? = null
     private val binding: FragmentNoteBinding
         get() = _binding!!
-
-    private val selectionFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -45,7 +41,6 @@ class NoteFragment: Fragment(), DatePickerBottomSheetDialog.DatePickerCallback, 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
-
     }
 
     override fun onDestroyView() {
@@ -53,16 +48,12 @@ class NoteFragment: Fragment(), DatePickerBottomSheetDialog.DatePickerCallback, 
         _binding = null
     }
 
-    override fun onChangeDate(date: LocalDate?) {
-        if(date == null){
-            binding.dateTextInputEditText.setText("")
-        }else{
-            binding.dateTextInputEditText.setText(selectionFormatter.format(date))
-        }
+    override fun onChangeDate(date: String) {
+        binding.dateTextInputEditText.setText(date)
     }
 
-    override fun onChangeTime(time: String?) {
-        binding.timeTextInputEditText.setText(time ?: "")
+    override fun onChangeTime(time: String) {
+        binding.timeTextInputEditText.setText(time)
     }
 
     private fun initUI() {
