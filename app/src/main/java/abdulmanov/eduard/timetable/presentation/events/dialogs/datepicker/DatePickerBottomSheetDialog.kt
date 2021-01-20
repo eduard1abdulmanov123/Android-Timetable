@@ -1,12 +1,12 @@
-package abdulmanov.eduard.timetable.presentation.events.dialogs
+package abdulmanov.eduard.timetable.presentation.events.dialogs.datepicker
 
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.BottomDialogDatePickerBinding
 import abdulmanov.eduard.timetable.presentation._common.extensions.daysOfWeekFromLocale
 import abdulmanov.eduard.timetable.presentation._common.extensions.dpToPx
 import abdulmanov.eduard.timetable.presentation._common.extensions.getScreenSize
-import abdulmanov.eduard.timetable.presentation.events.dialogs.helpercalendar.DatePickerDayBinder
-import abdulmanov.eduard.timetable.presentation.events.dialogs.helpercalendar.DatePickerMonthHeaderBinder
+import abdulmanov.eduard.timetable.presentation.events.dialogs.datepicker.helpercalendar.DatePickerDayBinder
+import abdulmanov.eduard.timetable.presentation.events.dialogs.datepicker.helpercalendar.DatePickerMonthHeaderBinder
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater

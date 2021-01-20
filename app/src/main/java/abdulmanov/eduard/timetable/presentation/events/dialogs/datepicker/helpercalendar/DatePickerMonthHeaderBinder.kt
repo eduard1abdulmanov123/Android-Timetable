@@ -1,4 +1,4 @@
-package abdulmanov.eduard.timetable.presentation.events.dialogs.helpercalendar
+package abdulmanov.eduard.timetable.presentation.events.dialogs.datepicker.helpercalendar
 
 import abdulmanov.eduard.timetable.databinding.ItemDatePickerCalendarDayLegendBinding
 import android.annotation.SuppressLint

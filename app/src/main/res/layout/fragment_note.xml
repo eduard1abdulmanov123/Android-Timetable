@@ -99,7 +99,10 @@
                     android:id="@+id/timeTextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorTextPrimary" />
+                    android:textColor="@color/colorTextPrimary"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:cursorVisible="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

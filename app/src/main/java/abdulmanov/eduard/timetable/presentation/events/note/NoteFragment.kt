@@ -4,7 +4,8 @@ import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.FragmentNoteBinding
 import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
-import abdulmanov.eduard.timetable.presentation.events.dialogs.DatePickerBottomSheetDialog
+import abdulmanov.eduard.timetable.presentation.events.dialogs.datepicker.DatePickerBottomSheetDialog
+import abdulmanov.eduard.timetable.presentation.events.dialogs.timepicker.TimePickerBottomSheetDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +18,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-class NoteFragment: Fragment(), DatePickerBottomSheetDialog.DatePickerCallback {
+class NoteFragment: Fragment(), DatePickerBottomSheetDialog.DatePickerCallback, TimePickerBottomSheetDialog.TimePickerCallback {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -60,6 +61,10 @@ class NoteFragment: Fragment(), DatePickerBottomSheetDialog.DatePickerCallback {
         }
     }
 
+    override fun onChangeTime(time: String?) {
+        binding.timeTextInputEditText.setText(time ?: "")
+    }
+
     private fun initUI() {
         binding.noteToolbar.run {
             setTitle(R.string.note_new_note)
@@ -71,6 +76,10 @@ class NoteFragment: Fragment(), DatePickerBottomSheetDialog.DatePickerCallback {
             openDatePicker()
         }
 
+        binding.timeTextInputEditText.setOnClickListener {
+            openTimePicker()
+        }
+
         binding.applyContainer.setOnClickListener {
 
         }
@@ -79,6 +88,11 @@ class NoteFragment: Fragment(), DatePickerBottomSheetDialog.DatePickerCallback {
     private fun openDatePicker(){
         val dialog = DatePickerBottomSheetDialog.newInstance(binding.dateTextInputEditText.text?.toString())
         dialog.show(childFragmentManager, DatePickerBottomSheetDialog.TAG)
+    }
+
+    private fun openTimePicker(){
+        val dialog = TimePickerBottomSheetDialog.newInstance(binding.timeTextInputEditText.text?.toString())
+        dialog.show(childFragmentManager, TimePickerBottomSheetDialog.TAG)
     }
 
     companion object{

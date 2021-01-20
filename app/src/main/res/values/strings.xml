@@ -62,4 +62,7 @@
     <string name="date_picker_select_date">Выберите дату</string>
     <string name="date_picker_throw_off">Сбросить</string>
     <string name="date_picker_to_apply">Применить</string>
+
+    <!--time_picker-->
+    <string name="time_picker_select_time">Выберите время</string>
 </resources>
