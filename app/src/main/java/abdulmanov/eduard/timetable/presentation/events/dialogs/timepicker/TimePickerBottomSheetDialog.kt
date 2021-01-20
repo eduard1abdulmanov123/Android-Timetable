@@ -39,7 +39,13 @@ class TimePickerBottomSheetDialog: BottomSheetDialogFragment() {
 
         binding.timePicker.run {
             setIs24HourView(true)
-            TimePickerDelegate.setTime(binding.timePicker, requireArguments().getString(ARG_TIME, null))
+
+            val currentTime = if(savedInstanceState == null){
+                requireArguments().getString(ARG_CURRENT_SELECTED_TIME, null)
+            }else{
+                savedInstanceState.getString(ARG_CURRENT_SELECTED_TIME, null)
+            }
+            TimePickerDelegate.setTime(binding.timePicker, currentTime)
         }
 
         binding.throwOffTextView.setOnClickListener {
@@ -54,14 +60,19 @@ class TimePickerBottomSheetDialog: BottomSheetDialogFragment() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(ARG_CURRENT_SELECTED_TIME, TimePickerDelegate.getTime(binding.timePicker))
+    }
+
     companion object{
         const val TAG = "TimePickerBottomSheetDialog"
 
-        private const val ARG_TIME = "TIME"
+        private const val ARG_CURRENT_SELECTED_TIME = "CURRENT_SELECTED_TIME"
 
         fun newInstance(time: String?): TimePickerBottomSheetDialog {
             return TimePickerBottomSheetDialog().apply {
-                arguments = bundleOf(ARG_TIME to time)
+                arguments = bundleOf(ARG_CURRENT_SELECTED_TIME to time)
             }
         }
     }

@@ -60,10 +60,13 @@ class DatePickerBottomSheetDialog: BottomSheetDialogFragment() {
             dayBinder = DatePickerDayBinder(daySize.height) { selectDate(it.date) }
             monthHeaderBinder = DatePickerMonthHeaderBinder(daysOfWeek)
 
-            requireArguments().getString(ARG_CURRENT_SELECTED_DATE, null)?.run {
-                scrollToDate(DatePickerDelegate.getDateAsLocalDate(this))
-                selectDate(DatePickerDelegate.getDateAsLocalDate(this))
+            val currentDate = if(savedInstanceState == null) {
+                requireArguments().getString(ARG_CURRENT_SELECTED_DATE, null)
+            }else{
+                savedInstanceState.getString(ARG_CURRENT_SELECTED_DATE, null)
             }
+            scrollToDate(DatePickerDelegate.getDateAsLocalDate(currentDate))
+            selectDate(DatePickerDelegate.getDateAsLocalDate(currentDate))
         }
 
         binding.throwOffTextView.setOnClickListener {
@@ -77,6 +80,12 @@ class DatePickerBottomSheetDialog: BottomSheetDialogFragment() {
             callback?.onChangeDate(DatePickerDelegate.getDateAsString(dayBinder.selectedDate))
             dismiss()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val dayBinder = binding.calendarView.dayBinder as DatePickerDayBinder
+        outState.putString(ARG_CURRENT_SELECTED_DATE, DatePickerDelegate.getDateAsString(dayBinder.selectedDate))
     }
 
     private fun selectDate(date: LocalDate?){
