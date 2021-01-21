@@ -1,7 +1,9 @@
 package abdulmanov.eduard.timetable.dagger.modules
 
+import abdulmanov.eduard.timetable.data.local.sharedpreferences.AuthSharedPreferences
 import abdulmanov.eduard.timetable.data.remote.RetrofitFactory
 import abdulmanov.eduard.timetable.data.remote.TimetableApi
+import abdulmanov.eduard.timetable.domain.interactors.AuthInteractor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -12,8 +14,8 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
-        return RetrofitFactory.getOkHttpInstance()
+    fun provideOkHttpClient(sharedPreferences: AuthSharedPreferences): OkHttpClient {
+        return RetrofitFactory.getOkHttpInstance(sharedPreferences)
     }
 
     @Singleton

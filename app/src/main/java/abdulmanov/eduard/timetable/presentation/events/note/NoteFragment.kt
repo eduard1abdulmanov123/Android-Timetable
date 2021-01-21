@@ -72,7 +72,12 @@ class NoteFragment: Fragment(), DatePickerBottomSheetDialog.DatePickerCallback, 
         }
 
         binding.applyContainer.setOnClickListener {
-
+            viewModel.createNote(
+                binding.contentTextInputEditText.text.toString(),
+                binding.dateTextInputEditText.text.toString(),
+                binding.timeTextInputEditText.text.toString(),
+                binding.groupNoteCheckBox.isChecked
+            )
         }
     }
 

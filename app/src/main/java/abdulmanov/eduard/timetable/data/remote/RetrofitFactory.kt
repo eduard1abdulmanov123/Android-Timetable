@@ -1,5 +1,8 @@
 package abdulmanov.eduard.timetable.data.remote
 
+import abdulmanov.eduard.timetable.data.local.sharedpreferences.AuthSharedPreferences
+import abdulmanov.eduard.timetable.data.remote.helpers.HeadersInterceptor
+import abdulmanov.eduard.timetable.domain.interactors.AuthInteractor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -10,13 +13,14 @@ class RetrofitFactory {
 
     companion object {
 
-        fun getOkHttpInstance(): OkHttpClient {
+        fun getOkHttpInstance(sharedPreferences: AuthSharedPreferences): OkHttpClient {
             val loggingInterceptor = HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             }
 
             return OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .addInterceptor(HeadersInterceptor(sharedPreferences))
                 .build()
         }
 
