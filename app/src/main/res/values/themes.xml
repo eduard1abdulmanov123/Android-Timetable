@@ -20,6 +20,11 @@
         <item name="titleTextColor">@color/colorTitleToolbar</item>
     </style>
 
+    <style name="RadioButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/colorControlActive</item>
+        <item name="colorControlNormal">@color/colorControlNormal</item>
+    </style>
+
     <style name="BottomDialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetModalStyleSmallCorners</item>
         <item name="android:windowIsFloating">false</item>

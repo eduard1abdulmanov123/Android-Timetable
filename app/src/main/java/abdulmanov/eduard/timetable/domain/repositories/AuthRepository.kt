@@ -10,7 +10,7 @@ interface AuthRepository {
 
     fun signIn(login: String, password: String): Single<User>
 
-    fun saveToken(token: String): Completable
+    fun saveUser(user: User)
 
-    fun getToken(): String?
+    fun getUser(): User
 }

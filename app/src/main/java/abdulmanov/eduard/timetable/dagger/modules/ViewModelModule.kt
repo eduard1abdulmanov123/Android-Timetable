@@ -7,6 +7,8 @@ import abdulmanov.eduard.timetable.presentation.login.sign_up.SignUpViewModel
 import abdulmanov.eduard.timetable.presentation.events.multipleclass.MultipleClassViewModel
 import abdulmanov.eduard.timetable.presentation.events.note.NoteViewModel
 import abdulmanov.eduard.timetable.presentation.events.onetimeclass.OneTimeClassViewModel
+import abdulmanov.eduard.timetable.presentation.onboarding.create.CreateTimetableViewModel
+import abdulmanov.eduard.timetable.presentation.onboarding.join.JoinTimetableViewModel
 import abdulmanov.eduard.timetable.presentation.timetable.TimetableViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -29,6 +31,16 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SignUpViewModel::class)
     abstract fun bindSignUpViewModel(viewModel: SignUpViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CreateTimetableViewModel::class)
+    abstract fun bindCreateTimetableViewModel(viewModel: CreateTimetableViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(JoinTimetableViewModel::class)
+    abstract fun bindJoinTimetableViewModel(viewModel: JoinTimetableViewModel): ViewModel
 
     @Binds
     @IntoMap

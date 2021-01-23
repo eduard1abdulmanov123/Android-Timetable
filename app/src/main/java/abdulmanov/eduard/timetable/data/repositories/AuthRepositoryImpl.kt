@@ -14,34 +14,26 @@ class AuthRepositoryImpl(
 ): AuthRepository {
 
     override fun signUp(login: String, password: String): Single<User> {
-        val user = UserNetModel.Request(login, password)
-
-        return timetableApi.signUp(user).map {
-            User(
-                userName = it.userName,
-                token = it.token
-            )
-        }
+        return timetableApi.signUp(UserNetModel.Request(login, password))
+            .map { User(it.userName, it.token, it.currentTimetableId) }
     }
 
     override fun signIn(login: String, password: String): Single<User> {
-        val user = UserNetModel.Request(login, password)
-
-        return timetableApi.signIn(user).map {
-            User(
-                userName = it.userName,
-                token = it.token
-            )
-        }
+        return timetableApi.signIn(UserNetModel.Request(login, password))
+            .map { User(it.userName, it.token, it.currentTimetableId) }
     }
 
-    override fun saveToken(token: String): Completable {
-        return Completable.fromCallable {
-            sharedPreferences.setToken(token)
-        }
+    override fun saveUser(user: User) {
+        sharedPreferences.setToken(user.token)
+        sharedPreferences.setUserName(user.userName)
+        sharedPreferences.setCurrentTimetableId(user.currentTimetableId)
     }
 
-    override fun getToken(): String? {
-        return sharedPreferences.getToken()
+    override fun getUser(): User {
+        return User(
+            userName = sharedPreferences.getUserName(),
+            token = sharedPreferences.getToken(),
+            currentTimetableId = sharedPreferences.getCurrentTimetableId()
+        )
     }
 }

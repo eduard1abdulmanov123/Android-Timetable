@@ -15,6 +15,8 @@ class UserNetModel {
         @SerializedName("username")
         val userName: String,
         @SerializedName("token")
-        val token: String
+        val token: String,
+        @SerializedName("currentTimetableId")
+        val currentTimetableId: Int?
     )
 }

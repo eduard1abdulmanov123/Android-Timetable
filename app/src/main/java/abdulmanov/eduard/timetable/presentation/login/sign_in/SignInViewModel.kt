@@ -32,7 +32,12 @@ class SignInViewModel @Inject constructor(
             authInteractor.signIn(login, password).safeSubscribe(
                 {
                     _showLoginInApp.value = false
-                    router.replaceScreen(Screens.main())
+
+                    if(it.currentTimetableId != null){
+                        router.replaceScreen(Screens.main())
+                    }else{
+                        router.replaceScreen(Screens.onboarding())
+                    }
                 },
                 {
                     _showLoginInApp.value = false

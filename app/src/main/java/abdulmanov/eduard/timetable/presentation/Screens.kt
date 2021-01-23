@@ -7,6 +7,9 @@ import abdulmanov.eduard.timetable.presentation.main.MainActivity
 import abdulmanov.eduard.timetable.presentation.events.multipleclass.MultipleClassFragment
 import abdulmanov.eduard.timetable.presentation.events.note.NoteFragment
 import abdulmanov.eduard.timetable.presentation.events.onetimeclass.OneTimeClassFragment
+import abdulmanov.eduard.timetable.presentation.onboarding.OnboardingActivity
+import abdulmanov.eduard.timetable.presentation.onboarding.create.CreateTimetableFragment
+import abdulmanov.eduard.timetable.presentation.onboarding.join.JoinTimetableFragment
 import abdulmanov.eduard.timetable.presentation.timetable.TimetableFragment
 import com.github.terrakok.cicerone.androidx.ActivityScreen
 import com.github.terrakok.cicerone.androidx.FragmentScreen
@@ -27,6 +30,18 @@ object Screens {
 
     fun signIn() = FragmentScreen{
         SignInFragment.newInstance()
+    }
+
+    fun onboarding() = ActivityScreen{
+        OnboardingActivity.newIntent(it)
+    }
+
+    fun createTimetable() = FragmentScreen{
+        CreateTimetableFragment.newInstance()
+    }
+
+    fun joinTimetable() = FragmentScreen{
+        JoinTimetableFragment.newInstance()
     }
 
     fun timetable() = FragmentScreen{

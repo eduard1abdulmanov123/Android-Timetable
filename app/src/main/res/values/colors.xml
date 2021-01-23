@@ -14,6 +14,9 @@
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorSeparate">#99BFBFBF</color>
 
+    <color name="colorControlNormal">#6f6f6f</color>
+    <color name="colorControlActive">#0075EE</color>
+
     <color name="colorSeparator">#99bfbfbf</color>
 
     <color name="colorIconLight">#99B5B5B5</color>

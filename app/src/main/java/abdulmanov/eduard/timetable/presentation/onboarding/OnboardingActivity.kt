@@ -1,7 +1,6 @@
-package abdulmanov.eduard.timetable.presentation.login
+package abdulmanov.eduard.timetable.presentation.onboarding
 
 import abdulmanov.eduard.timetable.R
-import abdulmanov.eduard.timetable.domain.interactors.AuthInteractor
 import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation.Screens
 import android.content.Context
@@ -13,10 +12,7 @@ import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import javax.inject.Inject
 
-class LoginActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var authInteractor: AuthInteractor
+class OnboardingActivity : AppCompatActivity() {
 
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
@@ -24,15 +20,15 @@ class LoginActivity : AppCompatActivity() {
     @Inject
     lateinit var router: Router
 
-    private val navigator =  AppNavigator(this, R.id.loginFragmentContainerView)
+    private val navigator =  AppNavigator(this, R.id.onboardingFragmentContainerView)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as App).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_onboarding)
 
         if(savedInstanceState == null){
-            executeTransitionProcessing()
+            router.replaceScreen(Screens.createTimetable())
         }
     }
 
@@ -46,19 +42,7 @@ class LoginActivity : AppCompatActivity() {
         super.onPause()
     }
 
-    private fun executeTransitionProcessing(){
-        val user = authInteractor.getUser()
-
-        if(user.token!=null && user.currentTimetableId != null){
-            router.replaceScreen(Screens.main())
-        }else if(user.token != null && user.currentTimetableId == null) {
-            router.replaceScreen(Screens.onboarding())
-        }else if(user.token == null){
-            router.replaceScreen(Screens.signIn())
-        }
-    }
-
-    companion object{
-        fun newIntent(context: Context) = Intent(context, LoginActivity::class.java)
+    companion object {
+        fun newIntent(context: Context) = Intent(context, OnboardingActivity::class.java)
     }
 }

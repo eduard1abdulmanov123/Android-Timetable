@@ -11,8 +11,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
@@ -41,6 +44,9 @@ class NoteFragment: Fragment(), DatePickerBottomSheetDialog.DatePickerCallback, 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
+
+        viewModel.showApplyProgress.observe(viewLifecycleOwner, Observer(::showApplyProgress))
+        viewModel.showMessageErrorEvent.observe(viewLifecycleOwner, Observer(::showErrorMessage))
     }
 
     override fun onDestroyView() {
@@ -89,6 +95,15 @@ class NoteFragment: Fragment(), DatePickerBottomSheetDialog.DatePickerCallback, 
     private fun openTimePicker(){
         val dialog = TimePickerBottomSheetDialog.newInstance(binding.timeTextInputEditText.text?.toString())
         dialog.show(childFragmentManager, TimePickerBottomSheetDialog.TAG)
+    }
+
+    private fun showApplyProgress(show:Boolean){
+        binding.applyTextView.isVisible = !show
+        binding.applyProgressBar.isVisible = show
+    }
+
+    private fun showErrorMessage(message: String){
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     companion object{

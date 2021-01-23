@@ -32,7 +32,7 @@ class SignUpViewModel @Inject constructor(
             authInteractor.signUp(login, password).safeSubscribe(
                 {
                     _showRegistrationInApp.value = false
-                    router.replaceScreen(Screens.main())
+                    router.replaceScreen(Screens.onboarding())
                 },
                 {
                     _showRegistrationInApp.value = false

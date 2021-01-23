@@ -33,9 +33,11 @@ class NoteViewModel @Inject constructor(
             noteInteractor.createNote(note).safeSubscribe(
                 {
                     _showApplyProgress.value = false
+                    onBackCommandClick()
                 },
                 {
                     _showApplyProgress.value = false
+                    _showMessageErrorEvent.value = it.message.toString()
                 }
             )
         }
