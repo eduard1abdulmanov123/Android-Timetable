@@ -2,7 +2,7 @@ package abdulmanov.eduard.timetable.data.mappers
 
 import abdulmanov.eduard.timetable.data.remote.models.TimetableNetModel
 import abdulmanov.eduard.timetable.domain.models.Timetable
-import abdulmanov.eduard.timetable.domain.models.numberToWeekNumber
+import abdulmanov.eduard.timetable.domain.models.numberToTypeWeek
 
 class TimetableMapperDomain {
 
@@ -11,7 +11,8 @@ class TimetableMapperDomain {
             id = timetable.id,
             creatorUsername = timetable.creatorUsername,
             link = timetable.link,
-            weekType = timetable.weekType.numberToWeekNumber()
+            typeWeek = timetable.typeWeek.numberToTypeWeek(),
+            dateUpdate = timetable.dateUpdate
         )
     }
 }

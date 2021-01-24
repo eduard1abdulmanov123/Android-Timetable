@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.onboarding.OnboardingActivity"/>
+        <activity android:name=".presentation.create_or_join_timetable.CreateOrJoinTimetableActivity"/>
 
         <activity android:name=".presentation.main.MainActivity" />
     </application>

@@ -42,7 +42,7 @@ class SignUpFragment: Fragment() {
         initUI()
 
         viewModel.showRegistrationInApp.observe(viewLifecycleOwner, Observer(::showRegistrationInApp))
-        viewModel.showMessageErrorEvent.observe(viewLifecycleOwner, Observer(::showMessageError))
+        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessage))
     }
 
     override fun onDestroyView() {
@@ -83,7 +83,7 @@ class SignUpFragment: Fragment() {
         binding.registrationProgressBar.isVisible = show
     }
 
-    private fun showMessageError(show:Boolean){
+    private fun showMessage(show:Boolean){
         binding.messageErrorLinearLayout.isVisible = show
     }
 

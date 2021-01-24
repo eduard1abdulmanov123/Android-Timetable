@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 class TimetableNetModel{
 
     data class Request(
-        @SerializedName("weekType")
-        val weekType: Int
+        @SerializedName("typeWeek")
+        val typeWeek: Int
     )
 
     data class Response(
@@ -16,7 +16,9 @@ class TimetableNetModel{
         val creatorUsername: String,
         @SerializedName("link")
         val link: String,
-        @SerializedName("weekType")
-        val weekType: Int,
+        @SerializedName("typeWeek")
+        val typeWeek: Int,
+        @SerializedName("dateUpdate")
+        val dateUpdate: Long
     )
 }

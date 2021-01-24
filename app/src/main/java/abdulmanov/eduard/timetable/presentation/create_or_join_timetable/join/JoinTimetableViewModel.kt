@@ -1,8 +1,7 @@
-package abdulmanov.eduard.timetable.presentation.onboarding.create
+package abdulmanov.eduard.timetable.presentation.create_or_join_timetable.join
 
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.domain.interactors.TimetableInteractor
-import abdulmanov.eduard.timetable.domain.models.WeekType
 import abdulmanov.eduard.timetable.presentation.Screens
 import abdulmanov.eduard.timetable.presentation._common.StringProvider
 import abdulmanov.eduard.timetable.presentation._common.viewmodel.BaseViewModel
@@ -12,7 +11,7 @@ import com.github.terrakok.cicerone.Router
 import com.hadilq.liveevent.LiveEvent
 import javax.inject.Inject
 
-class CreateTimetableViewModel @Inject constructor(
+class JoinTimetableViewModel @Inject constructor(
     private val router: Router,
     private val stringProvider: StringProvider,
     private val timetableInteractor: TimetableInteractor
@@ -22,28 +21,26 @@ class CreateTimetableViewModel @Inject constructor(
     val showApplyProgress: LiveData<Boolean>
         get() = _showApplyProgress
 
-    private val _showMessageErrorEvent = LiveEvent<String>()
-    val showMessageErrorEvent: LiveData<String>
-        get() = _showMessageErrorEvent
+    private val _showMessageEvent = LiveEvent<String>()
+    val showMessageEvent: LiveData<String>
+        get() = _showMessageEvent
 
-    var currentSelectWeekType: WeekType? = null
+    fun openScreenCreateTimetable() = router.replaceScreen(Screens.createTimetable())
 
-    fun openScreenJoinTimetable() = router.replaceScreen(Screens.joinTimetable())
-
-    fun createTimetable(){
-        if(currentSelectWeekType == null){
-            _showMessageErrorEvent.value = stringProvider.getString(R.string.create_timetable_error_select_type_week)
+    fun joinTimetable(link: String){
+        if(link.isEmpty()){
+            _showMessageEvent.value = stringProvider.getString(R.string.join_timetable_error_empty_link)
         }else if(_showApplyProgress.value == false){
             _showApplyProgress.value = true
 
-            timetableInteractor.createTimetable(currentSelectWeekType!!).safeSubscribe(
+            timetableInteractor.joinTimetable(link).safeSubscribe(
                 {
                     _showApplyProgress.value = false
-                    router.replaceScreen(Screens.main())
+                    router.newRootScreen(Screens.main())
                 },
                 {
                     _showApplyProgress.value = false
-                    _showMessageErrorEvent.value = it.message.toString()
+                    _showMessageEvent.value = it.message.toString()
                 }
             )
         }

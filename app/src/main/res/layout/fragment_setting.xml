@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/settingToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/settingToolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/containerTimetableConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:background="?attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/timetableTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:textSize="@dimen/font_few_big"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorTextPrimary"
+                    android:text="@string/setting_type_week_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/timetableSubtitleTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="@dimen/font_small"
+                    android:textColor="@color/colorTextSecondary"
+                    android:text="@string/setting_timetable_subtitle"
+                    app:layout_constraintEnd_toEndOf="@id/timetableTitleTextView"
+                    app:layout_constraintStart_toStartOf="@id/timetableTitleTextView"
+                    app:layout_constraintTop_toBottomOf="@id/timetableTitleTextView" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorSeparator"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/timetableSubtitleTextView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/containerTypeWeekConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:background="?attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/typeWeekTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:textSize="@dimen/font_few_big"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorTextPrimary"
+                    android:text="@string/setting_type_week_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioGroup
+                    android:id="@+id/typeWeekRadioGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/typeWeekTitleTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/evenWeekRadioButton"
+                        android:theme="@style/RadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layoutDirection="rtl"
+                        android:textAlignment="textStart"
+                        android:layout_gravity="start"
+                        android:textSize="@dimen/font_normal"
+                        android:textColor="@color/colorTextPrimary"
+                        android:text="@string/setting_type_week_even_week"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="41dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginTop="12dp"/>
+
+                    <RadioButton
+                        android:id="@+id/oddWeekRadioButton"
+                        android:theme="@style/RadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layoutDirection="rtl"
+                        android:textAlignment="textStart"
+                        android:layout_gravity="start"
+                        android:textSize="@dimen/font_normal"
+                        android:textColor="@color/colorTextPrimary"
+                        android:text="@string/setting_type_week_odd_week"/>
+
+                </RadioGroup>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorSeparator"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/typeWeekRadioGroup" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/containerFeedbackConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:background="?attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/feedbackTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:textSize="@dimen/font_few_big"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorTextPrimary"
+                    android:text="@string/setting_feedback_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/feedbackSubtitleTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="@dimen/font_small"
+                    android:textColor="@color/colorTextSecondary"
+                    android:text="@string/setting_feedback_subtitle"
+                    app:layout_constraintEnd_toEndOf="@id/feedbackTitleTextView"
+                    app:layout_constraintStart_toStartOf="@id/feedbackTitleTextView"
+                    app:layout_constraintTop_toBottomOf="@id/feedbackTitleTextView" />
+
+                <ImageView
+                    android:id="@+id/feedbackImageView"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_mail"
+                    app:layout_constraintStart_toStartOf="@id/feedbackSubtitleTextView"
+                    app:layout_constraintTop_toBottomOf="@id/feedbackSubtitleTextView"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/feedbackWriteLetterTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textSize="@dimen/font_normal"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorTextPrimary"
+                    android:text="@string/setting_feedback_write_letter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/feedbackImageView"
+                    app:layout_constraintTop_toTopOf="@id/feedbackImageView"
+                    app:layout_constraintBottom_toBottomOf="@id/feedbackImageView"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorSeparator"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/feedbackWriteLetterTextView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/containerExitConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:background="?attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/exitTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:textSize="@dimen/font_few_big"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorDangerousAction"
+                    android:text="@string/setting_exit_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/exitSubtitleTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="@dimen/font_small"
+                    android:textColor="@color/colorTextSecondary"
+                    android:text="@string/setting_feedback_subtitle"
+                    app:layout_constraintEnd_toEndOf="@id/exitTitleTextView"
+                    app:layout_constraintStart_toStartOf="@id/exitTitleTextView"
+                    app:layout_constraintTop_toBottomOf="@id/exitTitleTextView" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorSeparator"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/exitSubtitleTextView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,35 +8,21 @@ class AuthSharedPreferences(context: Context) {
 
     private val sharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
-    fun setToken(token: String?){
-        sharedPreferences.edit { putString(PREF_TOKEN, token) }
-    }
+    var token: String?
+        set(value) = sharedPreferences.edit { putString(PREF_TOKEN, value) }
+        get() = sharedPreferences.getString(PREF_TOKEN, null)
 
-    fun getToken(): String? {
-        return sharedPreferences.getString(PREF_TOKEN, null)
-    }
+    var userName: String?
+        set(value) = sharedPreferences.edit { putString(PREF_USER_NAME, value) }
+        get() = sharedPreferences.getString(PREF_USER_NAME, null)
 
-    fun setUserName(userName: String?) {
-        sharedPreferences.edit { putString(PREF_USER_NAME, userName) }
-    }
-
-    fun getUserName(): String? {
-        return sharedPreferences.getString(PREF_USER_NAME, null)
-    }
-
-    fun setCurrentTimetableId(currentTimetableId: Int?) {
-        sharedPreferences.edit { putInt(PREF_CURRENT_TIMETABLE_ID, currentTimetableId ?: -1) }
-    }
-
-    fun getCurrentTimetableId(): Int? {
-        val currentTimetableId = sharedPreferences.getInt(PREF_CURRENT_TIMETABLE_ID, -1)
-
-        return if(currentTimetableId == -1) {
-            null
-        } else {
-            currentTimetableId
+    var currentTimetableId: Int?
+        set(value) = sharedPreferences.edit { putInt(PREF_CURRENT_TIMETABLE_ID, value ?: -1) }
+        get() = sharedPreferences.getInt(PREF_CURRENT_TIMETABLE_ID, -1).run {
+            return if(this == -1) null else this
         }
-    }
+
+    fun clearAll() = sharedPreferences.edit { clear() }
 
     companion object{
         private const val PREFERENCES_NAME = "${BuildConfig.APPLICATION_ID}_auth"

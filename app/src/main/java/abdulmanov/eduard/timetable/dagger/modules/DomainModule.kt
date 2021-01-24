@@ -2,9 +2,11 @@ package abdulmanov.eduard.timetable.dagger.modules
 
 import abdulmanov.eduard.timetable.domain.interactors.AuthInteractor
 import abdulmanov.eduard.timetable.domain.interactors.NoteInteractor
+import abdulmanov.eduard.timetable.domain.interactors.SettingInteractor
 import abdulmanov.eduard.timetable.domain.interactors.TimetableInteractor
 import abdulmanov.eduard.timetable.domain.repositories.AuthRepository
 import abdulmanov.eduard.timetable.domain.repositories.NoteRepository
+import abdulmanov.eduard.timetable.domain.repositories.SettingRepository
 import abdulmanov.eduard.timetable.domain.repositories.TimetableRepository
 import dagger.Module
 import dagger.Provides
@@ -15,14 +17,30 @@ class DomainModule {
 
     @Singleton
     @Provides
-    fun provideAuthInteractor(repository: AuthRepository): AuthInteractor {
-        return AuthInteractor(repository)
+    fun provideAuthInteractor(
+        authRepository: AuthRepository,
+        timetableRepository: TimetableRepository
+    ): AuthInteractor {
+        return AuthInteractor(authRepository, timetableRepository)
     }
 
     @Singleton
     @Provides
-    fun provideTimetableInteractor(repository: TimetableRepository): TimetableInteractor {
-        return TimetableInteractor(repository)
+    fun provideTimetableInteractor(
+        authRepository: AuthRepository,
+        timetableRepository: TimetableRepository
+    ): TimetableInteractor {
+        return TimetableInteractor(authRepository, timetableRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSettingInteractor(
+        authRepository: AuthRepository,
+        timetableRepository: TimetableRepository,
+        settingRepository: SettingRepository
+    ): SettingInteractor {
+        return SettingInteractor(authRepository, timetableRepository, settingRepository)
     }
 
     @Singleton

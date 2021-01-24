@@ -1,4 +1,4 @@
-package abdulmanov.eduard.timetable.presentation.onboarding
+package abdulmanov.eduard.timetable.presentation.create_or_join_timetable
 
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.presentation.App
@@ -12,7 +12,7 @@ import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import javax.inject.Inject
 
-class OnboardingActivity : AppCompatActivity() {
+class CreateOrJoinTimetableActivity : AppCompatActivity() {
 
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
@@ -25,7 +25,7 @@ class OnboardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as App).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_onboarding)
+        setContentView(R.layout.activity_create_or_join_timetable)
 
         if(savedInstanceState == null){
             router.replaceScreen(Screens.createTimetable())
@@ -43,6 +43,6 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun newIntent(context: Context) = Intent(context, OnboardingActivity::class.java)
+        fun newIntent(context: Context) = Intent(context, CreateOrJoinTimetableActivity::class.java)
     }
 }

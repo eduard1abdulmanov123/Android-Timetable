@@ -10,10 +10,10 @@ class HeadersInterceptor(
 ): Interceptor{
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = if(sharedPreferences.getToken() != null) {
+        val request = if(sharedPreferences.token != null) {
             chain.request()
                 .newBuilder()
-                .addHeader("Authorization", sharedPreferences.getToken() ?: "")
+                .addHeader("Authorization", sharedPreferences.token ?: "")
                 .build()
         }else{
             chain.request()

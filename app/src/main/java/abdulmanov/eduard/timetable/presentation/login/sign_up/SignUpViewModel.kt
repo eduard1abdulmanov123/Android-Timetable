@@ -14,9 +14,9 @@ class SignUpViewModel @Inject constructor(
     private val authInteractor: AuthInteractor
 ): BaseViewModel(){
 
-    private val _showMessageErrorEvent = LiveEvent<Boolean>()
-    val showMessageErrorEvent: LiveData<Boolean>
-        get() = _showMessageErrorEvent
+    private val _showMessageEvent = LiveEvent<Boolean>()
+    val showMessageEvent: LiveData<Boolean>
+        get() = _showMessageEvent
 
     private val _showRegistrationInApp = MutableLiveData(false)
     val showRegistrationInApp: LiveData<Boolean>
@@ -26,17 +26,17 @@ class SignUpViewModel @Inject constructor(
 
     fun signUp(login: String, password: String){
         if(_showRegistrationInApp.value == false) {
-            _showMessageErrorEvent.value = false
+            _showMessageEvent.value = false
             _showRegistrationInApp.value = true
 
             authInteractor.signUp(login, password).safeSubscribe(
                 {
                     _showRegistrationInApp.value = false
-                    router.replaceScreen(Screens.onboarding())
+                    router.replaceScreen(Screens.createOrJoinTimetable())
                 },
                 {
                     _showRegistrationInApp.value = false
-                    _showMessageErrorEvent.value = true
+                    _showMessageEvent.value = true
                 }
             )
         }

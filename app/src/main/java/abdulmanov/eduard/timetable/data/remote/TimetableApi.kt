@@ -3,6 +3,7 @@ package abdulmanov.eduard.timetable.data.remote
 import abdulmanov.eduard.timetable.data.remote.models.NoteNetModel
 import abdulmanov.eduard.timetable.data.remote.models.TimetableNetModel
 import abdulmanov.eduard.timetable.data.remote.models.UserNetModel
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -19,6 +20,12 @@ interface TimetableApi {
 
     @POST
     fun joinTimetable(@Url url: String): Single<TimetableNetModel.Response>
+
+    @GET("/api/v1/timetable/")
+    fun getTimetable(): Single<TimetableNetModel.Response>
+
+    @POST("/api/v1/timetable/changeTypeWeek")
+    fun changeTypeWeekTheTimetable(@Body timetable: TimetableNetModel.Request): Completable
 
     @POST("/api/v1/notes/create")
     fun createNote(@Body note: NoteNetModel.Request): Single<NoteNetModel.Response>

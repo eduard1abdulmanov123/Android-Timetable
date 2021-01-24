@@ -35,9 +35,30 @@
     <string name="join_timetable_error_empty_link">Пожалуйста, вставьте или введите ссылку на полученное расписание!</string>
     
     <!--timetable-->
+    <string name="timetable_toolbar_title">Расписание</string>
     <string name="timetable_note">Заметка</string>
     <string name="timetable_one_time_class">Одноразовое занятие</string>
     <string name="timetable_multiple_class">Многоразовое занятие</string>
+
+    <!--setting-->
+    <string name="setting_toolbar_title">Настройки</string>
+    <string name="setting_timetable_title">Выбор расписания</string>
+    <string name="setting_timetable_subtitle">Вы можете создать новое или подключиться к существующему расписанию. Если вы являетесь создателем расписания, то оно будет уничтожено!</string>
+    <string name="setting_type_week_title">Текущая неделя</string>
+    <string name="setting_type_week_even_week">Сейчас четная неделя</string>
+    <string name="setting_type_week_odd_week">Сейчас нечетная неделя</string>
+    <string name="setting_type_week_success">Тип текущей недели успешно изменен</string>
+    <string name="setting_type_week_error">Не получилось изменить тип текущей недели</string>
+    <string name="setting_feedback_title">Обратная связь</string>
+    <string name="setting_feedback_subtitle">Есть отзывы и идеи? Пишите, мы обязательно ответим</string>
+    <string name="setting_feedback_write_letter">Написать письмо</string>
+    <string name="setting_exit_title">Выход</string>
+    <string name="setting_exit_subtitle">Выйти из аккаунта: %s</string>
+
+    <!--feedback-->
+    <string name="feedback_address">eduardabdulmanov123@gmail.com</string>
+    <string name="feedback_subject">Новости: Мысли, пожелания, идеи</string>
+    <string name="feedback_body">\n\n\nСлужебные параметры:\n-Версия Android: %d\n-Устройство: %s\n-Версия мобильного приложения: %s\n</string>
 
     <!--multiple_class-->
     <string name="multiple_class_new_class">Новое занятие</string>

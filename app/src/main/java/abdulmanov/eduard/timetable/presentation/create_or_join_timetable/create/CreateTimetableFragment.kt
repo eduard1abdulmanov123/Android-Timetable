@@ -1,7 +1,8 @@
-package abdulmanov.eduard.timetable.presentation.onboarding.join
+package abdulmanov.eduard.timetable.presentation.create_or_join_timetable.create
 
 import abdulmanov.eduard.timetable.R
-import abdulmanov.eduard.timetable.databinding.FragmentJoinTimetableBinding
+import abdulmanov.eduard.timetable.databinding.FragmentCreateTimetableBinding
+import abdulmanov.eduard.timetable.domain.models.TypeWeek
 import abdulmanov.eduard.timetable.presentation.App
 import android.content.Context
 import android.os.Bundle
@@ -16,15 +17,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
-class JoinTimetableFragment: Fragment() {
+class CreateTimetableFragment: Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<JoinTimetableViewModel> { viewModelFactory }
+    private val viewModel by viewModels<CreateTimetableViewModel> { viewModelFactory }
 
-    private var _binding: FragmentJoinTimetableBinding? = null
-    private val binding: FragmentJoinTimetableBinding
+    private var _binding: FragmentCreateTimetableBinding? = null
+    private val binding: FragmentCreateTimetableBinding
         get() = _binding!!
 
     override fun onAttach(context: Context) {
@@ -33,7 +34,7 @@ class JoinTimetableFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentJoinTimetableBinding.inflate(inflater, container,false)
+        _binding = FragmentCreateTimetableBinding.inflate(inflater, container,false)
         return binding.root
     }
 
@@ -42,7 +43,7 @@ class JoinTimetableFragment: Fragment() {
         initUI()
 
         viewModel.showApplyProgress.observe(viewLifecycleOwner, Observer(::showApplyProgress))
-        viewModel.showMessageErrorEvent.observe(viewLifecycleOwner, Observer(::showErrorMessage))
+        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessage))
     }
 
     override fun onDestroyView() {
@@ -51,14 +52,21 @@ class JoinTimetableFragment: Fragment() {
     }
 
     private fun initUI() {
-        binding.joinTimetableToolbar.setTitle(R.string.join_timetable_join_title)
+        binding.createTimetableToolbar.setTitle(R.string.create_timetable_create_title)
 
-        binding.applyContainer.setOnClickListener {
-            viewModel.joinTimetable(binding.linkTimetableTextInputEditText.text.toString())
+        binding.typeWeekRadioGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.oddWeekRadioButton -> viewModel.currentSelectTypeWeek = TypeWeek.ODD
+                R.id.evenWeekRadioButton -> viewModel.currentSelectTypeWeek = TypeWeek.EVEN
+            }
         }
 
-        binding.createTimetableTextView.setOnClickListener {
-            viewModel.openScreenCreateTimetable()
+        binding.applyContainer.setOnClickListener {
+            viewModel.createTimetable()
+        }
+
+        binding.joinTimetableTextView.setOnClickListener {
+            viewModel.openScreenJoinTimetable()
         }
     }
 
@@ -67,11 +75,11 @@ class JoinTimetableFragment: Fragment() {
         binding.applyProgressBar.isVisible = show
     }
 
-    private fun showErrorMessage(message: String){
+    private fun showMessage(message: String){
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {
-        fun newInstance() = JoinTimetableFragment()
+        fun newInstance() = CreateTimetableFragment()
     }
 }

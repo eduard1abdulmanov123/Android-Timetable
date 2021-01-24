@@ -52,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
         if(user.token!=null && user.currentTimetableId != null){
             router.replaceScreen(Screens.main())
         }else if(user.token != null && user.currentTimetableId == null) {
-            router.replaceScreen(Screens.onboarding())
+            router.replaceScreen(Screens.createOrJoinTimetable())
         }else if(user.token == null){
             router.replaceScreen(Screens.signIn())
         }

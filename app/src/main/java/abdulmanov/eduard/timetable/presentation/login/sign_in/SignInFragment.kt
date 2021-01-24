@@ -27,7 +27,6 @@ class SignInFragment: Fragment() {
     private val binding: FragmentSignInBinding
         get() = _binding!!
 
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity().application as App).appComponent.inject(this)
@@ -43,7 +42,7 @@ class SignInFragment: Fragment() {
         initUI()
 
         viewModel.showLoginInApp.observe(viewLifecycleOwner, Observer(::showLoginInApp))
-        viewModel.showMessageErrorEvent.observe(viewLifecycleOwner, Observer(::showMessageError))
+        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessage))
     }
 
     override fun onDestroyView() {
@@ -84,7 +83,7 @@ class SignInFragment: Fragment() {
         binding.entryProgressBar.isVisible = show
     }
 
-    private fun showMessageError(show:Boolean){
+    private fun showMessage(show:Boolean){
         binding.messageErrorLinearLayout.isVisible = show
     }
 

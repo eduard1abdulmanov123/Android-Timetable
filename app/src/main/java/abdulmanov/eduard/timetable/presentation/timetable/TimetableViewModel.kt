@@ -11,6 +11,8 @@ class TimetableViewModel @Inject constructor(
 
     fun onBackCommandClick() = router.exit()
 
+    fun openScreenSetting() = router.navigateTo(Screens.setting())
+
     fun openScreenMultipleClass() = router.navigateTo(Screens.multipleClass())
 
     fun openScreenOneTimeClass() = router.navigateTo(Screens.oneTimeClass())

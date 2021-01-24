@@ -11,6 +11,7 @@ import abdulmanov.eduard.timetable.presentation.timetable.helpercalendar.Timetab
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -55,7 +56,6 @@ class TimetableFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
-
     }
 
     override fun onDestroyView() {
@@ -71,7 +71,20 @@ class TimetableFragment: Fragment() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.openSettingItem -> viewModel.openScreenSetting()
+        }
+        return true
+    }
+
     private fun initUI(){
+        binding.timetableToolbar.run {
+            setTitle(R.string.timetable_toolbar_title)
+            inflateMenu(R.menu.menu_timetable)
+            setOnMenuItemClickListener(this@TimetableFragment::onOptionsItemSelected)
+        }
+
         binding.dateTextView.run {
             text = selectionFormatter.format(LocalDate.now())
             setOnClickListener {

@@ -4,5 +4,6 @@ data class Timetable(
     val id: Int = -1,
     val creatorUsername: String,
     val link: String,
-    val weekType: WeekType
+    val typeWeek: TypeWeek,
+    val dateUpdate: Long
 )

@@ -8,9 +8,10 @@ import abdulmanov.eduard.timetable.presentation.main.MainActivity
 import abdulmanov.eduard.timetable.presentation.events.multipleclass.MultipleClassFragment
 import abdulmanov.eduard.timetable.presentation.events.note.NoteFragment
 import abdulmanov.eduard.timetable.presentation.events.onetimeclass.OneTimeClassFragment
-import abdulmanov.eduard.timetable.presentation.onboarding.OnboardingActivity
-import abdulmanov.eduard.timetable.presentation.onboarding.create.CreateTimetableFragment
-import abdulmanov.eduard.timetable.presentation.onboarding.join.JoinTimetableFragment
+import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.CreateOrJoinTimetableActivity
+import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.create.CreateTimetableFragment
+import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.join.JoinTimetableFragment
+import abdulmanov.eduard.timetable.presentation.setting.SettingFragment
 import abdulmanov.eduard.timetable.presentation.timetable.TimetableFragment
 import android.content.Context
 import dagger.BindsInstance
@@ -41,7 +42,7 @@ interface AppComponent{
 
     fun inject(signUpFragment: SignUpFragment)
 
-    fun inject(onboardingActivity: OnboardingActivity)
+    fun inject(createOrJoinTimetableActivity: CreateOrJoinTimetableActivity)
 
     fun inject(createTimetableFragment: CreateTimetableFragment)
 
@@ -50,6 +51,8 @@ interface AppComponent{
     fun inject(mainActivity: MainActivity)
 
     fun inject(timetableFragment: TimetableFragment)
+
+    fun inject(settingFragment: SettingFragment)
 
     fun inject(multipleClassFragment: MultipleClassFragment)
 

@@ -5,7 +5,7 @@
     android:id="@+id/onboardingFragmentContainerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.onboarding.OnboardingActivity"
+    tools:context=".presentation.create_or_join_timetable.CreateOrJoinTimetableActivity"
     tools:viewBindingIgnore="true" >
 
 </androidx.fragment.app.FragmentContainerView>
