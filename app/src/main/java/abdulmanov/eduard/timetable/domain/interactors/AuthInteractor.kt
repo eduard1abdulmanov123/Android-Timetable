@@ -21,9 +21,13 @@ class AuthInteractor(
         return authRepository.signIn(login, password)
             .doOnSuccess { authRepository.saveUser(it) }
             .flatMap { user ->
-                timetableRepository.getTimetable()
-                    .doOnSuccess { timetableRepository.saveTimetableInfo(it) }
-                    .flatMap { Single.fromCallable { user } }
+                if(user.currentTimetableId != null) {
+                    timetableRepository.getTimetable()
+                        .doOnSuccess { timetableRepository.saveTimetableInfo(it) }
+                        .flatMap { Single.fromCallable { user } }
+                }else{
+                    Single.fromCallable { user }
+                }
             }
     }
 

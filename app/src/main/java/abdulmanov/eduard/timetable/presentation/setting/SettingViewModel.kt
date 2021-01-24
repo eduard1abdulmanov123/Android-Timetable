@@ -27,7 +27,7 @@ class SettingViewModel @Inject constructor(
 
     fun onBackCommandClick() = router.exit()
 
-    fun openScreenCreateOrJoinTimetable() = router.navigateTo(Screens.createOrJoinTimetable())
+    fun openScreenCreateOrJoinTimetable() = router.navigateTo(Screens.createTimetable())
 
     fun setCurrentSelectTypeWeek(typeWeek: TypeWeek){
         settingInteractor.setTypeWeek(typeWeek).safeSubscribe(

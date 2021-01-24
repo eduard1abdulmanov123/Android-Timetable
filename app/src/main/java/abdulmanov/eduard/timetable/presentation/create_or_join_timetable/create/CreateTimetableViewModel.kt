@@ -39,7 +39,7 @@ class CreateTimetableViewModel @Inject constructor(
             timetableInteractor.createTimetable(currentSelectTypeWeek!!).safeSubscribe(
                 {
                     _showApplyProgress.value = false
-                    router.newRootScreen(Screens.main())
+                    router.newRootChain(Screens.main())
                 },
                 {
                     _showApplyProgress.value = false
