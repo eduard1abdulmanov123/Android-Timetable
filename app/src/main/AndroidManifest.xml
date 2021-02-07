@@ -24,7 +24,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.create_or_join_timetable.CreateOrJoinTimetableActivity"/>
+        <activity android:name=".presentation.create_or_join_timetable.CreateOrJoinTimetableActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http"
+                    android:host="192.168.0.103"
+                    android:port="8080"
+                    android:pathPrefix="/api/v1/timetable/join" />
+            </intent-filter>
+        </activity>
 
         <activity android:name=".presentation.main.MainActivity" />
     </application>

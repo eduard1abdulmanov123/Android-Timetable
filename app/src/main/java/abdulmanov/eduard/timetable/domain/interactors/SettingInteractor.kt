@@ -6,6 +6,8 @@ import abdulmanov.eduard.timetable.domain.repositories.AuthRepository
 import abdulmanov.eduard.timetable.domain.repositories.SettingRepository
 import abdulmanov.eduard.timetable.domain.repositories.TimetableRepository
 import io.reactivex.Completable
+import java.sql.Timestamp
+import java.time.LocalDate
 
 class SettingInteractor(
     private val authRepository: AuthRepository,
@@ -22,8 +24,12 @@ class SettingInteractor(
             }
     }
 
-    fun getTypeWeek(): TypeWeek {
-        return timetableRepository.getTimetableInfo().typeWeek
+    fun getTypeWeek(date: LocalDate): TypeWeek {
+        return timetableRepository.getTypeWeekForDate(date)
+    }
+
+    fun getTimetableLink(): String {
+        return timetableRepository.getTimetableLink()
     }
 
     fun getFeedbackData(): FeedbackData {

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -53,6 +54,11 @@ class JoinTimetableFragment: Fragment() {
     private fun initUI() {
         binding.joinTimetableToolbar.setTitle(R.string.join_timetable_join_title)
 
+        val link = requireArguments().getString(ARG_LINK, "")
+        binding.linkTimetableTextInputEditText.setText(link)
+        binding.view.isVisible = link.isEmpty()
+        binding.createTimetableTextView.isVisible = link.isEmpty()
+
         binding.applyContainer.setOnClickListener {
             viewModel.joinTimetable(binding.linkTimetableTextInputEditText.text.toString())
         }
@@ -72,6 +78,12 @@ class JoinTimetableFragment: Fragment() {
     }
 
     companion object {
-        fun newInstance() = JoinTimetableFragment()
+        private const val ARG_LINK = "link"
+
+        fun newInstance(link: String): JoinTimetableFragment{
+            return JoinTimetableFragment().apply {
+                arguments = bundleOf(ARG_LINK to link)
+            }
+        }
     }
 }

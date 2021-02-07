@@ -19,6 +19,8 @@ class TimetableNetModel{
         @SerializedName("typeWeek")
         val typeWeek: Int,
         @SerializedName("dateUpdate")
-        val dateUpdate: Long
+        val dateUpdate: String,
+        @SerializedName("multipleClasses")
+        val multipleClasses: List<MultipleClassNetModel.Response>
     )
 }

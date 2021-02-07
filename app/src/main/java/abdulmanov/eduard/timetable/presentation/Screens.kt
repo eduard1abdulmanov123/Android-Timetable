@@ -45,8 +45,8 @@ object Screens {
         CreateTimetableFragment.newInstance()
     }
 
-    fun joinTimetable() = FragmentScreen{
-        JoinTimetableFragment.newInstance()
+    fun joinTimetable(link: String = "") = FragmentScreen{
+        JoinTimetableFragment.newInstance(link)
     }
 
     fun timetable() = FragmentScreen{
@@ -69,6 +69,14 @@ object Screens {
         }
 
         Intent.createChooser(intent, "Email:")
+    }
+
+    fun sendLink(url: String) = ActivityScreen{
+        Intent(Intent.ACTION_SEND).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, url)
+        }
     }
 
     fun multipleClass() = FragmentScreen{

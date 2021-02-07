@@ -71,6 +71,10 @@ class SettingFragment: Fragment() {
             }
         }
 
+        binding.containerSendLinkFeedbackConstraintLayout.setOnClickListener {
+            viewModel.onOpenScreenSendLink()
+        }
+
         binding.containerFeedbackConstraintLayout.setOnClickListener {
             viewModel.onOpenScreenFeedback()
         }

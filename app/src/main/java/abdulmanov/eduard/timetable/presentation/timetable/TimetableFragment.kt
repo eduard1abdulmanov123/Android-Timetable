@@ -6,8 +6,10 @@ import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
 import abdulmanov.eduard.timetable.presentation._common.extensions.daysOfWeekFromLocale
 import abdulmanov.eduard.timetable.presentation._common.extensions.getScreenSize
+import abdulmanov.eduard.timetable.presentation.timetable.adapters.MultipleClassesDelegateAdapter
 import abdulmanov.eduard.timetable.presentation.timetable.helpercalendar.TimetableDayBinder
 import abdulmanov.eduard.timetable.presentation.timetable.helpercalendar.TimetableMonthHeaderBinder
+import abdulmanov.eduard.timetable.presentation.timetable.models.MultipleClassPresentationModel
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,18 +19,21 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kizitonwose.calendarview.model.InDateStyle
 import com.kizitonwose.calendarview.model.OutDateStyle
 import com.kizitonwose.calendarview.utils.Size
 import com.kizitonwose.calendarview.utils.yearMonth
 import com.leinardi.android.speeddial.SpeedDialActionItem
+import com.livermor.delegateadapter.delegate.CompositeDelegateAdapter
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-class TimetableFragment: Fragment() {
+class TimetableFragment: Fragment(), MultipleClassesDelegateAdapter.ClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -56,6 +61,8 @@ class TimetableFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
+
+        viewModel.classes.observe(viewLifecycleOwner, Observer { (binding.recyclerView.adapter as CompositeDelegateAdapter).swapData(it)})
     }
 
     override fun onDestroyView() {
@@ -76,6 +83,10 @@ class TimetableFragment: Fragment() {
             R.id.openSettingItem -> viewModel.openScreenSetting()
         }
         return true
+    }
+
+    override fun onMultipleClassClick(multipleClass: MultipleClassPresentationModel) {
+
     }
 
     private fun initUI(){
@@ -146,6 +157,13 @@ class TimetableFragment: Fragment() {
                 false
             }
         }
+
+        binding.recyclerView.run {
+            layoutManager = LinearLayoutManager(context)
+            adapter = CompositeDelegateAdapter(
+                MultipleClassesDelegateAdapter(this@TimetableFragment)
+            )
+        }
     }
 
     private fun selectDate(date: LocalDate){
@@ -157,6 +175,7 @@ class TimetableFragment: Fragment() {
             binding.calendarView.notifyDateChanged(oldDate)
             binding.calendarView.notifyDateChanged(date)
             binding.dateTextView.text = selectionFormatter.format(date)
+            viewModel.getClassesForSelectedDate(date)
         }
     }
 

@@ -6,8 +6,8 @@ import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation.Screens
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
@@ -24,14 +24,14 @@ class LoginActivity : AppCompatActivity() {
     @Inject
     lateinit var router: Router
 
-    private val navigator =  AppNavigator(this, R.id.loginFragmentContainerView)
+    private val navigator = AppNavigator(this, R.id.loginFragmentContainerView)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as App).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             executeTransitionProcessing()
         }
     }
@@ -46,19 +46,17 @@ class LoginActivity : AppCompatActivity() {
         super.onPause()
     }
 
-    private fun executeTransitionProcessing(){
+    private fun executeTransitionProcessing() {
         val user = authInteractor.getUser()
 
-        if(user.token!=null && user.currentTimetableId != null){
+        if (user.token != null && user.currentTimetableId != null) {
             router.replaceScreen(Screens.main())
-        }else if(user.token != null && user.currentTimetableId == null) {
-            router.replaceScreen(Screens.createOrJoinTimetable())
-        }else if(user.token == null){
+        } else {
             router.replaceScreen(Screens.signIn())
         }
     }
 
-    companion object{
+    companion object {
         fun newIntent(context: Context) = Intent(context, LoginActivity::class.java)
     }
 }

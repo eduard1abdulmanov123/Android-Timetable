@@ -9,6 +9,7 @@ import abdulmanov.eduard.timetable.presentation._common.viewmodel.BaseViewModel
 import androidx.lifecycle.LiveData
 import com.github.terrakok.cicerone.Router
 import com.hadilq.liveevent.LiveEvent
+import java.time.LocalDate
 import javax.inject.Inject
 
 class SettingViewModel @Inject constructor(
@@ -35,14 +36,19 @@ class SettingViewModel @Inject constructor(
                 _showMessageEvent.value = stringProvider.getString(R.string.setting_type_week_success)
             },
             {
-                _changeTypeWeekEvent.value = settingInteractor.getTypeWeek()
+                _changeTypeWeekEvent.value = settingInteractor.getTypeWeek(LocalDate.now())
                 _showMessageEvent.value = stringProvider.getString(R.string.setting_type_week_error)
             }
         )
     }
 
     fun getCurrentSelectTypeWeek(): TypeWeek{
-        return settingInteractor.getTypeWeek()
+        return settingInteractor.getTypeWeek(LocalDate.now())
+    }
+
+    fun onOpenScreenSendLink(){
+        val link = settingInteractor.getTimetableLink()
+        router.navigateTo(Screens.sendLink(link))
     }
 
     fun onOpenScreenFeedback() {

@@ -22,9 +22,9 @@ class TimetableSharedPreferences(context: Context) {
         set(value) = sharedPreferences.edit { putInt(PREF_TYPE_WEEK, value.number) }
         get() = sharedPreferences.getInt(PREF_TYPE_WEEK, 0).numberToTypeWeek()
 
-    var dateUpdate: Long
-        set(value) = sharedPreferences.edit { putLong(PREF_DATE_UPDATE, value) }
-        get() = sharedPreferences.getLong(PREF_DATE_UPDATE, 0)
+    var dateUpdate: String?
+        set(value) = sharedPreferences.edit { putString(PREF_DATE_UPDATE, value) }
+        get() = sharedPreferences.getString(PREF_DATE_UPDATE, null)
 
 
     fun clearAll() = sharedPreferences.edit { clear() }

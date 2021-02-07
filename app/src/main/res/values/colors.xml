@@ -35,4 +35,8 @@
     <!--speed_dial-->
     <color name="sd_overlay_color">#C3FFFFFF</color>
 
+    <!--timetable-->
+    <color name="colorTimetableBackground">#FDFDFD</color>
+    <color name="colorTimetableItems">#FFFFFF</color>
+
 </resources>

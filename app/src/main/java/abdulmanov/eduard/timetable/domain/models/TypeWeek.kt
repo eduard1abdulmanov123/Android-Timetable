@@ -11,3 +11,10 @@ fun Int.numberToTypeWeek(): TypeWeek {
         else -> TypeWeek.EVEN
     }
 }
+
+fun TypeWeek.switch(): TypeWeek {
+    return when(this){
+        TypeWeek.EVEN -> TypeWeek.ODD
+        TypeWeek.ODD -> TypeWeek.EVEN
+    }
+}

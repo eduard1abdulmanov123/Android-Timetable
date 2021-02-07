@@ -27,7 +27,9 @@ class CreateOrJoinTimetableActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_or_join_timetable)
 
-        if(savedInstanceState == null){
+        if(intent.dataString != null){
+            router.replaceScreen(Screens.joinTimetable(intent.dataString!!))
+        }else if(savedInstanceState == null){
             router.replaceScreen(Screens.createTimetable())
         }
     }

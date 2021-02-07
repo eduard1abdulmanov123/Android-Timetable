@@ -1,13 +1,26 @@
 package abdulmanov.eduard.timetable.presentation.timetable
 
+import abdulmanov.eduard.timetable.domain.interactors.TimetableInteractor
+import abdulmanov.eduard.timetable.domain.models.Classes
 import abdulmanov.eduard.timetable.presentation.Screens
 import abdulmanov.eduard.timetable.presentation._common.viewmodel.BaseViewModel
+import abdulmanov.eduard.timetable.presentation.timetable.mapper.ClassesMapperPresentation
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.github.terrakok.cicerone.Router
+import java.time.LocalDate
 import javax.inject.Inject
 
 class TimetableViewModel @Inject constructor(
-    private val router: Router
+    private val router: Router,
+    private val timetableInteractor: TimetableInteractor,
+    private val classesMapperPresentation: ClassesMapperPresentation
 ):BaseViewModel() {
+
+    private val _classes = MutableLiveData<List<Any>>()
+    val classes: LiveData<List<Any>>
+        get() = _classes
 
     fun onBackCommandClick() = router.exit()
 
@@ -18,4 +31,20 @@ class TimetableViewModel @Inject constructor(
     fun openScreenOneTimeClass() = router.navigateTo(Screens.oneTimeClass())
 
     fun openScreenNote() = router.navigateTo(Screens.note())
+
+    fun getClassesForSelectedDate(date:LocalDate, refresh: Boolean = false){
+        timetableInteractor.getClassesForSelectedDate(_classes.value==null || refresh, date)
+            .map(classesMapperPresentation::mapClassesToPresentationModels)
+            .safeSubscribe(
+                {
+                    _classes.value = it
+                },
+                {
+                    Log.d("FuckFuck", it.message.toString())
+                    it.stackTrace.forEach {
+                        Log.d("FuckFuck", it.toString())
+                    }
+                }
+            )
+    }
 }
