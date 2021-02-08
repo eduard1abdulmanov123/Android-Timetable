@@ -1,4 +1,4 @@
-package abdulmanov.eduard.timetable.presentation.timetable.helpercalendar
+package abdulmanov.eduard.timetable.presentation.timetable.helpers.caledar
 
 import abdulmanov.eduard.timetable.databinding.ItemTimetableCalendarDayLegendBinding
 import android.view.View

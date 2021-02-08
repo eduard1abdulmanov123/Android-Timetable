@@ -4,6 +4,7 @@ import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.FragmentSettingBinding
 import abdulmanov.eduard.timetable.domain.models.TypeWeek
 import abdulmanov.eduard.timetable.presentation.App
+import abdulmanov.eduard.timetable.presentation._common.LawProvider
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
 import android.content.Context
 import android.os.Bundle
@@ -18,6 +19,9 @@ import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
 class SettingFragment: Fragment() {
+
+    @Inject
+    lateinit var lawProvider: LawProvider
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -63,6 +67,7 @@ class SettingFragment: Fragment() {
             viewModel.openScreenCreateOrJoinTimetable()
         }
 
+        lawProvider.showIfYouHaveLaw(binding.containerTypeWeekConstraintLayout)
         setCurrentSelectTypeWeek(viewModel.getCurrentSelectTypeWeek())
         binding.typeWeekRadioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
@@ -71,6 +76,7 @@ class SettingFragment: Fragment() {
             }
         }
 
+        lawProvider.showIfYouHaveLaw(binding.containerSendLinkFeedbackConstraintLayout)
         binding.containerSendLinkFeedbackConstraintLayout.setOnClickListener {
             viewModel.onOpenScreenSendLink()
         }

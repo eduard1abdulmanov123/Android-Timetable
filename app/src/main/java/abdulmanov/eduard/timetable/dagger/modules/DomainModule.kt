@@ -1,9 +1,6 @@
 package abdulmanov.eduard.timetable.dagger.modules
 
-import abdulmanov.eduard.timetable.domain.interactors.AuthInteractor
-import abdulmanov.eduard.timetable.domain.interactors.NoteInteractor
-import abdulmanov.eduard.timetable.domain.interactors.SettingInteractor
-import abdulmanov.eduard.timetable.domain.interactors.TimetableInteractor
+import abdulmanov.eduard.timetable.domain.interactors.*
 import abdulmanov.eduard.timetable.domain.repositories.AuthRepository
 import abdulmanov.eduard.timetable.domain.repositories.NoteRepository
 import abdulmanov.eduard.timetable.domain.repositories.SettingRepository
@@ -31,6 +28,15 @@ class DomainModule {
         timetableRepository: TimetableRepository
     ): TimetableInteractor {
         return TimetableInteractor(authRepository, timetableRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLawInteractor(
+        authRepository: AuthRepository,
+        timetableRepository: TimetableRepository
+    ): LawInteractor {
+        return LawInteractor(authRepository, timetableRepository)
     }
 
     @Singleton

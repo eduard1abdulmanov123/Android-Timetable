@@ -3,12 +3,14 @@ package abdulmanov.eduard.timetable.presentation.timetable
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.FragmentTimetableBinding
 import abdulmanov.eduard.timetable.presentation.App
+import abdulmanov.eduard.timetable.presentation._common.LawProvider
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
 import abdulmanov.eduard.timetable.presentation._common.extensions.daysOfWeekFromLocale
 import abdulmanov.eduard.timetable.presentation._common.extensions.getScreenSize
 import abdulmanov.eduard.timetable.presentation.timetable.adapters.MultipleClassesDelegateAdapter
-import abdulmanov.eduard.timetable.presentation.timetable.helpercalendar.TimetableDayBinder
-import abdulmanov.eduard.timetable.presentation.timetable.helpercalendar.TimetableMonthHeaderBinder
+import abdulmanov.eduard.timetable.presentation.timetable.helpers.caledar.TimetableDayBinder
+import abdulmanov.eduard.timetable.presentation.timetable.helpers.caledar.TimetableMonthHeaderBinder
+import abdulmanov.eduard.timetable.presentation.timetable.helpers.speed_dial.SpeedDialDelegate
 import abdulmanov.eduard.timetable.presentation.timetable.models.MultipleClassPresentationModel
 import android.content.Context
 import android.os.Bundle
@@ -34,6 +36,9 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class TimetableFragment: Fragment(), MultipleClassesDelegateAdapter.ClickListener {
+
+    @Inject
+    lateinit var lawProvider: LawProvider
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -118,35 +123,8 @@ class TimetableFragment: Fragment(), MultipleClassesDelegateAdapter.ClickListene
         }
 
         binding.speedDialView.run {
-            addActionItem(
-                SpeedDialActionItem.Builder(R.id.multipleClass, R.drawable.ic_multiple)
-                    .setFabImageTintColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
-                    .setLabel(R.string.timetable_multiple_class)
-                    .setLabelColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
-                    .setLabelBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
-                    .setLabelClickable(false)
-                    .create()
-            )
-
-            addActionItem(
-                SpeedDialActionItem.Builder(R.id.oneTimeClass, R.drawable.ic_one_time)
-                    .setFabImageTintColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
-                    .setLabel(R.string.timetable_one_time_class)
-                    .setLabelColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
-                    .setLabelBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
-                    .setLabelClickable(false)
-                    .create()
-            )
-
-            addActionItem(
-                SpeedDialActionItem.Builder(R.id.note, R.drawable.ic_note)
-                    .setLabel(R.string.timetable_note)
-                    .setLabelColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
-                    .setLabelBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
-                    .setFabImageTintColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
-                    .setLabelClickable(false)
-                    .create()
-            )
+            lawProvider.showIfYouHaveLaw(this)
+            SpeedDialDelegate.addActions(this)
 
             setOnActionSelectedListener {
                 when(it.id){
