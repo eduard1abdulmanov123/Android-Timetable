@@ -2,7 +2,6 @@ package abdulmanov.eduard.timetable.presentation
 
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.domain.models.FeedbackData
-import abdulmanov.eduard.timetable.domain.models.OneTimeClass
 import abdulmanov.eduard.timetable.presentation.login.LoginActivity
 import abdulmanov.eduard.timetable.presentation.login.sign_in.SignInFragment
 import abdulmanov.eduard.timetable.presentation.login.sign_up.SignUpFragment
@@ -14,6 +13,7 @@ import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.CreateO
 import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.create.CreateTimetableFragment
 import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.join.JoinTimetableFragment
 import abdulmanov.eduard.timetable.presentation.events.multipleclass.models.MultipleClassPresentationModel
+import abdulmanov.eduard.timetable.presentation.events.note.models.NotePresentationModel
 import abdulmanov.eduard.timetable.presentation.events.onetimeclass.models.OneTimeClassPresentationModel
 import abdulmanov.eduard.timetable.presentation.setting.SettingFragment
 import abdulmanov.eduard.timetable.presentation.timetable.TimetableFragment
@@ -90,7 +90,7 @@ object Screens {
         OneTimeClassFragment.newInstance(oneTimeClass)
     }
 
-    fun note() = FragmentScreen{
-        NoteFragment.newInstance()
+    fun note(note: NotePresentationModel?) = FragmentScreen{
+        NoteFragment.newInstance(note)
     }
 }

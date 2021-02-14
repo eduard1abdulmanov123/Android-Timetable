@@ -9,4 +9,12 @@ class NoteInteractor(private val noteRepository: NoteRepository) {
     fun createNote(note: Note): Completable {
         return noteRepository.createNote(note)
     }
+
+    fun updateNote(noteId: Int, note: Note): Completable {
+        return noteRepository.updateNote(noteId, note)
+    }
+
+    fun deleteNote(noteId: Int): Completable {
+        return noteRepository.deleteNote(noteId)
+    }
 }

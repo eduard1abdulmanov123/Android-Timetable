@@ -4,13 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 class UserNetModel {
 
-    data class Request(
-        @SerializedName("username")
-        val login: String,
-        @SerializedName("password")
-        val password: String
-    )
-
     data class Response(
         @SerializedName("username")
         val userName: String,
@@ -18,5 +11,12 @@ class UserNetModel {
         val token: String,
         @SerializedName("currentTimetableId")
         val currentTimetableId: Int?
+    )
+
+    data class Request(
+        @SerializedName("username")
+        val login: String,
+        @SerializedName("password")
+        val password: String
     )
 }

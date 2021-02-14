@@ -4,26 +4,25 @@ import abdulmanov.eduard.timetable.data.remote.TimetableApi
 import abdulmanov.eduard.timetable.data.remote.models.NoteNetModel
 import abdulmanov.eduard.timetable.domain.models.Note
 import abdulmanov.eduard.timetable.domain.repositories.NoteRepository
-import android.util.Log
 import io.reactivex.Completable
 
-class NoteRepositoryImpl(
-    private val timetableApi: TimetableApi
-): NoteRepository {
+class NoteRepositoryImpl(private val timetableApi: TimetableApi): NoteRepository {
 
     override fun createNote(note: Note): Completable {
-        val noteNetModel = NoteNetModel.Request(
-            content = note.content,
-            date = note.date,
-            time = note.time,
-            visibility = note.visibility
-        )
+        val noteNetModel = NoteNetModel.fromDomain(note)
 
         return timetableApi.createNote(noteNetModel)
-            .doOnSuccess {
-                Log.d("FuckFuck", it.toString())
-            }
             .ignoreElement()
     }
 
+    override fun updateNote(noteId: Int, note: Note): Completable {
+        val noteNetModel = NoteNetModel.fromDomain(note)
+
+        return timetableApi.updateNote(noteId,noteNetModel)
+            .ignoreElement()
+    }
+
+    override fun deleteNote(noteId: Int): Completable {
+        return timetableApi.deleteNote(noteId)
+    }
 }

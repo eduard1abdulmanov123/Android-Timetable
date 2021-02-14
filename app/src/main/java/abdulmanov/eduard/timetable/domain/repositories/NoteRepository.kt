@@ -8,4 +8,7 @@ interface NoteRepository {
 
     fun createNote(note: Note): Completable
 
+    fun updateNote(noteId: Int, note: Note): Completable
+
+    fun deleteNote(noteId: Int): Completable
 }

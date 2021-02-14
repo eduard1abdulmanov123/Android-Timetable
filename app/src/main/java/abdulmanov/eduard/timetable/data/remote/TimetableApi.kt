@@ -58,8 +58,14 @@ interface TimetableApi {
     @POST("/api/v1/notes/create")
     fun createNote(@Body note: NoteNetModel.Request): Single<NoteNetModel.Response>
 
-    @GET("/api/v1/notes/")
-    fun getNotes(): Single<List<NoteNetModel.Response>>
+    @POST("/api/v1/notes/update/{id}")
+    fun updateNote(
+        @Path("id") noteId: Int,
+        @Body noteNetModel: NoteNetModel.Request
+    ): Single<NoteNetModel.Response>
+
+    @POST("/api/v1/notes/delete/{id}")
+    fun deleteNote(@Path("id") noteId: Int): Completable
 
     companion object{
         const val BASE_URL = "http://192.168.0.103:8080/"

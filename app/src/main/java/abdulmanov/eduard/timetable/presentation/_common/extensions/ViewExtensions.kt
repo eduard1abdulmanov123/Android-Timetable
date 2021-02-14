@@ -7,6 +7,7 @@ import android.graphics.Point
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.ColorRes
@@ -49,4 +50,4 @@ fun Int.dpToPx() = this * Resources.getSystem().displayMetrics.density
 
 fun EditText.bind(property: KMutableProperty<String>) = addTextChangedListener { property.setter.call(it.toString()) }
 
-fun TextView.bind(property: KMutableProperty<String>) = addTextChangedListener { property.setter.call(it.toString()) }
+fun CheckBox.bind(property: KMutableProperty<Boolean>) = setOnCheckedChangeListener { _, isChecked -> property.setter.call(isChecked) }
