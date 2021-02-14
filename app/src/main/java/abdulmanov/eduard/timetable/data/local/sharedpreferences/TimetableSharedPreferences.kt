@@ -2,7 +2,6 @@ package abdulmanov.eduard.timetable.data.local.sharedpreferences
 
 import abdulmanov.eduard.timetable.BuildConfig
 import abdulmanov.eduard.timetable.domain.models.TypeWeek
-import abdulmanov.eduard.timetable.domain.models.numberToTypeWeek
 import android.content.Context
 import androidx.core.content.edit
 
@@ -20,7 +19,7 @@ class TimetableSharedPreferences(context: Context) {
 
     var typeWeek: TypeWeek
         set(value) = sharedPreferences.edit { putInt(PREF_TYPE_WEEK, value.number) }
-        get() = sharedPreferences.getInt(PREF_TYPE_WEEK, 0).numberToTypeWeek()
+        get() = TypeWeek.numberToTypeWeek(sharedPreferences.getInt(PREF_TYPE_WEEK, 0))
 
     var dateUpdate: String?
         set(value) = sharedPreferences.edit { putString(PREF_DATE_UPDATE, value) }

@@ -2,11 +2,11 @@ package abdulmanov.eduard.timetable.presentation.events.dialogs.datepicker
 
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.BottomDialogDatePickerBinding
-import abdulmanov.eduard.timetable.presentation._common.extensions.daysOfWeekFromLocale
+import abdulmanov.eduard.timetable.presentation._common.extensions.getDaysOfWeekFromLocale
 import abdulmanov.eduard.timetable.presentation._common.extensions.dpToPx
 import abdulmanov.eduard.timetable.presentation._common.extensions.getScreenSize
-import abdulmanov.eduard.timetable.presentation.events.dialogs.datepicker.helpercalendar.DatePickerDayBinder
-import abdulmanov.eduard.timetable.presentation.events.dialogs.datepicker.helpercalendar.DatePickerMonthHeaderBinder
+import abdulmanov.eduard.timetable.presentation.events.dialogs.datepicker.helpers.DatePickerDayBinder
+import abdulmanov.eduard.timetable.presentation.events.dialogs.datepicker.helpers.DatePickerMonthHeaderBinder
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -53,7 +53,7 @@ class DatePickerBottomSheetDialog: BottomSheetDialogFragment() {
             val screenSize = context.getScreenSize()
             daySize = Size(((screenSize.x -64.dpToPx())/7).toInt(),screenSize.x/10)
 
-            val daysOfWeek = daysOfWeekFromLocale()
+            val daysOfWeek = getDaysOfWeekFromLocale()
             val currentMonth = YearMonth.now()
 
             setup(currentMonth.minusMonths(10), currentMonth.plusMonths(10), daysOfWeek.first())

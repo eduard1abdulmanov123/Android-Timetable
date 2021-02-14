@@ -4,7 +4,7 @@ import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.domain.interactors.SettingInteractor
 import abdulmanov.eduard.timetable.domain.models.TypeWeek
 import abdulmanov.eduard.timetable.presentation.Screens
-import abdulmanov.eduard.timetable.presentation._common.StringProvider
+import abdulmanov.eduard.timetable.presentation._common.provides.StringProvider
 import abdulmanov.eduard.timetable.presentation._common.viewmodel.BaseViewModel
 import androidx.lifecycle.LiveData
 import com.github.terrakok.cicerone.Router

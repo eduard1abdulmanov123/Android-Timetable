@@ -1,6 +1,7 @@
 package abdulmanov.eduard.timetable.data.remote
 
 import abdulmanov.eduard.timetable.data.local.sharedpreferences.AuthSharedPreferences
+import abdulmanov.eduard.timetable.data.remote.helpers.ErrorInterceptor
 import abdulmanov.eduard.timetable.data.remote.helpers.HeadersInterceptor
 import abdulmanov.eduard.timetable.domain.interactors.AuthInteractor
 import okhttp3.OkHttpClient
@@ -21,6 +22,7 @@ class RetrofitFactory {
             return OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(HeadersInterceptor(sharedPreferences))
+                .addInterceptor(ErrorInterceptor())
                 .build()
         }
 

@@ -12,6 +12,7 @@ import abdulmanov.eduard.timetable.presentation.events.onetimeclass.OneTimeClass
 import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.CreateOrJoinTimetableActivity
 import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.create.CreateTimetableFragment
 import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.join.JoinTimetableFragment
+import abdulmanov.eduard.timetable.presentation.events.multipleclass.models.MultipleClassPresentationModel
 import abdulmanov.eduard.timetable.presentation.setting.SettingFragment
 import abdulmanov.eduard.timetable.presentation.timetable.TimetableFragment
 import android.content.Intent
@@ -79,8 +80,8 @@ object Screens {
         }
     }
 
-    fun multipleClass() = FragmentScreen{
-        MultipleClassFragment.newInstance()
+    fun multipleClass(multipleClass: MultipleClassPresentationModel?) = FragmentScreen{
+        MultipleClassFragment.newInstance(multipleClass)
     }
 
     fun oneTimeClass() = FragmentScreen{

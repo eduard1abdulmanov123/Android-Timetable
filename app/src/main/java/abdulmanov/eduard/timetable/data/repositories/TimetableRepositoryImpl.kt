@@ -7,13 +7,10 @@ import abdulmanov.eduard.timetable.data.remote.models.TimetableNetModel
 import abdulmanov.eduard.timetable.domain.models.Classes
 import abdulmanov.eduard.timetable.domain.models.Timetable
 import abdulmanov.eduard.timetable.domain.models.TypeWeek
-import abdulmanov.eduard.timetable.domain.models.switch
 import abdulmanov.eduard.timetable.domain.repositories.TimetableRepository
-import android.util.Log
 import io.reactivex.Single
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.time.temporal.WeekFields
 
 class TimetableRepositoryImpl(
     private val timetableApi: TimetableApi,
@@ -49,7 +46,7 @@ class TimetableRepositoryImpl(
 
         while (startUpdateDate.dayOfYear/7 != date.dayOfYear/7){
             startUpdateDate = startUpdateDate.plusWeeks(1)
-            startTypeWeek = startTypeWeek.switch()
+            startTypeWeek = TypeWeek.switch(startTypeWeek)
         }
 
         return startTypeWeek

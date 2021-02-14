@@ -1,12 +1,10 @@
-package abdulmanov.eduard.timetable.presentation._common
+package abdulmanov.eduard.timetable.presentation._common.provides
 
 import android.content.Context
 import androidx.annotation.StringRes
 import javax.inject.Inject
 
-class StringProvider @Inject constructor(
-    private val context: Context
-) {
+class StringProvider @Inject constructor(private val context: Context) {
 
     fun getString(@StringRes resId: Int) = context.getString(resId)
 }

@@ -4,7 +4,7 @@ import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.FragmentSettingBinding
 import abdulmanov.eduard.timetable.domain.models.TypeWeek
 import abdulmanov.eduard.timetable.presentation.App
-import abdulmanov.eduard.timetable.presentation._common.LawProvider
+import abdulmanov.eduard.timetable.presentation._common.provides.LawProvider
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
 import android.content.Context
 import android.os.Bundle

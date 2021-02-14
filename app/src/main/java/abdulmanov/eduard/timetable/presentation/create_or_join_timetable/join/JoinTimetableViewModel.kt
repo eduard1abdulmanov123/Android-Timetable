@@ -3,7 +3,7 @@ package abdulmanov.eduard.timetable.presentation.create_or_join_timetable.join
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.domain.interactors.TimetableInteractor
 import abdulmanov.eduard.timetable.presentation.Screens
-import abdulmanov.eduard.timetable.presentation._common.StringProvider
+import abdulmanov.eduard.timetable.presentation._common.provides.StringProvider
 import abdulmanov.eduard.timetable.presentation._common.viewmodel.BaseViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

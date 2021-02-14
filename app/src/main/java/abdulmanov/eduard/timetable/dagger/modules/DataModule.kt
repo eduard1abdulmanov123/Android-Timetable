@@ -5,32 +5,14 @@ import abdulmanov.eduard.timetable.data.local.sharedpreferences.TimetableSharedP
 import abdulmanov.eduard.timetable.data.mappers.TimetableMapperDomain
 import abdulmanov.eduard.timetable.data.mappers.UserMapperDomain
 import abdulmanov.eduard.timetable.data.remote.TimetableApi
-import abdulmanov.eduard.timetable.data.repositories.AuthRepositoryImpl
-import abdulmanov.eduard.timetable.data.repositories.NoteRepositoryImpl
-import abdulmanov.eduard.timetable.data.repositories.SettingRepositoryImpl
-import abdulmanov.eduard.timetable.data.repositories.TimetableRepositoryImpl
-import abdulmanov.eduard.timetable.domain.repositories.AuthRepository
-import abdulmanov.eduard.timetable.domain.repositories.NoteRepository
-import abdulmanov.eduard.timetable.domain.repositories.SettingRepository
-import abdulmanov.eduard.timetable.domain.repositories.TimetableRepository
+import abdulmanov.eduard.timetable.data.repositories.*
+import abdulmanov.eduard.timetable.domain.repositories.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
 class DataModule {
-
-    @Singleton
-    @Provides
-    fun provideUserMapperDomain(): UserMapperDomain {
-        return UserMapperDomain()
-    }
-
-    @Singleton
-    @Provides
-    fun provideTimetableMapperDomain(): TimetableMapperDomain {
-        return TimetableMapperDomain()
-    }
 
     @Singleton
     @Provides
@@ -56,6 +38,12 @@ class DataModule {
     @Provides
     fun provideSettingRepository(timetableApi: TimetableApi): SettingRepository {
         return SettingRepositoryImpl(timetableApi)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMultipleClassRepository(timetableApi: TimetableApi): MultipleClassRepository {
+        return MultipleClassRepositoryImpl(timetableApi)
     }
 
     @Singleton

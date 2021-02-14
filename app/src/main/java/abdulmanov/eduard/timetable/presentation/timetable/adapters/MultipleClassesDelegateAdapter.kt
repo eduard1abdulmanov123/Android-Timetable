@@ -1,7 +1,7 @@
 package abdulmanov.eduard.timetable.presentation.timetable.adapters
 
 import abdulmanov.eduard.timetable.databinding.ItemMultipleClassBinding
-import abdulmanov.eduard.timetable.presentation.timetable.models.MultipleClassPresentationModel
+import abdulmanov.eduard.timetable.presentation.events.multipleclass.models.MultipleClassPresentationModel
 import android.annotation.SuppressLint
 import com.livermor.delegateadapter.delegate.ViewBindingDelegateAdapter
 

@@ -11,6 +11,8 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
+import kotlin.reflect.KMutableProperty
 
 fun Context.showKeyboard() {
     val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -44,3 +46,7 @@ fun Context.getScreenSize(): Point {
 }
 
 fun Int.dpToPx() = this * Resources.getSystem().displayMetrics.density
+
+fun EditText.bind(property: KMutableProperty<String>) = addTextChangedListener { property.setter.call(it.toString()) }
+
+fun TextView.bind(property: KMutableProperty<String>) = addTextChangedListener { property.setter.call(it.toString()) }

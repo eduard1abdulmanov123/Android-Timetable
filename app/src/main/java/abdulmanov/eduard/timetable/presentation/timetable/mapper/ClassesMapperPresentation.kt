@@ -2,7 +2,7 @@ package abdulmanov.eduard.timetable.presentation.timetable.mapper
 
 import abdulmanov.eduard.timetable.domain.models.Classes
 import abdulmanov.eduard.timetable.domain.models.MultipleClass
-import abdulmanov.eduard.timetable.presentation.timetable.models.MultipleClassPresentationModel
+import abdulmanov.eduard.timetable.presentation.events.multipleclass.models.MultipleClassPresentationModel
 import javax.inject.Inject
 
 class ClassesMapperPresentation @Inject constructor() {
@@ -19,11 +19,10 @@ class ClassesMapperPresentation @Inject constructor() {
                 nameTeacher = it.nameTeacher,
                 audience = it.audience,
                 typeClass = it.typeClass,
-                color = it.color,
                 startOfClass = it.startOfClass,
                 endOfClass = it.endOfClass,
-                dayOfWeek = it.dayOfWeek,
-                periodicity = it.periodicity
+                dayOfWeek = it.dayOfWeek.toString(),
+                periodicity = it.periodicity.toString()
             )
         }
     }

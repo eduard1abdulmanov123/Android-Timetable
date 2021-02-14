@@ -1,20 +1,26 @@
 package abdulmanov.eduard.timetable.domain.models
 
+import java.lang.IllegalStateException
+
 enum class TypeWeek(val number: Int) {
-    EVEN(2), ODD(1);
-}
+    ODD(1),
+    EVEN(2);
 
-fun Int.numberToTypeWeek(): TypeWeek {
-    return when(this){
-        2 -> TypeWeek.EVEN
-        1 -> TypeWeek.ODD
-        else -> TypeWeek.EVEN
-    }
-}
+    companion object {
 
-fun TypeWeek.switch(): TypeWeek {
-    return when(this){
-        TypeWeek.EVEN -> TypeWeek.ODD
-        TypeWeek.ODD -> TypeWeek.EVEN
+        fun numberToTypeWeek(number: Int): TypeWeek {
+            return when(number){
+                ODD.number -> ODD
+                EVEN.number -> EVEN
+                else -> throw IllegalStateException("number not found")
+            }
+        }
+
+        fun switch(typeWeek: TypeWeek): TypeWeek {
+            return when(typeWeek){
+                EVEN -> ODD
+                ODD -> EVEN
+            }
+        }
     }
 }

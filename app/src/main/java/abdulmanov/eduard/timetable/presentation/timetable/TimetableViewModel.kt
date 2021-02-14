@@ -4,6 +4,7 @@ import abdulmanov.eduard.timetable.domain.interactors.TimetableInteractor
 import abdulmanov.eduard.timetable.domain.models.Classes
 import abdulmanov.eduard.timetable.presentation.Screens
 import abdulmanov.eduard.timetable.presentation._common.viewmodel.BaseViewModel
+import abdulmanov.eduard.timetable.presentation.events.multipleclass.models.MultipleClassPresentationModel
 import abdulmanov.eduard.timetable.presentation.timetable.mapper.ClassesMapperPresentation
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -26,7 +27,7 @@ class TimetableViewModel @Inject constructor(
 
     fun openScreenSetting() = router.navigateTo(Screens.setting())
 
-    fun openScreenMultipleClass() = router.navigateTo(Screens.multipleClass())
+    fun openScreenMultipleClass(multipleClass: MultipleClassPresentationModel? = null) = router.navigateTo(Screens.multipleClass(multipleClass))
 
     fun openScreenOneTimeClass() = router.navigateTo(Screens.oneTimeClass())
 
@@ -34,7 +35,7 @@ class TimetableViewModel @Inject constructor(
 
     fun getClassesForSelectedDate(date:LocalDate, refresh: Boolean = false){
         timetableInteractor.getClassesForSelectedDate(_classes.value==null || refresh, date)
-            .map(classesMapperPresentation::mapClassesToPresentationModels)
+            .map { it.multipleClasses.map { MultipleClassPresentationModel.fromDomain(it) } }
             .safeSubscribe(
                 {
                     _classes.value = it

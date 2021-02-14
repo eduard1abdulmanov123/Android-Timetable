@@ -1,5 +1,6 @@
 package abdulmanov.eduard.timetable.data.remote
 
+import abdulmanov.eduard.timetable.data.remote.models.MultipleClassNetModel
 import abdulmanov.eduard.timetable.data.remote.models.NoteNetModel
 import abdulmanov.eduard.timetable.data.remote.models.TimetableNetModel
 import abdulmanov.eduard.timetable.data.remote.models.UserNetModel
@@ -26,6 +27,25 @@ interface TimetableApi {
 
     @POST("/api/v1/timetable/changeTypeWeek")
     fun changeTypeWeekTheTimetable(@Body timetable: TimetableNetModel.Request): Completable
+
+    /*MultipleClass*/
+
+    @GET("/api/v1/multiple_class/{id}")
+    fun getMultipleClass(@Path("id") multipleClassId: Int): Single<MultipleClassNetModel.Response>
+
+    @POST("/api/v1/multiple_class/create")
+    fun createMultipleClass(@Body multipleClass: MultipleClassNetModel.Request): Single<MultipleClassNetModel.Response>
+
+    @POST("/api/v1/multiple_class/update/{id}")
+    fun updateMultipleClass(
+        @Path("id") multipleClassId: Int,
+        @Body multipleClass: MultipleClassNetModel.Request
+    ): Single<MultipleClassNetModel.Response>
+
+    @POST("/api/v1/multiple_class/delete/{id}")
+    fun deleteMultipleClass(@Path("id") multipleClassId: Int): Completable
+
+    /*Note*/
 
     @POST("/api/v1/notes/create")
     fun createNote(@Body note: NoteNetModel.Request): Single<NoteNetModel.Response>

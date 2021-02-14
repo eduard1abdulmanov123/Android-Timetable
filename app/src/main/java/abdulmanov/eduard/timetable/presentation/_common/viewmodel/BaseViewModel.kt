@@ -5,7 +5,10 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import org.json.JSONObject
+import retrofit2.HttpException
 
 abstract class BaseViewModel : ViewModel() {
 
@@ -28,5 +31,14 @@ abstract class BaseViewModel : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(onSuccess, onError)
         compositeDisposable.add(disposable)
+    }
+
+    protected fun Completable.addDispatchers(): Completable {
+        return subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    protected fun Disposable.connect() {
+        compositeDisposable.add(this)
     }
 }

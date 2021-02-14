@@ -1,10 +1,7 @@
 package abdulmanov.eduard.timetable.dagger.modules
 
 import abdulmanov.eduard.timetable.domain.interactors.*
-import abdulmanov.eduard.timetable.domain.repositories.AuthRepository
-import abdulmanov.eduard.timetable.domain.repositories.NoteRepository
-import abdulmanov.eduard.timetable.domain.repositories.SettingRepository
-import abdulmanov.eduard.timetable.domain.repositories.TimetableRepository
+import abdulmanov.eduard.timetable.domain.repositories.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -47,6 +44,12 @@ class DomainModule {
         settingRepository: SettingRepository
     ): SettingInteractor {
         return SettingInteractor(authRepository, timetableRepository, settingRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMultipleClassInteractor(repository: MultipleClassRepository): MultipleClassInteractor {
+        return MultipleClassInteractor(repository)
     }
 
     @Singleton

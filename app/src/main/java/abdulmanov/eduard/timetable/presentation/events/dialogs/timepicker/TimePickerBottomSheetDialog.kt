@@ -50,12 +50,15 @@ class TimePickerBottomSheetDialog: BottomSheetDialogFragment() {
 
         binding.throwOffTextView.setOnClickListener {
             TimePickerDelegate.setTime(binding.timePicker,null)
-            callback?.onChangeTime("")
+            callback?.onChangeTime("", requireArguments().getInt(ARG_VIEW_ID))
             dismiss()
         }
 
         binding.applyTextView.setOnClickListener {
-            callback?.onChangeTime(TimePickerDelegate.getTime(binding.timePicker))
+            callback?.onChangeTime(
+                TimePickerDelegate.getTime(binding.timePicker),
+                requireArguments().getInt(ARG_VIEW_ID)
+            )
             dismiss()
         }
     }
@@ -69,15 +72,16 @@ class TimePickerBottomSheetDialog: BottomSheetDialogFragment() {
         const val TAG = "TimePickerBottomSheetDialog"
 
         private const val ARG_CURRENT_SELECTED_TIME = "CURRENT_SELECTED_TIME"
+        private const val ARG_VIEW_ID = "VIEW_ID"
 
-        fun newInstance(time: String?): TimePickerBottomSheetDialog {
+        fun newInstance(time: String?, viewId: Int): TimePickerBottomSheetDialog {
             return TimePickerBottomSheetDialog().apply {
-                arguments = bundleOf(ARG_CURRENT_SELECTED_TIME to time)
+                arguments = bundleOf(ARG_CURRENT_SELECTED_TIME to time, ARG_VIEW_ID to viewId)
             }
         }
     }
 
     interface TimePickerCallback{
-        fun onChangeTime(time: String)
+        fun onChangeTime(time: String, viewId: Int)
     }
 }

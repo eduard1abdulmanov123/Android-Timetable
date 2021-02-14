@@ -3,15 +3,15 @@ package abdulmanov.eduard.timetable.presentation.timetable
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.FragmentTimetableBinding
 import abdulmanov.eduard.timetable.presentation.App
-import abdulmanov.eduard.timetable.presentation._common.LawProvider
+import abdulmanov.eduard.timetable.presentation._common.provides.LawProvider
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
-import abdulmanov.eduard.timetable.presentation._common.extensions.daysOfWeekFromLocale
+import abdulmanov.eduard.timetable.presentation._common.extensions.getDaysOfWeekFromLocale
 import abdulmanov.eduard.timetable.presentation._common.extensions.getScreenSize
 import abdulmanov.eduard.timetable.presentation.timetable.adapters.MultipleClassesDelegateAdapter
 import abdulmanov.eduard.timetable.presentation.timetable.helpers.caledar.TimetableDayBinder
 import abdulmanov.eduard.timetable.presentation.timetable.helpers.caledar.TimetableMonthHeaderBinder
 import abdulmanov.eduard.timetable.presentation.timetable.helpers.speed_dial.SpeedDialDelegate
-import abdulmanov.eduard.timetable.presentation.timetable.models.MultipleClassPresentationModel
+import abdulmanov.eduard.timetable.presentation.events.multipleclass.models.MultipleClassPresentationModel
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,7 +28,6 @@ import com.kizitonwose.calendarview.model.InDateStyle
 import com.kizitonwose.calendarview.model.OutDateStyle
 import com.kizitonwose.calendarview.utils.Size
 import com.kizitonwose.calendarview.utils.yearMonth
-import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.livermor.delegateadapter.delegate.CompositeDelegateAdapter
 import java.time.LocalDate
 import java.time.YearMonth
@@ -91,7 +90,7 @@ class TimetableFragment: Fragment(), MultipleClassesDelegateAdapter.ClickListene
     }
 
     override fun onMultipleClassClick(multipleClass: MultipleClassPresentationModel) {
-
+        viewModel.openScreenMultipleClass(multipleClass)
     }
 
     private fun initUI(){
@@ -112,7 +111,7 @@ class TimetableFragment: Fragment(), MultipleClassesDelegateAdapter.ClickListene
             val screenSize = context.getScreenSize()
             daySize = Size(screenSize.x/7,screenSize.x/10)
 
-            val daysOfWeek = daysOfWeekFromLocale()
+            val daysOfWeek = getDaysOfWeekFromLocale()
             val currentMonth = YearMonth.now()
 
             setup(currentMonth.minusMonths(10), currentMonth.plusMonths(10), daysOfWeek.first())

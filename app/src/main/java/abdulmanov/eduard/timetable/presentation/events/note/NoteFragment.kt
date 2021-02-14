@@ -58,7 +58,7 @@ class NoteFragment: Fragment(), DatePickerBottomSheetDialog.DatePickerCallback, 
         binding.dateTextInputEditText.setText(date)
     }
 
-    override fun onChangeTime(time: String) {
+    override fun onChangeTime(time: String, viewId: Int) {
         binding.timeTextInputEditText.setText(time)
     }
 
@@ -93,7 +93,10 @@ class NoteFragment: Fragment(), DatePickerBottomSheetDialog.DatePickerCallback, 
     }
 
     private fun openTimePicker(){
-        val dialog = TimePickerBottomSheetDialog.newInstance(binding.timeTextInputEditText.text?.toString())
+        val dialog = TimePickerBottomSheetDialog.newInstance(
+            binding.timeTextInputEditText.text?.toString(),
+            binding.timeTextInputEditText.id
+        )
         dialog.show(childFragmentManager, TimePickerBottomSheetDialog.TAG)
     }
 

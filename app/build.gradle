@@ -45,6 +45,7 @@ dependencies {
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugarJdkLibsVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinStdlibJdk7"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinReflectVersion"
 
     //leakCanary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
@@ -55,6 +56,9 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$androidXLegacyVersion"
     implementation "androidx.constraintlayout:constraintlayout:$androidXConstraintLayout"
     implementation "androidx.fragment:fragment-ktx:$androidXFragmentVersion"
+
+    //viewBinding
+    implementation "com.github.jintin:BindingExtension:$viewBindingVersion"
 
     //ui
     implementation "com.google.android.material:material:$materialVersion"
