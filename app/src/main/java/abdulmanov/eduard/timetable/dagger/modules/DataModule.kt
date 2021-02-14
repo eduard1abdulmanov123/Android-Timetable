@@ -48,6 +48,12 @@ class DataModule {
 
     @Singleton
     @Provides
+    fun provideOneTimeClassRepository(timetableApi: TimetableApi): OneTimeClassRepository {
+        return OneTimeClassRepositoryImpl(timetableApi)
+    }
+
+    @Singleton
+    @Provides
     fun provideNoteRepository(timetableApi: TimetableApi): NoteRepository {
         return NoteRepositoryImpl(timetableApi)
     }

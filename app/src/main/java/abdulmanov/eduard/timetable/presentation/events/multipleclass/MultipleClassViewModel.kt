@@ -5,7 +5,6 @@ import abdulmanov.eduard.timetable.domain.interactors.MultipleClassInteractor
 import abdulmanov.eduard.timetable.presentation._common.provides.StringProvider
 import abdulmanov.eduard.timetable.presentation._common.viewmodel.BaseViewModel
 import abdulmanov.eduard.timetable.presentation.events.multipleclass.models.MultipleClassPresentationModel
-import android.widget.Toolbar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.terrakok.cicerone.Router
@@ -19,9 +18,9 @@ class MultipleClassViewModel @Inject constructor(
     private val multipleClassInteractor: MultipleClassInteractor
 ): BaseViewModel() {
 
-    private val _showMessageErrorEvent = LiveEvent<String>()
-    val showMessageErrorEvent: LiveData<String>
-        get() = _showMessageErrorEvent
+    private val _showMessageEvent = LiveEvent<String>()
+    val showMessageEvent: LiveData<String>
+        get() = _showMessageEvent
 
     private val _showApplyProgress = MutableLiveData(false)
     val showApplyProgress: LiveData<Boolean>
@@ -37,21 +36,11 @@ class MultipleClassViewModel @Inject constructor(
     }
 
     fun getTitleForToolbar(): String{
-        return stringProvider.getString(
-            if(multipleClass.isNew())
-                R.string.multiple_class_new_class
-            else
-                R.string.multiple_class_edit_class
-        )
+        return stringProvider.getString(if(multipleClass.isNew()) R.string.multiple_class_new_class else R.string.multiple_class_edit_class)
     }
 
     fun getTextForApplyButton(): String {
-        return stringProvider.getString(
-            if(multipleClass.isNew())
-                R.string.multiple_class_create
-            else
-                R.string.multiple_class_save
-        )
+        return stringProvider.getString(if(multipleClass.isNew()) R.string.multiple_class_create else R.string.multiple_class_save)
     }
 
     fun createOrUpdate(){
@@ -65,7 +54,7 @@ class MultipleClassViewModel @Inject constructor(
                         onBackCommandClick()
                     },
                     {
-                        _showMessageErrorEvent.value = it.message.toString()
+                        _showMessageEvent.value = it.message.toString()
                     }
                 )
                 .connect()
@@ -79,7 +68,7 @@ class MultipleClassViewModel @Inject constructor(
                     onBackCommandClick()
                 },
                 {
-                    _showMessageErrorEvent.value = it.message.toString()
+                    _showMessageEvent.value = it.message.toString()
                 }
             )
     }

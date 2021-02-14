@@ -54,6 +54,12 @@ class DomainModule {
 
     @Singleton
     @Provides
+    fun provideOneTimeClassInteractor(repository: OneTimeClassRepository): OneTimeClassInteractor {
+        return OneTimeClassInteractor(repository)
+    }
+
+    @Singleton
+    @Provides
     fun provideNoteInteractor(repository: NoteRepository): NoteInteractor {
         return NoteInteractor(repository)
     }

@@ -39,7 +39,7 @@ class MultipleClassFragment: BaseFragment<FragmentMultipleClassBinding>(), TimeP
         super.onViewCreated(view, savedInstanceState)
         initUI()
 
-        viewModel.showMessageErrorEvent.observe(viewLifecycleOwner,Observer(::showMessage))
+        viewModel.showMessageEvent.observe(viewLifecycleOwner,Observer(::showMessage))
         viewModel.showApplyProgress.observe(viewLifecycleOwner, Observer(::showApplyProgress))
     }
 

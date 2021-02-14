@@ -1,9 +1,6 @@
 package abdulmanov.eduard.timetable.data.remote
 
-import abdulmanov.eduard.timetable.data.remote.models.MultipleClassNetModel
-import abdulmanov.eduard.timetable.data.remote.models.NoteNetModel
-import abdulmanov.eduard.timetable.data.remote.models.TimetableNetModel
-import abdulmanov.eduard.timetable.data.remote.models.UserNetModel
+import abdulmanov.eduard.timetable.data.remote.models.*
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
@@ -30,9 +27,6 @@ interface TimetableApi {
 
     /*MultipleClass*/
 
-    @GET("/api/v1/multiple_class/{id}")
-    fun getMultipleClass(@Path("id") multipleClassId: Int): Single<MultipleClassNetModel.Response>
-
     @POST("/api/v1/multiple_class/create")
     fun createMultipleClass(@Body multipleClass: MultipleClassNetModel.Request): Single<MultipleClassNetModel.Response>
 
@@ -44,6 +38,20 @@ interface TimetableApi {
 
     @POST("/api/v1/multiple_class/delete/{id}")
     fun deleteMultipleClass(@Path("id") multipleClassId: Int): Completable
+
+    /*OneTimeClass*/
+
+    @POST("/api/v1/onetime_class/create")
+    fun createOneTimeClass(@Body oneTimeClass: OneTimeClassNetModel.Request): Single<OneTimeClassNetModel.Response>
+
+    @POST("/api/v1/onetime_class/update/{id}")
+    fun updateOneTimeClass(
+        @Path("id") oneTimeClassId: Int,
+        @Body oneTimeClass: OneTimeClassNetModel.Request
+    ): Single<OneTimeClassNetModel>
+
+    @POST("/api/v1/onetime_class/delete/{id}")
+    fun deleteOneTimeClass(@Path("id") oneTimeClassId: Int): Completable
 
     /*Note*/
 
