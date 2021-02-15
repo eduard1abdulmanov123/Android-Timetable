@@ -1,16 +1,16 @@
 package abdulmanov.eduard.timetable.presentation.timetable.adapters
 
-import abdulmanov.eduard.timetable.databinding.ItemMultipleClassBinding
+import abdulmanov.eduard.timetable.databinding.ItemClassBinding
 import abdulmanov.eduard.timetable.presentation.events.multipleclass.models.MultipleClassPresentationModel
 import android.annotation.SuppressLint
 import com.livermor.delegateadapter.delegate.ViewBindingDelegateAdapter
 
 class MultipleClassesDelegateAdapter(
     private val clickListener: ClickListener
-) : ViewBindingDelegateAdapter<MultipleClassPresentationModel, ItemMultipleClassBinding>(ItemMultipleClassBinding::inflate) {
+) : ViewBindingDelegateAdapter<MultipleClassPresentationModel, ItemClassBinding>(ItemClassBinding::inflate) {
 
     @SuppressLint("SetTextI18n")
-    override fun ItemMultipleClassBinding.onBind(item: MultipleClassPresentationModel) {
+    override fun ItemClassBinding.onBind(item: MultipleClassPresentationModel) {
         root.setOnClickListener { clickListener.onMultipleClassClick(item) }
 
         typeClassTextView.text = "${item.typeClass} (${item.audience})"

@@ -3,6 +3,8 @@ package abdulmanov.eduard.timetable.presentation.events.onetimeclass.models
 import abdulmanov.eduard.timetable.domain.models.OneTimeClass
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Parcelize
 data class OneTimeClassPresentationModel(
@@ -20,6 +22,8 @@ data class OneTimeClassPresentationModel(
 
     companion object {
 
+        private val DATE_FORMATTER_PRESENTER = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")
+
         fun fromDomain(oneTimeClass: OneTimeClass): OneTimeClassPresentationModel {
             return OneTimeClassPresentationModel(
                 id = oneTimeClass.id,
@@ -29,7 +33,7 @@ data class OneTimeClassPresentationModel(
                 typeClass = oneTimeClass.typeClass,
                 startOfClass = oneTimeClass.startOfClass,
                 endOfClass = oneTimeClass.endOfClass,
-                dateOfClass = oneTimeClass.dateOfClass
+                dateOfClass = DATE_FORMATTER_PRESENTER.format(LocalDate.parse(oneTimeClass.dateOfClass))
             )
         }
 
@@ -42,7 +46,7 @@ data class OneTimeClassPresentationModel(
                 typeClass = oneTimeClass.typeClass,
                 startOfClass = oneTimeClass.startOfClass,
                 endOfClass = oneTimeClass.endOfClass,
-                dateOfClass = oneTimeClass.dateOfClass
+                dateOfClass = LocalDate.parse(oneTimeClass.dateOfClass, DATE_FORMATTER_PRESENTER).toString()
             )
         }
     }

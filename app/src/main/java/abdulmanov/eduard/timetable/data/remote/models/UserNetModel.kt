@@ -1,5 +1,6 @@
 package abdulmanov.eduard.timetable.data.remote.models
 
+import abdulmanov.eduard.timetable.domain.models.User
 import com.google.gson.annotations.SerializedName
 
 class UserNetModel {
@@ -19,4 +20,15 @@ class UserNetModel {
         @SerializedName("password")
         val password: String
     )
+
+    companion object {
+
+        fun toDomain(user: Response): User {
+            return User(
+                userName = user.userName,
+                token = user.token,
+                currentTimetableId = user.currentTimetableId
+            )
+        }
+    }
 }

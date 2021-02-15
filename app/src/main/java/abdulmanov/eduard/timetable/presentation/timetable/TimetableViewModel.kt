@@ -1,13 +1,11 @@
 package abdulmanov.eduard.timetable.presentation.timetable
 
 import abdulmanov.eduard.timetable.domain.interactors.TimetableInteractor
-import abdulmanov.eduard.timetable.domain.models.Classes
 import abdulmanov.eduard.timetable.presentation.Screens
 import abdulmanov.eduard.timetable.presentation._common.viewmodel.BaseViewModel
 import abdulmanov.eduard.timetable.presentation.events.multipleclass.models.MultipleClassPresentationModel
 import abdulmanov.eduard.timetable.presentation.events.note.models.NotePresentationModel
 import abdulmanov.eduard.timetable.presentation.events.onetimeclass.models.OneTimeClassPresentationModel
-import abdulmanov.eduard.timetable.presentation.timetable.mapper.ClassesMapperPresentation
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,8 +15,7 @@ import javax.inject.Inject
 
 class TimetableViewModel @Inject constructor(
     private val router: Router,
-    private val timetableInteractor: TimetableInteractor,
-    private val classesMapperPresentation: ClassesMapperPresentation
+    private val timetableInteractor: TimetableInteractor
 ):BaseViewModel() {
 
     private val _classes = MutableLiveData<List<Any>>()
@@ -36,8 +33,12 @@ class TimetableViewModel @Inject constructor(
     fun openScreenNote(note: NotePresentationModel? = null) = router.navigateTo(Screens.note(note))
 
     fun getClassesForSelectedDate(date:LocalDate, refresh: Boolean = false){
-        timetableInteractor.getClassesForSelectedDate(_classes.value==null || refresh, date)
-            .map { it.multipleClasses.map { MultipleClassPresentationModel.fromDomain(it) } }
+        timetableInteractor.getTimetableForSelectedDate(_classes.value==null || refresh, date)
+            .map { timetable ->
+                val multipleClasses = timetable.multipleClasses.map { MultipleClassPresentationModel.fromDomain(it) }
+                val oneTimeClasses = timetable.oneTimeClasses.map { OneTimeClassPresentationModel.fromDomain(it) }
+                multipleClasses + oneTimeClasses
+            }
             .safeSubscribe(
                 {
                     _classes.value = it

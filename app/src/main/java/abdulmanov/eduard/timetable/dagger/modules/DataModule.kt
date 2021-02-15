@@ -2,8 +2,6 @@ package abdulmanov.eduard.timetable.dagger.modules
 
 import abdulmanov.eduard.timetable.data.local.sharedpreferences.AuthSharedPreferences
 import abdulmanov.eduard.timetable.data.local.sharedpreferences.TimetableSharedPreferences
-import abdulmanov.eduard.timetable.data.mappers.TimetableMapperDomain
-import abdulmanov.eduard.timetable.data.mappers.UserMapperDomain
 import abdulmanov.eduard.timetable.data.remote.TimetableApi
 import abdulmanov.eduard.timetable.data.repositories.*
 import abdulmanov.eduard.timetable.domain.repositories.*
@@ -18,20 +16,18 @@ class DataModule {
     @Provides
     fun provideAuthRepository(
         timetableApi: TimetableApi,
-        userMapperDomain: UserMapperDomain,
         authSharedPreferences: AuthSharedPreferences
     ): AuthRepository{
-        return AuthRepositoryImpl(timetableApi, userMapperDomain, authSharedPreferences)
+        return AuthRepositoryImpl(timetableApi, authSharedPreferences)
     }
 
     @Singleton
     @Provides
     fun provideTimetableRepository(
         timetableApi: TimetableApi,
-        timetableMapperDomain: TimetableMapperDomain,
         timetableSharedPreferences: TimetableSharedPreferences
     ): TimetableRepository {
-        return TimetableRepositoryImpl(timetableApi, timetableMapperDomain, timetableSharedPreferences)
+        return TimetableRepositoryImpl(timetableApi, timetableSharedPreferences)
     }
 
     @Singleton

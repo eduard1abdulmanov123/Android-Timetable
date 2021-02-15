@@ -3,6 +3,7 @@ package abdulmanov.eduard.timetable.presentation.timetable
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.FragmentTimetableBinding
 import abdulmanov.eduard.timetable.presentation.App
+import abdulmanov.eduard.timetable.presentation._common.base.BaseFragment
 import abdulmanov.eduard.timetable.presentation._common.provides.LawProvider
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
 import abdulmanov.eduard.timetable.presentation._common.extensions.getDaysOfWeekFromLocale
@@ -12,17 +13,13 @@ import abdulmanov.eduard.timetable.presentation.timetable.helpers.caledar.Timeta
 import abdulmanov.eduard.timetable.presentation.timetable.helpers.caledar.TimetableMonthHeaderBinder
 import abdulmanov.eduard.timetable.presentation.timetable.helpers.speed_dial.SpeedDialDelegate
 import abdulmanov.eduard.timetable.presentation.events.multipleclass.models.MultipleClassPresentationModel
+import abdulmanov.eduard.timetable.presentation.events.onetimeclass.models.OneTimeClassPresentationModel
+import abdulmanov.eduard.timetable.presentation.timetable.adapters.OneTimeClassesDelegateAdapter
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kizitonwose.calendarview.model.InDateStyle
 import com.kizitonwose.calendarview.model.OutDateStyle
@@ -34,19 +31,14 @@ import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-class TimetableFragment: Fragment(), MultipleClassesDelegateAdapter.ClickListener {
+class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
+    MultipleClassesDelegateAdapter.ClickListener,
+    OneTimeClassesDelegateAdapter.ClickListener {
 
     @Inject
     lateinit var lawProvider: LawProvider
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel by viewModels<TimetableViewModel> { viewModelFactory }
-
-    private var _binding: FragmentTimetableBinding? = null
-    private val binding: FragmentTimetableBinding
-        get() = _binding!!
+    private val viewModel by initViewModel<TimetableViewModel>()
 
     private val selectionFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
     private var isCollapse = true
@@ -57,21 +49,11 @@ class TimetableFragment: Fragment(), MultipleClassesDelegateAdapter.ClickListene
         addOnBackPressedCallback(::onBackPressed)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentTimetableBinding.inflate(inflater, container,false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
 
-        viewModel.classes.observe(viewLifecycleOwner, Observer { (binding.recyclerView.adapter as CompositeDelegateAdapter).swapData(it)})
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        viewModel.classes.observe(viewLifecycleOwner, { (binding.recyclerView.adapter as CompositeDelegateAdapter).swapData(it)})
     }
 
     private fun onBackPressed(){
@@ -91,6 +73,10 @@ class TimetableFragment: Fragment(), MultipleClassesDelegateAdapter.ClickListene
 
     override fun onMultipleClassClick(multipleClass: MultipleClassPresentationModel) {
         viewModel.openScreenMultipleClass(multipleClass)
+    }
+
+    override fun onOneTimeClassClick(oneTimeClass: OneTimeClassPresentationModel) {
+        viewModel.openScreenOneTimeClass(oneTimeClass)
     }
 
     private fun initUI(){
@@ -138,7 +124,8 @@ class TimetableFragment: Fragment(), MultipleClassesDelegateAdapter.ClickListene
         binding.recyclerView.run {
             layoutManager = LinearLayoutManager(context)
             adapter = CompositeDelegateAdapter(
-                MultipleClassesDelegateAdapter(this@TimetableFragment)
+                MultipleClassesDelegateAdapter(this@TimetableFragment),
+                OneTimeClassesDelegateAdapter(this@TimetableFragment)
             )
         }
     }

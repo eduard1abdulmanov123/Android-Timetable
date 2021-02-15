@@ -22,7 +22,7 @@ class AuthInteractor(
             .doOnSuccess { authRepository.saveUser(it) }
             .flatMap { user ->
                 if(user.currentTimetableId != null) {
-                    timetableRepository.getTimetable()
+                    timetableRepository.getTimetable(true)
                         .doOnSuccess { timetableRepository.saveTimetableInfo(it) }
                         .flatMap { Single.fromCallable { user } }
                 }else{

@@ -3,6 +3,8 @@ package abdulmanov.eduard.timetable.presentation.events.note.models
 import abdulmanov.eduard.timetable.domain.models.Note
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Parcelize
 data class NotePresentationModel(
@@ -17,11 +19,13 @@ data class NotePresentationModel(
 
     companion object {
 
+        private val DATE_FORMATTER_PRESENTER = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")
+
         fun fromDomain(note: Note): NotePresentationModel {
             return NotePresentationModel(
                 id = note.id,
                 content = note.content,
-                date = note.date,
+                date = DATE_FORMATTER_PRESENTER.format(LocalDate.parse(note.date)),
                 time = note.time,
                 visibility = note.visibility
             )
@@ -31,7 +35,7 @@ data class NotePresentationModel(
             return Note(
                 id = note.id,
                 content = note.content,
-                date = note.date,
+                date = LocalDate.parse(note.date, DATE_FORMATTER_PRESENTER).toString(),
                 time = note.time,
                 visibility = note.visibility
             )
