@@ -67,6 +67,12 @@ interface TimetableApi {
     @POST("/api/v1/notes/delete/{id}")
     fun deleteNote(@Path("id") noteId: Int): Completable
 
+    @GET("/api/v1/notes/timetable_owner")
+    fun getNotesForTimetableOwner(): Single<List<NoteNetModel.Response>>
+
+    @GET("/api/v1/notes/")
+    fun getNotes(): Single<List<NoteNetModel.Response>>
+
     companion object{
         const val BASE_URL = "http://192.168.0.103:8080/"
     }

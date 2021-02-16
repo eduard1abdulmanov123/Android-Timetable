@@ -34,10 +34,11 @@ class TimetableViewModel @Inject constructor(
 
     fun getClassesForSelectedDate(date:LocalDate, refresh: Boolean = false){
         timetableInteractor.getTimetableForSelectedDate(_classes.value==null || refresh, date)
-            .map { timetable ->
-                val multipleClasses = timetable.multipleClasses.map { MultipleClassPresentationModel.fromDomain(it) }
-                val oneTimeClasses = timetable.oneTimeClasses.map { OneTimeClassPresentationModel.fromDomain(it) }
-                multipleClasses + oneTimeClasses
+            .map { timetableWithNotes ->
+                val multipleClasses = timetableWithNotes.timetable.multipleClasses.map { MultipleClassPresentationModel.fromDomain(it) }
+                val oneTimeClasses = timetableWithNotes.timetable.oneTimeClasses.map { OneTimeClassPresentationModel.fromDomain(it) }
+                val notes = timetableWithNotes.notes.map { NotePresentationModel.fromDomain(it) }
+                multipleClasses + oneTimeClasses + notes
             }
             .safeSubscribe(
                 {

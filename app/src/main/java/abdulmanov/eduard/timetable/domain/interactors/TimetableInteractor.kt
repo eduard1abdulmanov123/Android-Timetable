@@ -2,15 +2,18 @@ package abdulmanov.eduard.timetable.domain.interactors
 
 import abdulmanov.eduard.timetable.domain.models.*
 import abdulmanov.eduard.timetable.domain.repositories.AuthRepository
+import abdulmanov.eduard.timetable.domain.repositories.NotesRepository
 import abdulmanov.eduard.timetable.domain.repositories.TimetableRepository
 import io.reactivex.Completable
 import io.reactivex.Single
+import io.reactivex.functions.BiFunction
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class TimetableInteractor(
     private val authRepository: AuthRepository,
-    private val timetableRepository: TimetableRepository
+    private val timetableRepository: TimetableRepository,
+    private val notesRepository: NotesRepository
 ) {
 
     fun createTimetable(typeWeek: TypeWeek): Completable{
@@ -36,14 +39,20 @@ class TimetableInteractor(
         authRepository.saveUser(updatedUser)
     }
 
-    fun getTimetableForSelectedDate(refresh: Boolean, date: LocalDate): Single<Timetable> {
-        return timetableRepository.getTimetable(refresh)
-            .map { timetable ->
-                timetable.copy(
-                    multipleClasses = getMultipleClassesForSelectedDate(timetable, date),
-                    oneTimeClasses = getOneTimeClassesForSelectedDate(timetable, date)
+    fun getTimetableForSelectedDate(refresh: Boolean, date: LocalDate): Single<TimetableWithNotes> {
+        return Single.zip(
+            timetableRepository.getTimetable(refresh),
+            notesRepository.getNotes(refresh),
+            { timetable, notes ->
+                TimetableWithNotes(
+                    timetable =  timetable.copy(
+                        multipleClasses = getMultipleClassesForSelectedDate(timetable, date),
+                        oneTimeClasses = getOneTimeClassesForSelectedDate(timetable, date)
+                    ),
+                    notes =getNotesForSelectedDate(notes, date)
                 )
             }
+        )
     }
 
     private fun getMultipleClassesForSelectedDate(timetable: Timetable, date: LocalDate): List<MultipleClass> {
@@ -58,5 +67,9 @@ class TimetableInteractor(
     private fun getOneTimeClassesForSelectedDate(timetable: Timetable, date: LocalDate): List<OneTimeClass> {
         return timetable.oneTimeClasses
             .filter { it.dateOfClass == date.toString() }
+    }
+
+    private fun getNotesForSelectedDate(notes: List<Note>, date: LocalDate): List<Note> {
+        return notes.filter { it.date == date.toString() }
     }
 }

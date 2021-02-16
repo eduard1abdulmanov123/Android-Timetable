@@ -6,6 +6,7 @@ import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation._common.base.BaseFragment
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
 import abdulmanov.eduard.timetable.presentation._common.extensions.bind
+import abdulmanov.eduard.timetable.presentation._common.provides.LawProvider
 import abdulmanov.eduard.timetable.presentation.events.dialogs.datepicker.DatePickerBottomSheetDialog
 import abdulmanov.eduard.timetable.presentation.events.dialogs.timepicker.TimePickerBottomSheetDialog
 import abdulmanov.eduard.timetable.presentation.events.note.models.NotePresentationModel
@@ -17,10 +18,15 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import javax.inject.Inject
 
 class NoteFragment: BaseFragment<FragmentNoteBinding>(),
     DatePickerBottomSheetDialog.DatePickerCallback,
     TimePickerBottomSheetDialog.TimePickerCallback {
+
+    @Inject
+    lateinit var lawProvider: LawProvider
 
     private val viewModel by initViewModel<NoteViewModel>()
 
@@ -69,6 +75,8 @@ class NoteFragment: BaseFragment<FragmentNoteBinding>(),
         binding.dateTextInputEditText.bind(viewModel.note::date)
         binding.timeTextInputEditText.bind(viewModel.note::time)
         binding.groupNoteCheckBox.bind(viewModel.note::visibility)
+
+        lawProvider.showIfYouHaveLaw(binding.groupConstraintLayout)
     }
 
     private fun initFields() {

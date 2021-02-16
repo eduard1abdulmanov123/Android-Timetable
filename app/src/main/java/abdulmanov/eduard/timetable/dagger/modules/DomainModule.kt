@@ -22,9 +22,10 @@ class DomainModule {
     @Provides
     fun provideTimetableInteractor(
         authRepository: AuthRepository,
-        timetableRepository: TimetableRepository
+        timetableRepository: TimetableRepository,
+        notesRepository: NotesRepository
     ): TimetableInteractor {
-        return TimetableInteractor(authRepository, timetableRepository)
+        return TimetableInteractor(authRepository, timetableRepository, notesRepository)
     }
 
     @Singleton
@@ -60,7 +61,7 @@ class DomainModule {
 
     @Singleton
     @Provides
-    fun provideNoteInteractor(repository: NoteRepository): NoteInteractor {
+    fun provideNoteInteractor(repository: NotesRepository): NoteInteractor {
         return NoteInteractor(repository)
     }
 }

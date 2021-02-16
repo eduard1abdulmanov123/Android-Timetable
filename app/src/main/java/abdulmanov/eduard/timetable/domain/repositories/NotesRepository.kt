@@ -4,7 +4,9 @@ import abdulmanov.eduard.timetable.domain.models.Note
 import io.reactivex.Completable
 import io.reactivex.Single
 
-interface NoteRepository {
+interface NotesRepository {
+
+    fun getNotes(refresh: Boolean): Single<List<Note>>
 
     fun createNote(note: Note): Completable
 

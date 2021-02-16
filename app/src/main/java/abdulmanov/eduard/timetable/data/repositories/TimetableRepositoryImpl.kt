@@ -8,16 +8,12 @@ import abdulmanov.eduard.timetable.domain.models.TypeWeek
 import abdulmanov.eduard.timetable.domain.repositories.TimetableRepository
 import io.reactivex.Single
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import kotlin.math.round
 
 class TimetableRepositoryImpl(
     private val timetableApi: TimetableApi,
     private val sharedPreferences: TimetableSharedPreferences
 ): TimetableRepository {
-
-    private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-d")
-    private var timetable: Timetable? = null
 
     override fun createTimetable(typeWeek: TypeWeek): Single<Timetable> {
         return timetableApi.createTimetable(TimetableNetModel.Request(typeWeek.number))
@@ -30,16 +26,11 @@ class TimetableRepositoryImpl(
     }
 
     override fun getTimetable(refresh: Boolean): Single<Timetable> {
-        return if(refresh) {
-            timetableApi.getTimetable()
-                .map(TimetableNetModel::toDomain)
-                .doOnSuccess {
-                    saveTimetableInfo(it)
-                    timetable = it
-                }
-        }else{
-            Single.fromCallable { timetable }
-        }
+        return timetableApi.getTimetable()
+            .map(TimetableNetModel::toDomain)
+            .doOnSuccess {
+                saveTimetableInfo(it)
+            }
     }
 
     override fun saveTimetableInfo(timetable: Timetable) {
@@ -64,7 +55,7 @@ class TimetableRepositoryImpl(
 
     override fun getTypeWeekForDate(date: LocalDate): TypeWeek {
         var startTypeWeek = sharedPreferences.typeWeek
-        var startUpdateDate = LocalDate.parse(sharedPreferences.dateUpdate!!, dateFormatter)
+        var startUpdateDate = LocalDate.parse(sharedPreferences.dateUpdate!!)
 
         while (round(startUpdateDate.dayOfYear.toDouble()/7) != round(date.dayOfYear.toDouble()/7)){
             startUpdateDate = startUpdateDate.plusWeeks(1)

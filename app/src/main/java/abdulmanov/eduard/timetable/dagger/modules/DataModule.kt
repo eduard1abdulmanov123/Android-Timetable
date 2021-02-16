@@ -50,7 +50,7 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideNoteRepository(timetableApi: TimetableApi): NoteRepository {
-        return NoteRepositoryImpl(timetableApi)
+    fun provideNoteRepository(timetableApi: TimetableApi): NotesRepository {
+        return NotesRepositoryImpl(timetableApi)
     }
 }

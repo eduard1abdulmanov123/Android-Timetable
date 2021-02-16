@@ -7,6 +7,8 @@ import javax.inject.Inject
 
 class LawProvider @Inject constructor(private val lawInteractor: LawInteractor){
 
+    fun haveAccess() = lawInteractor.haveAccess()
+
     fun showIfYouHaveLaw(view: View) {
         view.isVisible = lawInteractor.haveAccess()
     }

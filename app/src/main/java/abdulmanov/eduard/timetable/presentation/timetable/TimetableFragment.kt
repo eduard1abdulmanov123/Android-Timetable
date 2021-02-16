@@ -13,7 +13,9 @@ import abdulmanov.eduard.timetable.presentation.timetable.helpers.caledar.Timeta
 import abdulmanov.eduard.timetable.presentation.timetable.helpers.caledar.TimetableMonthHeaderBinder
 import abdulmanov.eduard.timetable.presentation.timetable.helpers.speed_dial.SpeedDialDelegate
 import abdulmanov.eduard.timetable.presentation.events.multipleclass.models.MultipleClassPresentationModel
+import abdulmanov.eduard.timetable.presentation.events.note.models.NotePresentationModel
 import abdulmanov.eduard.timetable.presentation.events.onetimeclass.models.OneTimeClassPresentationModel
+import abdulmanov.eduard.timetable.presentation.timetable.adapters.NotesDelegateAdapter
 import abdulmanov.eduard.timetable.presentation.timetable.adapters.OneTimeClassesDelegateAdapter
 import android.content.Context
 import android.os.Bundle
@@ -33,7 +35,8 @@ import javax.inject.Inject
 
 class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
     MultipleClassesDelegateAdapter.ClickListener,
-    OneTimeClassesDelegateAdapter.ClickListener {
+    OneTimeClassesDelegateAdapter.ClickListener,
+    NotesDelegateAdapter.ClickListener {
 
     @Inject
     lateinit var lawProvider: LawProvider
@@ -79,6 +82,10 @@ class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
         viewModel.openScreenOneTimeClass(oneTimeClass)
     }
 
+    override fun onNoteClick(note: NotePresentationModel) {
+        viewModel.openScreenNote(note)
+    }
+
     private fun initUI(){
         binding.timetableToolbar.run {
             setTitle(R.string.timetable_toolbar_title)
@@ -108,8 +115,7 @@ class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
         }
 
         binding.speedDialView.run {
-            lawProvider.showIfYouHaveLaw(this)
-            SpeedDialDelegate.addActions(this)
+            SpeedDialDelegate.addActions(lawProvider,this)
 
             setOnActionSelectedListener {
                 when(it.id){
@@ -125,7 +131,8 @@ class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
             layoutManager = LinearLayoutManager(context)
             adapter = CompositeDelegateAdapter(
                 MultipleClassesDelegateAdapter(this@TimetableFragment),
-                OneTimeClassesDelegateAdapter(this@TimetableFragment)
+                OneTimeClassesDelegateAdapter(this@TimetableFragment),
+                NotesDelegateAdapter(this@TimetableFragment)
             )
         }
     }
