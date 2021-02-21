@@ -41,6 +41,10 @@ data class MultipleClassDbModel(
         const val COLUMN_DAY_OF_WEEK = "day_of_week"
         const val COLUMN_PERIODICITY = "periodicity"
 
+        fun toDomain(multipleClasses: List<MultipleClassDbModel>): List<MultipleClass> {
+            return multipleClasses.map(::toDomain)
+        }
+
         fun toDomain(multipleClass: MultipleClassDbModel): MultipleClass {
             return MultipleClass(
                 id = multipleClass.id,

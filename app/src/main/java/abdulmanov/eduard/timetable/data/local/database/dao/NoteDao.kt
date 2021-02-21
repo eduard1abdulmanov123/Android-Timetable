@@ -5,6 +5,7 @@ import abdulmanov.eduard.timetable.data.local.database.models.NoteDbModel
 import abdulmanov.eduard.timetable.data.local.database.models.OneTimeClassDbModel
 import androidx.room.*
 import io.reactivex.Observable
+import io.reactivex.Single
 
 @Dao
 abstract class NoteDao {
@@ -18,12 +19,15 @@ abstract class NoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertNotes(notes: List<NoteDbModel>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertNote(note: NoteDbModel)
+
     @Query("DELETE FROM ${NoteDbModel.TABLE_NAME}")
     abstract fun deleteAll()
 
     @Query("DELETE FROM ${NoteDbModel.TABLE_NAME} WHERE ${NoteDbModel.COLUMN_ID} = :id")
     abstract fun deleteById(id: Int)
 
-    @Query("SELECT * FROM ${MultipleClassDbModel.TABLE_NAME}")
-    abstract fun getNotes(): Observable<List<NoteDbModel>>
+    @Query("SELECT * FROM ${NoteDbModel.TABLE_NAME}")
+    abstract fun getNotes(): Single<List<NoteDbModel>>
 }

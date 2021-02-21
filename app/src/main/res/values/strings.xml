@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Timetable</string>
 
+    <!--splash-->
+    <string name="splash_error">Произошла ошибка, данные не были обновлены!</string>
+
     <!--sign_in-->
     <string name="sign_in_title">Вход</string>
     <string name="sign_in_login">Логин</string>

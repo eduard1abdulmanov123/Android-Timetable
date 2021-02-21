@@ -28,6 +28,10 @@ data class NoteDbModel(
         const val COLUMN_TIME = "note_tme"
         const val COLUMN_VISIBILITY = "note_visibility"
 
+        fun toDomain(notes: List<NoteDbModel>): List<Note> {
+            return notes.map(::toDomain)
+        }
+
         fun toDomain(note: NoteDbModel): Note {
             return Note(
                 id = note.id,

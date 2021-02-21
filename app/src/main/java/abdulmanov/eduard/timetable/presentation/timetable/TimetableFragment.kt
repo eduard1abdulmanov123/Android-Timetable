@@ -131,6 +131,7 @@ class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
             scrollToDate(date)
             dateTextView.text =  "${dateTextView.text.split(",").first()}, ${viewModel.getTypeWeekForDate(date)}"
         }
+        viewModel.getClassesForSelectedDate(date)
     }
 
     private fun setIsCollapse(isCollapse: Boolean){
@@ -152,16 +153,6 @@ class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
                 binding.swipeRefresh.isVisible = true
                 binding.swipeRefresh.isRefreshing = false
                 binding.recyclerView.isVisible = false
-            }
-            is TimetableState.Error -> {
-                binding.progressBar.isVisible = false
-                binding.emptyItemsImageView.isVisible = false
-                binding.swipeRefresh.isVisible = true
-                binding.swipeRefresh.isRefreshing = false
-                binding.recyclerView.isVisible = false
-            }
-            is TimetableState.Refresh -> {
-                binding.swipeRefresh.isRefreshing = true
             }
             is TimetableState.Data -> {
                 binding.progressBar.isVisible = false

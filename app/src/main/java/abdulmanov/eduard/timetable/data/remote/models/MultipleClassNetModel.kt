@@ -48,6 +48,10 @@ class MultipleClassNetModel {
 
     companion object {
 
+        fun toDatabase(multipleClasses: List<Response>): List<MultipleClassDbModel> {
+            return multipleClasses.map(::toDatabase)
+        }
+
         fun toDatabase(multipleClass: Response): MultipleClassDbModel {
             return MultipleClassDbModel(
                 id = multipleClass.id,

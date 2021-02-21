@@ -9,6 +9,10 @@ class TimetableSharedPreferences(context: Context) {
 
     private val sharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
+    var id: Int
+        set(value) = sharedPreferences.edit { putInt(PREF_ID, value) }
+        get() = sharedPreferences.getInt(PREF_ID, -1)
+
     var creatorUsername: String?
         set(value) = sharedPreferences.edit { putString(PREF_CREATOR_USERNAME, value) }
         get() = sharedPreferences.getString(PREF_CREATOR_USERNAME, null)
@@ -30,6 +34,7 @@ class TimetableSharedPreferences(context: Context) {
 
     companion object{
         private const val PREFERENCES_NAME = "${BuildConfig.APPLICATION_ID}_timetable"
+        private const val PREF_ID = "id"
         private const val PREF_CREATOR_USERNAME = "creator_username"
         private const val PREF_LINK = "link"
         private const val PREF_TYPE_WEEK = "type_week"

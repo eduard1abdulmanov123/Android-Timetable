@@ -1,9 +1,8 @@
 package abdulmanov.eduard.timetable.data.local.database.dao
 
-import abdulmanov.eduard.timetable.data.local.database.models.MultipleClassDbModel
 import abdulmanov.eduard.timetable.data.local.database.models.OneTimeClassDbModel
 import androidx.room.*
-import io.reactivex.Observable
+import io.reactivex.Single
 
 @Dao
 abstract class OneTimeClassDao {
@@ -17,12 +16,15 @@ abstract class OneTimeClassDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertOneTimeClasses(oneTimeClasses: List<OneTimeClassDbModel>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertOneTimeClass(oneTimeClass: OneTimeClassDbModel)
+
     @Query("DELETE FROM ${OneTimeClassDbModel.TABLE_NAME}")
     abstract fun deleteAll()
 
     @Query("DELETE FROM ${OneTimeClassDbModel.TABLE_NAME} WHERE ${OneTimeClassDbModel.COLUMN_ID} = :id")
     abstract fun deleteById(id: Int)
 
-    @Query("SELECT * FROM ${MultipleClassDbModel.TABLE_NAME}")
-    abstract fun getOneTimeClasses(): Observable<List<OneTimeClassDbModel>>
+    @Query("SELECT * FROM ${OneTimeClassDbModel.TABLE_NAME}")
+    abstract fun getOneTimeClasses(): Single<List<OneTimeClassDbModel>>
 }

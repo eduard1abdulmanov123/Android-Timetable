@@ -2,6 +2,7 @@ package abdulmanov.eduard.timetable.domain.repositories
 
 import abdulmanov.eduard.timetable.domain.models.MultipleClass
 import io.reactivex.Completable
+import io.reactivex.Single
 
 interface MultipleClassRepository {
 

@@ -2,6 +2,7 @@ package abdulmanov.eduard.timetable.presentation._common.viewmodel
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -19,6 +20,13 @@ abstract class BaseViewModel : ViewModel() {
         compositeDisposable.dispose()
     }
 
+    protected fun <T> Observable<T>.safeSubscribe(onSuccess: (T) -> Unit, onError: (Throwable) -> Unit) {
+        val disposable = subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(onSuccess, onError)
+        compositeDisposable.add(disposable)
+    }
+
     protected fun <T> Single<T>.safeSubscribe(onSuccess: (T) -> Unit, onError: (Throwable) -> Unit) {
         val disposable = subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -30,6 +38,13 @@ abstract class BaseViewModel : ViewModel() {
         val disposable = subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(onSuccess, onError)
+        compositeDisposable.add(disposable)
+    }
+
+    protected fun Completable.safeSubscribe(onSuccess: () -> Unit) {
+        val disposable = subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(onSuccess)
         compositeDisposable.add(disposable)
     }
 

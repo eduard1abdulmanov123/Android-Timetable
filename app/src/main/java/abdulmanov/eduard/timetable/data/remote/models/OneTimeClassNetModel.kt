@@ -44,6 +44,10 @@ class OneTimeClassNetModel {
 
     companion object {
 
+        fun toDatabase(oneTimeClasses: List<Response>): List<OneTimeClassDbModel> {
+            return oneTimeClasses.map(::toDatabase)
+        }
+
         fun toDatabase(oneTimeClass: Response): OneTimeClassDbModel {
             return OneTimeClassDbModel(
                 id = oneTimeClass.id,

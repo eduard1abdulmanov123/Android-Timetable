@@ -37,6 +37,10 @@ data class OneTimeClassDbModel(
         const val COLUMN_END_OF_CLASS = "end_of_class"
         const val COLUMN_DATE_OF_CLASS = "date_of_class"
 
+        fun toDomain(oneTimeClasses: List<OneTimeClassDbModel>): List<OneTimeClass> {
+            return oneTimeClasses.map(::toDomain)
+        }
+
         fun toDomain(oneTimeClass: OneTimeClassDbModel): OneTimeClass {
             return OneTimeClass(
                 id = oneTimeClass.id,

@@ -1,5 +1,8 @@
 package abdulmanov.eduard.timetable.dagger.modules
 
+import abdulmanov.eduard.timetable.data.local.database.dao.MultipleClassDao
+import abdulmanov.eduard.timetable.data.local.database.dao.NoteDao
+import abdulmanov.eduard.timetable.data.local.database.dao.OneTimeClassDao
 import abdulmanov.eduard.timetable.data.local.sharedpreferences.AuthSharedPreferences
 import abdulmanov.eduard.timetable.data.local.sharedpreferences.TimetableSharedPreferences
 import abdulmanov.eduard.timetable.data.remote.TimetableApi
@@ -25,9 +28,16 @@ class DataModule {
     @Provides
     fun provideTimetableRepository(
         timetableApi: TimetableApi,
+        multipleClassDao: MultipleClassDao,
+        oneTimeClassDao: OneTimeClassDao,
         timetableSharedPreferences: TimetableSharedPreferences
     ): TimetableRepository {
-        return TimetableRepositoryImpl(timetableApi, timetableSharedPreferences)
+        return TimetableRepositoryImpl(
+            timetableApi,
+            multipleClassDao,
+            oneTimeClassDao,
+            timetableSharedPreferences
+        )
     }
 
     @Singleton
@@ -38,19 +48,19 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideMultipleClassRepository(timetableApi: TimetableApi): MultipleClassRepository {
-        return MultipleClassRepositoryImpl(timetableApi)
+    fun provideMultipleClassRepository(timetableApi: TimetableApi, multipleClassDao: MultipleClassDao): MultipleClassRepository {
+        return MultipleClassRepositoryImpl(timetableApi, multipleClassDao)
     }
 
     @Singleton
     @Provides
-    fun provideOneTimeClassRepository(timetableApi: TimetableApi): OneTimeClassRepository {
-        return OneTimeClassRepositoryImpl(timetableApi)
+    fun provideOneTimeClassRepository(timetableApi: TimetableApi, oneTimeClassDao: OneTimeClassDao): OneTimeClassRepository {
+        return OneTimeClassRepositoryImpl(timetableApi, oneTimeClassDao)
     }
 
     @Singleton
     @Provides
-    fun provideNoteRepository(timetableApi: TimetableApi): NotesRepository {
-        return NotesRepositoryImpl(timetableApi)
+    fun provideNoteRepository(timetableApi: TimetableApi, noteDao: NoteDao): NotesRepository {
+        return NotesRepositoryImpl(timetableApi, noteDao)
     }
 }

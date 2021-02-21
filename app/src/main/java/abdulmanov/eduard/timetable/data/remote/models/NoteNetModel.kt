@@ -32,6 +32,10 @@ class NoteNetModel {
 
     companion object {
 
+        fun toDatabase(notes: List<Response>): List<NoteDbModel> {
+            return notes.map(::toDatabase)
+        }
+
         fun toDatabase(note: Response): NoteDbModel {
             return NoteDbModel(
                 id = note.id,

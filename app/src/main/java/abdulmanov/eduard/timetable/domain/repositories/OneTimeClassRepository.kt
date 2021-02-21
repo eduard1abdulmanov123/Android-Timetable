@@ -2,6 +2,7 @@ package abdulmanov.eduard.timetable.domain.repositories
 
 import abdulmanov.eduard.timetable.domain.models.OneTimeClass
 import io.reactivex.Completable
+import io.reactivex.Observable
 
 interface OneTimeClassRepository {
 

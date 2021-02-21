@@ -2,6 +2,8 @@ package abdulmanov.eduard.timetable.domain.repositories
 
 import abdulmanov.eduard.timetable.domain.models.Timetable
 import abdulmanov.eduard.timetable.domain.models.TypeWeek
+import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import java.time.LocalDate
 
@@ -11,7 +13,9 @@ interface TimetableRepository {
 
     fun joinTimetable(link: String): Single<Timetable>
 
-    fun getTimetable(refresh: Boolean): Single<Timetable>
+    fun fetchTimetable(): Completable
+
+    fun getTimetable(): Single<Timetable>
 
     fun saveTimetableInfo(timetable: Timetable)
 

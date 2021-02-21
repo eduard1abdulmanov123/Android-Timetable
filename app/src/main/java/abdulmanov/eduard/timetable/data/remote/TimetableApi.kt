@@ -48,7 +48,7 @@ interface TimetableApi {
     fun updateOneTimeClass(
         @Path("id") oneTimeClassId: Int,
         @Body oneTimeClass: OneTimeClassNetModel.Request
-    ): Single<OneTimeClassNetModel>
+    ): Single<OneTimeClassNetModel.Response>
 
     @POST("/api/v1/onetime_class/delete/{id}")
     fun deleteOneTimeClass(@Path("id") oneTimeClassId: Int): Completable

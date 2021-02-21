@@ -51,11 +51,9 @@ class TimetableViewModel @Inject constructor(
     fun openScreenNote(note: NotePresentationModel? = null) = router.navigateTo(Screens.note(note))
 
     fun setSelectedDate(selectedDate: LocalDate){
-        if(selectedDate != _selectedDate.value) {
-            getClassesForSelectedDate(selectedDate, true)
+        if(_selectedDate.value != selectedDate) {
+            _selectedDate.value = selectedDate
         }
-        _selectedDate.value = selectedDate
-
     }
 
     fun setIsCollapse(isCollapse: Boolean) {
@@ -69,10 +67,8 @@ class TimetableViewModel @Inject constructor(
         }
     }
 
-    fun getClassesForSelectedDate(date:LocalDate, refresh: Boolean = false){
-        _state.value = TimetableState.Progress
-
-        timetableInteractor.getTimetableForSelectedDate(refresh, date)
+    fun getClassesForSelectedDate(date:LocalDate){
+        timetableInteractor.getTimetableForSelectedDate(date)
             .map { timetableWithNotes ->
                 val multipleClasses = timetableWithNotes.timetable.multipleClasses.map { MultipleClassPresentationModel.fromDomain(it) }
                 val oneTimeClasses = timetableWithNotes.timetable.oneTimeClasses.map { OneTimeClassPresentationModel.fromDomain(it) }
@@ -88,32 +84,18 @@ class TimetableViewModel @Inject constructor(
                     }
                 },
                 {
-                    _state.value = TimetableState.Error
                     _showMessageEvent.value = it.message.toString()
                 }
             )
     }
 
     fun refresh(){
-        _state.value = TimetableState.Refresh(_state.value!!)
-
-        timetableInteractor.getTimetableForSelectedDate(true, _selectedDate.value!!)
-            .map { timetableWithNotes ->
-                val multipleClasses = timetableWithNotes.timetable.multipleClasses.map { MultipleClassPresentationModel.fromDomain(it) }
-                val oneTimeClasses = timetableWithNotes.timetable.oneTimeClasses.map { OneTimeClassPresentationModel.fromDomain(it) }
-                val notes = timetableWithNotes.notes.map { NotePresentationModel.fromDomain(it) }
-                multipleClasses + oneTimeClasses + notes
-            }
+        timetableInteractor.fetchTimetableAndNote()
             .safeSubscribe(
                 {
-                    if(it.isEmpty()){
-                        _state.value = TimetableState.Empty
-                    }else{
-                        _state.value = TimetableState.Data(it)
-                    }
+                    getClassesForSelectedDate(_selectedDate.value!!)
                 },
                 {
-                    _state.value = (_state.value as TimetableState.Refresh).lastState
                     _showMessageEvent.value = it.message.toString()
                 }
             )

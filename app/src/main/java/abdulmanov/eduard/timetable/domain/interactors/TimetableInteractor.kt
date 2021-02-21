@@ -6,9 +6,7 @@ import abdulmanov.eduard.timetable.domain.repositories.NotesRepository
 import abdulmanov.eduard.timetable.domain.repositories.TimetableRepository
 import io.reactivex.Completable
 import io.reactivex.Single
-import io.reactivex.functions.BiFunction
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class TimetableInteractor(
     private val authRepository: AuthRepository,
@@ -39,10 +37,15 @@ class TimetableInteractor(
         authRepository.saveUser(updatedUser)
     }
 
-    fun getTimetableForSelectedDate(refresh: Boolean, date: LocalDate): Single<TimetableWithNotes> {
+    fun fetchTimetableAndNote(): Completable {
+        return timetableRepository.fetchTimetable()
+            .andThen(notesRepository.fetchNotes())
+    }
+
+    fun getTimetableForSelectedDate(date: LocalDate):Single<TimetableWithNotes> {
         return Single.zip(
-            timetableRepository.getTimetable(refresh),
-            notesRepository.getNotes(refresh),
+            timetableRepository.getTimetable(),
+            notesRepository.getNotes(),
             { timetable, notes ->
                 TimetableWithNotes(
                     timetable =  timetable.copy(

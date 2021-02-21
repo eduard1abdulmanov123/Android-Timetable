@@ -1,17 +1,25 @@
 package abdulmanov.eduard.timetable.data.repositories
 
+import abdulmanov.eduard.timetable.data.local.database.dao.OneTimeClassDao
+import abdulmanov.eduard.timetable.data.local.database.models.OneTimeClassDbModel
 import abdulmanov.eduard.timetable.data.remote.TimetableApi
 import abdulmanov.eduard.timetable.data.remote.models.OneTimeClassNetModel
 import abdulmanov.eduard.timetable.domain.models.OneTimeClass
 import abdulmanov.eduard.timetable.domain.repositories.OneTimeClassRepository
 import io.reactivex.Completable
+import io.reactivex.Observable
 
-class OneTimeClassRepositoryImpl(private val timetableApi: TimetableApi): OneTimeClassRepository {
+class OneTimeClassRepositoryImpl(
+    private val timetableApi: TimetableApi,
+    private val oneTimeClassDao: OneTimeClassDao
+): OneTimeClassRepository {
 
     override fun createOneTimeClass(oneTimeClass: OneTimeClass): Completable {
         val oneTimeClassNetModel = OneTimeClassNetModel.fromDomain(oneTimeClass)
 
         return timetableApi.createOneTimeClass(oneTimeClassNetModel)
+            .map(OneTimeClassNetModel::toDatabase)
+            .doOnSuccess(oneTimeClassDao::insertOneTimeClass)
             .ignoreElement()
     }
 
@@ -19,10 +27,13 @@ class OneTimeClassRepositoryImpl(private val timetableApi: TimetableApi): OneTim
         val oneTimeClassNetModel = OneTimeClassNetModel.fromDomain(oneTimeClass)
 
         return timetableApi.updateOneTimeClass(oneTimeClassId, oneTimeClassNetModel)
+            .map(OneTimeClassNetModel::toDatabase)
+            .doOnSuccess(oneTimeClassDao::insertOneTimeClass)
             .ignoreElement()
     }
 
     override fun deleteOneTimeClass(oneTimeClassId: Int): Completable {
         return timetableApi.deleteOneTimeClass(oneTimeClassId)
+            .doOnComplete { oneTimeClassDao.deleteById(oneTimeClassId) }
     }
 }

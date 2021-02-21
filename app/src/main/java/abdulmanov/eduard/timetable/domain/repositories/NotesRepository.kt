@@ -6,7 +6,9 @@ import io.reactivex.Single
 
 interface NotesRepository {
 
-    fun getNotes(refresh: Boolean): Single<List<Note>>
+    fun fetchNotes(): Completable
+
+    fun getNotes(): Single<List<Note>>
 
     fun createNote(note: Note): Completable
 
