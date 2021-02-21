@@ -1,6 +1,7 @@
 package abdulmanov.eduard.timetable.presentation.events.onetimeclass.models
 
 import abdulmanov.eduard.timetable.domain.models.OneTimeClass
+import abdulmanov.eduard.timetable.presentation.events.common.ItemToBeSortedByTime
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
@@ -16,13 +17,19 @@ data class OneTimeClassPresentationModel(
     var startOfClass: String = "",
     var endOfClass: String = "",
     var dateOfClass: String = ""
-): Parcelable {
+): Parcelable, ItemToBeSortedByTime {
+
+    override val timeToSort get() = startOfClass
 
     fun isNew(): Boolean = id == -1
 
     companion object {
 
         private val DATE_FORMATTER_PRESENTER = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")
+
+        fun fromDomain(oneTimeClasses: List<OneTimeClass>): List<OneTimeClassPresentationModel> {
+            return oneTimeClasses.map(::fromDomain)
+        }
 
         fun fromDomain(oneTimeClass: OneTimeClass): OneTimeClassPresentationModel {
             return OneTimeClassPresentationModel(

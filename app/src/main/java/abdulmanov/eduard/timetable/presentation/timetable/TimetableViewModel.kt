@@ -6,16 +6,15 @@ import abdulmanov.eduard.timetable.domain.models.TypeWeek
 import abdulmanov.eduard.timetable.presentation.Screens
 import abdulmanov.eduard.timetable.presentation._common.provides.StringProvider
 import abdulmanov.eduard.timetable.presentation._common.viewmodel.BaseViewModel
+import abdulmanov.eduard.timetable.presentation.events.common.ItemToBeSortedByTime
 import abdulmanov.eduard.timetable.presentation.events.multipleclass.models.MultipleClassPresentationModel
 import abdulmanov.eduard.timetable.presentation.events.note.models.NotePresentationModel
 import abdulmanov.eduard.timetable.presentation.events.onetimeclass.models.OneTimeClassPresentationModel
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.terrakok.cicerone.Router
-import com.hadilq.liveevent.LiveEvent
-import java.sql.Time
 import java.time.LocalDate
+import java.time.LocalTime
 import javax.inject.Inject
 
 class TimetableViewModel @Inject constructor(
@@ -66,10 +65,11 @@ class TimetableViewModel @Inject constructor(
     fun getClassesForSelectedDate(date:LocalDate){
         timetableInteractor.getTimetableForSelectedDate(date)
             .map { timetableWithNotes ->
-                val multipleClasses = timetableWithNotes.timetable.multipleClasses.map { MultipleClassPresentationModel.fromDomain(it) }
-                val oneTimeClasses = timetableWithNotes.timetable.oneTimeClasses.map { OneTimeClassPresentationModel.fromDomain(it) }
-                val notes = timetableWithNotes.notes.map { NotePresentationModel.fromDomain(it) }
-                multipleClasses + oneTimeClasses + notes
+                val multipleClasses = MultipleClassPresentationModel.fromDomain(timetableWithNotes.timetable.multipleClasses)
+                val oneTimeClasses = OneTimeClassPresentationModel.fromDomain(timetableWithNotes.timetable.oneTimeClasses)
+                val notes = NotePresentationModel.fromDomain(timetableWithNotes.notes)
+                val items = multipleClasses + oneTimeClasses + notes
+                items.sortedBy { LocalTime.parse((it as ItemToBeSortedByTime).timeToSort) }
             }
             .safeSubscribe(
                 {

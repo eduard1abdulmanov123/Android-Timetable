@@ -4,6 +4,7 @@ import abdulmanov.eduard.timetable.domain.models.MultipleClass
 import abdulmanov.eduard.timetable.domain.models.Periodicity
 import abdulmanov.eduard.timetable.presentation._common.extensions.getFullTitleDayOfWeekForNumber
 import abdulmanov.eduard.timetable.presentation._common.extensions.getNumberForFullTitleDayOfWeek
+import abdulmanov.eduard.timetable.presentation.events.common.ItemToBeSortedByTime
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
@@ -18,11 +19,17 @@ data class MultipleClassPresentationModel(
     var endOfClass: String = "",
     var dayOfWeek: String = "",
     var periodicity: String = ""
-): Parcelable {
+): Parcelable, ItemToBeSortedByTime {
+
+    override val timeToSort get() =  startOfClass
 
     fun isNew(): Boolean = id == -1
 
     companion object {
+
+        fun fromDomain(multipleClasses: List<MultipleClass>): List<MultipleClassPresentationModel>{
+            return multipleClasses.map(::fromDomain)
+        }
 
         fun fromDomain(multipleClass: MultipleClass): MultipleClassPresentationModel {
             return MultipleClassPresentationModel(

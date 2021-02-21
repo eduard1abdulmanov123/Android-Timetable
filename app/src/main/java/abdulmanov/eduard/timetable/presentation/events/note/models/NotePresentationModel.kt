@@ -1,6 +1,7 @@
 package abdulmanov.eduard.timetable.presentation.events.note.models
 
 import abdulmanov.eduard.timetable.domain.models.Note
+import abdulmanov.eduard.timetable.presentation.events.common.ItemToBeSortedByTime
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
@@ -13,13 +14,19 @@ data class NotePresentationModel(
     var date: String = "",
     var time: String = "",
     var visibility: Boolean = false
-): Parcelable {
+): Parcelable, ItemToBeSortedByTime {
+
+    override val timeToSort get() = time
 
     fun isNew(): Boolean = id == -1
 
     companion object {
 
         private val DATE_FORMATTER_PRESENTER = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")
+
+        fun fromDomain(notes: List<Note>): List<NotePresentationModel> {
+            return notes.map(::fromDomain)
+        }
 
         fun fromDomain(note: Note): NotePresentationModel {
             return NotePresentationModel(
