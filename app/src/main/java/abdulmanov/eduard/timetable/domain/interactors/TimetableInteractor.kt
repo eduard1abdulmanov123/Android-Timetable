@@ -9,32 +9,16 @@ import io.reactivex.Single
 import java.time.LocalDate
 
 class TimetableInteractor(
-    private val authRepository: AuthRepository,
     private val timetableRepository: TimetableRepository,
     private val notesRepository: NotesRepository
 ) {
 
     fun createTimetable(typeWeek: TypeWeek): Completable{
         return timetableRepository.createTimetable(typeWeek)
-            .doOnSuccess {
-                timetableRepository.saveTimetableInfo(it)
-                attachUserToTimetable(it)
-            }
-            .ignoreElement()
     }
 
     fun joinTimetable(link: String): Completable {
         return timetableRepository.joinTimetable(link)
-            .doOnSuccess {
-                timetableRepository.saveTimetableInfo(it)
-                attachUserToTimetable(it)
-            }
-            .ignoreElement()
-    }
-
-    private fun attachUserToTimetable(timetable: Timetable){
-        val updatedUser = authRepository.getUser().copy(currentTimetableId = timetable.id)
-        authRepository.saveUser(updatedUser)
     }
 
     fun fetchTimetableAndNote(): Completable {

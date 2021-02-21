@@ -24,10 +24,7 @@ import javax.inject.Inject
 class NoteFragment: BaseFragment<FragmentNoteBinding>(),
     DatePickerBottomSheetDialog.DatePickerCallback,
     TimePickerBottomSheetDialog.TimePickerCallback {
-
-    @Inject
-    lateinit var lawProvider: LawProvider
-
+    
     private val viewModel by initViewModel<NoteViewModel>()
 
     override fun onAttach(context: Context) {
@@ -45,7 +42,7 @@ class NoteFragment: BaseFragment<FragmentNoteBinding>(),
         super.onViewCreated(view, savedInstanceState)
         initUI()
 
-        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessage))
+        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessageAsToast))
         viewModel.showApplyProgress.observe(viewLifecycleOwner, Observer(::showApplyProgress))
     }
 
@@ -122,11 +119,7 @@ class NoteFragment: BaseFragment<FragmentNoteBinding>(),
             viewModel.createOrUpdate()
         }
     }
-
-    private fun showMessage(message: String){
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
-
+    
     private fun showApplyProgress(show:Boolean){
         binding.applyTextView.isVisible = !show
         binding.applyProgressBar.isVisible = show

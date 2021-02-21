@@ -16,9 +16,6 @@ import javax.inject.Inject
 
 class SettingFragment: BaseFragment<FragmentSettingBinding>() {
 
-    @Inject
-    lateinit var lawProvider: LawProvider
-
     private val viewModel by initViewModel<SettingViewModel>()
 
     override fun onAttach(context: Context) {
@@ -32,7 +29,7 @@ class SettingFragment: BaseFragment<FragmentSettingBinding>() {
         initUI()
 
         viewModel.changeTypeWeekEvent.observe(viewLifecycleOwner, Observer(::setCurrentSelectTypeWeek))
-        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessage))
+        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessageAsToast))
     }
 
     private fun initUI() {
@@ -76,10 +73,6 @@ class SettingFragment: BaseFragment<FragmentSettingBinding>() {
             TypeWeek.EVEN -> binding.evenWeekRadioButton.isChecked = true
         }
         binding.typeWeekRadioGroup.jumpDrawablesToCurrentState()
-    }
-
-    private fun showMessage(message: String){
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

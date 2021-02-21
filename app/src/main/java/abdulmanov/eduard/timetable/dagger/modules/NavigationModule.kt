@@ -9,6 +9,7 @@ import javax.inject.Singleton
 
 @Module
 class NavigationModule {
+
     private val cicerone: Cicerone<Router> = Cicerone.create()
 
     @Singleton

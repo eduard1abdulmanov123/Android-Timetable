@@ -4,6 +4,7 @@ import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.FragmentCreateTimetableBinding
 import abdulmanov.eduard.timetable.domain.models.TypeWeek
 import abdulmanov.eduard.timetable.presentation.App
+import abdulmanov.eduard.timetable.presentation._common.base.BaseFragment
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,25 +18,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
-class CreateTimetableFragment: Fragment() {
+class CreateTimetableFragment: BaseFragment<FragmentCreateTimetableBinding>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel by viewModels<CreateTimetableViewModel> { viewModelFactory }
-
-    private var _binding: FragmentCreateTimetableBinding? = null
-    private val binding: FragmentCreateTimetableBinding
-        get() = _binding!!
+    private val viewModel by initViewModel<CreateTimetableViewModel>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity().application as App).appComponent.inject(this)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentCreateTimetableBinding.inflate(inflater, container,false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,12 +32,7 @@ class CreateTimetableFragment: Fragment() {
         initUI()
 
         viewModel.showApplyProgress.observe(viewLifecycleOwner, Observer(::showApplyProgress))
-        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessage))
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessageAsToast))
     }
 
     private fun initUI() {
@@ -73,10 +57,6 @@ class CreateTimetableFragment: Fragment() {
     private fun showApplyProgress(show:Boolean){
         binding.applyTextView.isVisible = !show
         binding.applyProgressBar.isVisible = show
-    }
-
-    private fun showMessage(message: String){
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

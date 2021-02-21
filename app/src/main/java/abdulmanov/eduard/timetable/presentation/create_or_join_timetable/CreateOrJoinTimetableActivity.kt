@@ -1,8 +1,11 @@
 package abdulmanov.eduard.timetable.presentation.create_or_join_timetable
 
 import abdulmanov.eduard.timetable.R
+import abdulmanov.eduard.timetable.databinding.ActivityCreateOrJoinTimetableBinding
 import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation.Screens
+import abdulmanov.eduard.timetable.presentation._common.base.BaseActivity
+import abdulmanov.eduard.timetable.presentation._common.viewmodel.BaseViewModel
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,36 +15,19 @@ import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import javax.inject.Inject
 
-class CreateOrJoinTimetableActivity : AppCompatActivity() {
+class CreateOrJoinTimetableActivity : BaseActivity<ActivityCreateOrJoinTimetableBinding>() {
 
-    @Inject
-    lateinit var navigatorHolder: NavigatorHolder
-
-    @Inject
-    lateinit var router: Router
-
-    private val navigator =  AppNavigator(this, R.id.onboardingFragmentContainerView)
+    override val navigator =  AppNavigator(this, R.id.onboardingFragmentContainerView)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as App).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_or_join_timetable)
 
         if(intent.dataString != null){
             router.replaceScreen(Screens.joinTimetable(intent.dataString!!))
         }else if(savedInstanceState == null){
             router.replaceScreen(Screens.createTimetable())
         }
-    }
-
-    override fun onResumeFragments() {
-        super.onResumeFragments()
-        navigatorHolder.setNavigator(navigator)
-    }
-
-    override fun onPause() {
-        navigatorHolder.removeNavigator()
-        super.onPause()
     }
 
     companion object {

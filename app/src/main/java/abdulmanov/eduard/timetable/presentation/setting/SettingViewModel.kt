@@ -22,10 +22,6 @@ class SettingViewModel @Inject constructor(
     val changeTypeWeekEvent: LiveData<TypeWeek>
         get() = _changeTypeWeekEvent
 
-    private val _showMessageEvent = LiveEvent<String>()
-    val showMessageEvent: LiveData<String>
-        get() = _showMessageEvent
-
     fun onBackCommandClick() = router.exit()
 
     fun openScreenCreateOrJoinTimetable() = router.navigateTo(Screens.createTimetable())
@@ -58,7 +54,9 @@ class SettingViewModel @Inject constructor(
 
     fun onOpenScreenLogin() {
         settingInteractor.logout()
-        router.replaceScreen(Screens.login())
+            .addDispatchers()
+            .subscribe{ router.replaceScreen(Screens.login()) }
+            .connect()
     }
 
     fun getUserName(): String {

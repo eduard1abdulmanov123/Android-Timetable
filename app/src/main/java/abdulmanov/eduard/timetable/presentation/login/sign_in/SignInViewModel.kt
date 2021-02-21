@@ -14,36 +14,33 @@ class SignInViewModel @Inject constructor(
     private val authInteractor: AuthInteractor
 ): BaseViewModel(){
 
-    private val _showMessageEvent = LiveEvent<Boolean>()
-    val showMessageEvent: LiveData<Boolean>
-        get() = _showMessageEvent
-
     private val _showLoginInApp = MutableLiveData(false)
     val showLoginInApp: LiveData<Boolean>
         get() = _showLoginInApp
 
     fun openSignUp() = router.replaceScreen(Screens.signUp())
 
+    @Suppress("UnstableApiUsage")
     fun signIn(login: String, password: String){
         if(_showLoginInApp.value == false) {
-            _showMessageEvent.value = false
-            _showLoginInApp.value = true
 
-            authInteractor.signIn(login, password).safeSubscribe(
-                {
-                    _showLoginInApp.value = false
-
-                    if(it.currentTimetableId != null){
-                        router.replaceScreen(Screens.main())
-                    }else{
-                        router.replaceScreen(Screens.createOrJoinTimetable())
+            authInteractor.signIn(login, password)
+                .addDispatchers()
+                .doOnSubscribe { _showLoginInApp.value = true }
+                .doOnTerminate { _showLoginInApp.value = false }
+                .subscribe(
+                    {
+                        if(it.currentTimetableId != null){
+                            router.replaceScreen(Screens.main())
+                        }else{
+                            router.replaceScreen(Screens.createOrJoinTimetable())
+                        }
+                    },
+                    {
+                        _showMessageEvent.value = it.message.toString()
                     }
-                },
-                {
-                    _showLoginInApp.value = false
-                    _showMessageEvent.value = true
-                }
-            )
+                )
+                .connect()
         }
     }
 }

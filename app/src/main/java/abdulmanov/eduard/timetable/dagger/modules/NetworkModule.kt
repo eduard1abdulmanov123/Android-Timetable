@@ -23,5 +23,4 @@ class NetworkModule {
     fun provideTimetableApi(okHttpClient: OkHttpClient): TimetableApi {
         return RetrofitFactory.getTimetableApi(TimetableApi.BASE_URL, okHttpClient)
     }
-
 }

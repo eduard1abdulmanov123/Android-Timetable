@@ -9,7 +9,6 @@ import abdulmanov.eduard.timetable.presentation._common.viewmodel.BaseViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.terrakok.cicerone.Router
-import com.hadilq.liveevent.LiveEvent
 import javax.inject.Inject
 
 class CreateTimetableViewModel @Inject constructor(
@@ -22,10 +21,6 @@ class CreateTimetableViewModel @Inject constructor(
     val showApplyProgress: LiveData<Boolean>
         get() = _showApplyProgress
 
-    private val _showMessageEvent = LiveEvent<String>()
-    val showMessageEvent: LiveData<String>
-        get() = _showMessageEvent
-
     var currentSelectTypeWeek: TypeWeek? = null
 
     fun openScreenJoinTimetable() = router.replaceScreen(Screens.joinTimetable())
@@ -34,18 +29,19 @@ class CreateTimetableViewModel @Inject constructor(
         if(currentSelectTypeWeek == null){
             _showMessageEvent.value = stringProvider.getString(R.string.create_timetable_error_select_type_week)
         }else if(_showApplyProgress.value == false){
-            _showApplyProgress.value = true
-
-            timetableInteractor.createTimetable(currentSelectTypeWeek!!).safeSubscribe(
-                {
-                    _showApplyProgress.value = false
-                    router.newRootChain(Screens.main())
-                },
-                {
-                    _showApplyProgress.value = false
-                    _showMessageEvent.value = it.message.toString()
-                }
-            )
+            timetableInteractor.createTimetable(currentSelectTypeWeek!!)
+                .addDispatchers()
+                .doOnSubscribe { _showApplyProgress.value = true }
+                .doOnTerminate { _showApplyProgress.value = false }
+                .subscribe(
+                    {
+                        router.newRootChain(Screens.main())
+                    },
+                    {
+                        _showMessageEvent.value = it.message.toString()
+                    }
+                )
+                .connect()
         }
     }
 }

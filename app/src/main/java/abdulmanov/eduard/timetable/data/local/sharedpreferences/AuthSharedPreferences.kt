@@ -26,6 +26,7 @@ class AuthSharedPreferences(context: Context) {
 
     companion object{
         private const val PREFERENCES_NAME = "${BuildConfig.APPLICATION_ID}_auth"
+
         private const val PREF_TOKEN = "token"
         private const val PREF_USER_NAME = "user_name"
         private const val PREF_CURRENT_TIMETABLE_ID = "current_timetable_id"

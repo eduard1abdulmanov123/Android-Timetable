@@ -36,9 +36,7 @@ class TimetableNetModel{
                 creatorUsername = timetable.creatorUsername,
                 link = timetable.link,
                 dateUpdate = timetable.dateUpdate,
-                typeWeek = TypeWeek.numberToTypeWeek(timetable.typeWeek),
-                multipleClasses = timetable.multipleClasses.map { MultipleClassNetModel.toDomain(it) },
-                oneTimeClasses = timetable.oneTimeClasses.map { OneTimeClassNetModel.toDomain(it) }
+                typeWeek = TypeWeek.numberToTypeWeek(timetable.typeWeek)
             )
         }
     }

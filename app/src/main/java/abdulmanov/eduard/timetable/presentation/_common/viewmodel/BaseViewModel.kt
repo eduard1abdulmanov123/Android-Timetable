@@ -1,6 +1,8 @@
 package abdulmanov.eduard.timetable.presentation._common.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.hadilq.liveevent.LiveEvent
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -11,20 +13,18 @@ import io.reactivex.schedulers.Schedulers
 import org.json.JSONObject
 import retrofit2.HttpException
 
+@Suppress("PropertyName")
 abstract class BaseViewModel : ViewModel() {
+
+    protected val _showMessageEvent = LiveEvent<String>()
+    val showMessageEvent: LiveData<String>
+        get() = _showMessageEvent
 
     private val compositeDisposable = CompositeDisposable()
 
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()
-    }
-
-    protected fun <T> Observable<T>.safeSubscribe(onSuccess: (T) -> Unit, onError: (Throwable) -> Unit) {
-        val disposable = subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(onSuccess, onError)
-        compositeDisposable.add(disposable)
     }
 
     protected fun <T> Single<T>.safeSubscribe(onSuccess: (T) -> Unit, onError: (Throwable) -> Unit) {
@@ -41,11 +41,9 @@ abstract class BaseViewModel : ViewModel() {
         compositeDisposable.add(disposable)
     }
 
-    protected fun Completable.safeSubscribe(onSuccess: () -> Unit) {
-        val disposable = subscribeOn(Schedulers.io())
+    protected fun <T> Single<T>.addDispatchers(): Single<T> {
+        return subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(onSuccess)
-        compositeDisposable.add(disposable)
     }
 
     protected fun Completable.addDispatchers(): Completable {

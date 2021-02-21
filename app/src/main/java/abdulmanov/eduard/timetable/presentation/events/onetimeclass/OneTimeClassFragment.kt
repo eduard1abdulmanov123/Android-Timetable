@@ -39,7 +39,7 @@ class OneTimeClassFragment: BaseFragment<FragmentOneTimeClassBinding>(),
         super.onViewCreated(view, savedInstanceState)
         initUI()
 
-        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessage))
+        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessageAsToast))
         viewModel.showApplyProgress.observe(viewLifecycleOwner, Observer(::showApplyProgress))
     }
 
@@ -133,10 +133,6 @@ class OneTimeClassFragment: BaseFragment<FragmentOneTimeClassBinding>(),
         binding.applyContainer.setOnClickListener {
             viewModel.createOrUpdate()
         }
-    }
-
-    private fun showMessage(message: String){
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showApplyProgress(show:Boolean){

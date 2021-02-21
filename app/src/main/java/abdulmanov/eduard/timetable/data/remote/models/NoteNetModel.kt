@@ -46,16 +46,6 @@ class NoteNetModel {
             )
         }
 
-        fun toDomain(note: Response): Note {
-            return Note(
-                id = note.id,
-                content = note.content,
-                date = note.date,
-                time = note.time,
-                visibility = note.visibility
-            )
-        }
-
         fun fromDomain(note: Note): Request {
             return Request(
                 content = note.content,

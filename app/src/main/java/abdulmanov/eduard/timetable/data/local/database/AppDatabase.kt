@@ -23,6 +23,12 @@ abstract class AppDatabase: RoomDatabase() {
 
     abstract val oneTimeClassDao: OneTimeClassDao
 
+    fun clearAll(){
+        noteDao.deleteAll()
+        multipleClassDao.deleteAll()
+        oneTimeClassDao.deleteAll()
+    }
+
     companion object {
         private const val DATABASE_NAME = "timetable_database"
 

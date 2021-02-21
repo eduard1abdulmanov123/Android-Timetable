@@ -34,9 +34,6 @@ class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
     OneTimeClassesDelegateAdapter.ClickListener,
     NotesDelegateAdapter.ClickListener {
 
-    @Inject
-    lateinit var lawProvider: LawProvider
-
     private val viewModel by initViewModel<TimetableViewModel>()
 
     override fun onAttach(context: Context) {
@@ -52,7 +49,7 @@ class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
         viewModel.selectedDate.observe(viewLifecycleOwner, Observer(::selectDate))
         viewModel.isCollapse.observe(viewLifecycleOwner, Observer(::setIsCollapse))
         viewModel.state.observe(viewLifecycleOwner, Observer(::setState))
-        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessage))
+        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessageAsToast))
 
         if(viewModel.selectedDate.value == null){
             viewModel.setSelectedDate(LocalDate.now())
@@ -140,34 +137,19 @@ class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
 
     private fun setState(state: TimetableState){
         when(state){
-            is TimetableState.Progress -> {
-                binding.progressBar.isVisible = true
-                binding.emptyItemsImageView.isVisible = false
-                binding.swipeRefresh.isVisible = false
-                binding.swipeRefresh.isRefreshing = false
-                binding.recyclerView.isVisible = false
-            }
             is TimetableState.Empty -> {
-                binding.progressBar.isVisible = false
                 binding.emptyItemsImageView.isVisible = true
-                binding.swipeRefresh.isVisible = true
                 binding.swipeRefresh.isRefreshing = false
                 binding.recyclerView.isVisible = false
             }
             is TimetableState.Data -> {
-                binding.progressBar.isVisible = false
                 binding.emptyItemsImageView.isVisible = false
-                binding.swipeRefresh.isVisible = true
                 binding.swipeRefresh.isRefreshing = false
                 binding.recyclerView.isVisible = true
                 (binding.recyclerView.adapter as CompositeDelegateAdapter).swapData(state.items)
                 binding.recyclerView.scrollToPosition(0)
             }
         }
-    }
-
-    fun showMessage(message: String){
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     companion object{

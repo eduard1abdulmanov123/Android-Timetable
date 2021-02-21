@@ -9,9 +9,9 @@ import java.time.LocalDate
 
 interface TimetableRepository {
 
-    fun createTimetable(typeWeek: TypeWeek): Single<Timetable>
+    fun createTimetable(typeWeek: TypeWeek): Completable
 
-    fun joinTimetable(link: String): Single<Timetable>
+    fun joinTimetable(link: String): Completable
 
     fun fetchTimetable(): Completable
 
@@ -19,11 +19,5 @@ interface TimetableRepository {
 
     fun saveTimetableInfo(timetable: Timetable)
 
-    fun getTimetableInfo(): Timetable
-
-    fun getTimetableLink(): String
-
     fun getTypeWeekForDate(date: LocalDate): TypeWeek
-
-    fun clearAllInformationAboutTimetable()
 }

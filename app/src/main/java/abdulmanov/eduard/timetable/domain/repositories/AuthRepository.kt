@@ -13,5 +13,5 @@ interface AuthRepository {
 
     fun getUser(): User
 
-    fun clearAllInformationAboutUser()
+    fun haveAccess(): Boolean
 }

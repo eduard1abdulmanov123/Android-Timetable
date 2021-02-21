@@ -18,9 +18,7 @@ class NotesRepositoryImpl(
         return Single.zip(
             timetableApi.getNotesForTimetableOwner(),
             timetableApi.getNotes(),
-            { notesForOwner, notes ->
-                notesForOwner.plus(notes).distinctBy { it.id }
-            }
+            { notesForOwner, notes -> notesForOwner.plus(notes).distinctBy { it.id } }
         )
             .map(NoteNetModel::toDatabase)
             .doOnSuccess(noteDao::updateNotes)
@@ -44,7 +42,7 @@ class NotesRepositoryImpl(
     override fun updateNote(noteId: Int, note: Note): Completable {
         val noteNetModel = NoteNetModel.fromDomain(note)
 
-        return timetableApi.updateNote(noteId,noteNetModel)
+        return timetableApi.updateNote(noteId, noteNetModel)
             .map(NoteNetModel::toDatabase)
             .doOnSuccess(noteDao::insertNote)
             .ignoreElement()

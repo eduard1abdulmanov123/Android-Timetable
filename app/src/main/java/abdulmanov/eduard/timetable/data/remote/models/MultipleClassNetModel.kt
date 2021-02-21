@@ -66,20 +66,6 @@ class MultipleClassNetModel {
             )
         }
 
-        fun toDomain(multipleClass: Response): MultipleClass {
-            return MultipleClass(
-                id = multipleClass.id,
-                nameSubject = multipleClass.nameSubject,
-                nameTeacher = multipleClass.nameTeacher,
-                audience = multipleClass.audience,
-                typeClass = multipleClass.typeClass,
-                startOfClass = multipleClass.startOfClass,
-                endOfClass = multipleClass.endOfClass,
-                dayOfWeek = multipleClass.dayOfWeek,
-                periodicity = multipleClass.periodicity
-            )
-        }
-
         fun fromDomain(multipleClass: MultipleClass): Request {
             return Request(
                 nameSubject = multipleClass.nameSubject,

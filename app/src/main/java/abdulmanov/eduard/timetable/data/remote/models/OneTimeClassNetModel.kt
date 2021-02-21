@@ -61,19 +61,6 @@ class OneTimeClassNetModel {
             )
         }
 
-        fun toDomain(oneTimeClass: Response): OneTimeClass {
-            return OneTimeClass(
-                id = oneTimeClass.id,
-                nameSubject = oneTimeClass.nameSubject,
-                nameTeacher = oneTimeClass.nameTeacher,
-                audience = oneTimeClass.audience,
-                typeClass = oneTimeClass.typeClass,
-                startOfClass = oneTimeClass.startOfClass,
-                endOfClass = oneTimeClass.endOfClass,
-                dateOfClass = oneTimeClass.dateOfClass
-            )
-        }
-
         fun fromDomain(oneTimeClass: OneTimeClass): Request {
             return Request(
                 nameSubject = oneTimeClass.nameSubject,

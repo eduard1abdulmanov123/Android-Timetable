@@ -13,38 +13,24 @@ class DomainModule {
     @Provides
     fun provideAuthInteractor(
         authRepository: AuthRepository,
-        timetableRepository: TimetableRepository
+        timetableInteractor: TimetableInteractor
     ): AuthInteractor {
-        return AuthInteractor(authRepository, timetableRepository)
+        return AuthInteractor(authRepository, timetableInteractor)
     }
 
     @Singleton
     @Provides
     fun provideTimetableInteractor(
-        authRepository: AuthRepository,
         timetableRepository: TimetableRepository,
         notesRepository: NotesRepository
     ): TimetableInteractor {
-        return TimetableInteractor(authRepository, timetableRepository, notesRepository)
+        return TimetableInteractor(timetableRepository, notesRepository)
     }
 
     @Singleton
     @Provides
-    fun provideLawInteractor(
-        authRepository: AuthRepository,
-        timetableRepository: TimetableRepository
-    ): LawInteractor {
-        return LawInteractor(authRepository, timetableRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideSettingInteractor(
-        authRepository: AuthRepository,
-        timetableRepository: TimetableRepository,
-        settingRepository: SettingRepository
-    ): SettingInteractor {
-        return SettingInteractor(authRepository, timetableRepository, settingRepository)
+    fun provideSettingInteractor(settingRepository: SettingRepository): SettingInteractor {
+        return SettingInteractor(settingRepository)
     }
 
     @Singleton

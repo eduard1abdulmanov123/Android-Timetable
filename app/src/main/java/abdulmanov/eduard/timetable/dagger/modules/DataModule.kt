@@ -1,5 +1,6 @@
 package abdulmanov.eduard.timetable.dagger.modules
 
+import abdulmanov.eduard.timetable.data.local.database.AppDatabase
 import abdulmanov.eduard.timetable.data.local.database.dao.MultipleClassDao
 import abdulmanov.eduard.timetable.data.local.database.dao.NoteDao
 import abdulmanov.eduard.timetable.data.local.database.dao.OneTimeClassDao
@@ -19,9 +20,10 @@ class DataModule {
     @Provides
     fun provideAuthRepository(
         timetableApi: TimetableApi,
-        authSharedPreferences: AuthSharedPreferences
+        authSharedPreferences: AuthSharedPreferences,
+        timetableSharedPreferences: TimetableSharedPreferences
     ): AuthRepository{
-        return AuthRepositoryImpl(timetableApi, authSharedPreferences)
+        return AuthRepositoryImpl(timetableApi, authSharedPreferences,timetableSharedPreferences)
     }
 
     @Singleton
@@ -30,20 +32,27 @@ class DataModule {
         timetableApi: TimetableApi,
         multipleClassDao: MultipleClassDao,
         oneTimeClassDao: OneTimeClassDao,
+        authSharedPreferences: AuthSharedPreferences,
         timetableSharedPreferences: TimetableSharedPreferences
     ): TimetableRepository {
         return TimetableRepositoryImpl(
             timetableApi,
             multipleClassDao,
             oneTimeClassDao,
+            authSharedPreferences,
             timetableSharedPreferences
         )
     }
 
     @Singleton
     @Provides
-    fun provideSettingRepository(timetableApi: TimetableApi): SettingRepository {
-        return SettingRepositoryImpl(timetableApi)
+    fun provideSettingRepository(
+        timetableApi: TimetableApi,
+        database: AppDatabase,
+        authSharedPreferences: AuthSharedPreferences,
+        timetableSharedPreferences: TimetableSharedPreferences
+    ): SettingRepository {
+        return SettingRepositoryImpl(timetableApi, database, authSharedPreferences, timetableSharedPreferences)
     }
 
     @Singleton

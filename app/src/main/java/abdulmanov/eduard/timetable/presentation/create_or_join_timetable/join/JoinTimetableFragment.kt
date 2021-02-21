@@ -3,6 +3,7 @@ package abdulmanov.eduard.timetable.presentation.create_or_join_timetable.join
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.FragmentJoinTimetableBinding
 import abdulmanov.eduard.timetable.presentation.App
+import abdulmanov.eduard.timetable.presentation._common.base.BaseFragment
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,25 +18,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
-class JoinTimetableFragment: Fragment() {
+class JoinTimetableFragment: BaseFragment<FragmentJoinTimetableBinding>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel by viewModels<JoinTimetableViewModel> { viewModelFactory }
-
-    private var _binding: FragmentJoinTimetableBinding? = null
-    private val binding: FragmentJoinTimetableBinding
-        get() = _binding!!
+    private val viewModel by initViewModel<JoinTimetableViewModel>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity().application as App).appComponent.inject(this)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentJoinTimetableBinding.inflate(inflater, container,false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,12 +32,7 @@ class JoinTimetableFragment: Fragment() {
         initUI()
 
         viewModel.showApplyProgress.observe(viewLifecycleOwner, Observer(::showApplyProgress))
-        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessage))
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessageAsToast))
     }
 
     private fun initUI() {
@@ -71,10 +55,6 @@ class JoinTimetableFragment: Fragment() {
     private fun showApplyProgress(show:Boolean){
         binding.applyTextView.isVisible = !show
         binding.applyProgressBar.isVisible = show
-    }
-
-    private fun showMessage(message: String){
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

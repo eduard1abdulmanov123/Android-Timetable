@@ -18,15 +18,17 @@ class ErrorInterceptor: Interceptor {
 
             return if(jsonObject.has("status") && jsonObject.has("message")){
                 val jsonMessage = jsonObject.getString("message")
+                val jsonStatus = jsonObject.getString("status")
+                val message = ":$jsonStatus:$jsonMessage"
 
                 response.newBuilder()
                     .code(400)
                     .body(jsonString.toResponseBody(responseBody.contentType()))
-                    .message(jsonMessage)
+                    .message(message)
                     .build()
             } else {
                 response.newBuilder()
-                    .body(ResponseBody.create(responseBody.contentType(), jsonString))
+                    .body(jsonString.toResponseBody(responseBody.contentType()))
                     .build()
             }
         }

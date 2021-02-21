@@ -34,6 +34,7 @@ class TimetableSharedPreferences(context: Context) {
 
     companion object{
         private const val PREFERENCES_NAME = "${BuildConfig.APPLICATION_ID}_timetable"
+
         private const val PREF_ID = "id"
         private const val PREF_CREATOR_USERNAME = "creator_username"
         private const val PREF_LINK = "link"

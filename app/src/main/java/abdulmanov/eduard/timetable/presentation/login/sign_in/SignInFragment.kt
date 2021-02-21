@@ -2,6 +2,7 @@ package abdulmanov.eduard.timetable.presentation.login.sign_in
 
 import abdulmanov.eduard.timetable.databinding.FragmentSignInBinding
 import abdulmanov.eduard.timetable.presentation.App
+import abdulmanov.eduard.timetable.presentation._common.base.BaseFragment
 import abdulmanov.eduard.timetable.presentation._common.extensions.focus
 import android.content.Context
 import android.os.Bundle
@@ -16,25 +17,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
-class SignInFragment: Fragment() {
+class SignInFragment: BaseFragment<FragmentSignInBinding>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel by viewModels<SignInViewModel> { viewModelFactory }
-
-    private var _binding: FragmentSignInBinding? = null
-    private val binding: FragmentSignInBinding
-        get() = _binding!!
+    private val viewModel by initViewModel<SignInViewModel>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity().application as App).appComponent.inject(this)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentSignInBinding.inflate(inflater, container,false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,12 +31,7 @@ class SignInFragment: Fragment() {
         initUI()
 
         viewModel.showLoginInApp.observe(viewLifecycleOwner, Observer(::showLoginInApp))
-        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessage))
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessageAsToast))
     }
 
     private fun initUI(){
@@ -81,10 +65,6 @@ class SignInFragment: Fragment() {
     private fun showLoginInApp(show:Boolean){
         binding.entryTextView.isVisible = !show
         binding.entryProgressBar.isVisible = show
-    }
-
-    private fun showMessage(show:Boolean){
-        binding.messageErrorLinearLayout.isVisible = show
     }
 
     companion object{

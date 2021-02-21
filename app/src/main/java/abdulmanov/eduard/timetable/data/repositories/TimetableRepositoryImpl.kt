@@ -4,6 +4,7 @@ import abdulmanov.eduard.timetable.data.local.database.dao.MultipleClassDao
 import abdulmanov.eduard.timetable.data.local.database.dao.OneTimeClassDao
 import abdulmanov.eduard.timetable.data.local.database.models.MultipleClassDbModel
 import abdulmanov.eduard.timetable.data.local.database.models.OneTimeClassDbModel
+import abdulmanov.eduard.timetable.data.local.sharedpreferences.AuthSharedPreferences
 import abdulmanov.eduard.timetable.data.local.sharedpreferences.TimetableSharedPreferences
 import abdulmanov.eduard.timetable.data.remote.TimetableApi
 import abdulmanov.eduard.timetable.data.remote.models.MultipleClassNetModel
@@ -21,17 +22,28 @@ class TimetableRepositoryImpl(
     private val timetableApi: TimetableApi,
     private val multipleClassDao: MultipleClassDao,
     private val oneTimeClassDao: OneTimeClassDao,
-    private val sharedPreferences: TimetableSharedPreferences
+    private val authSharedPreferences: AuthSharedPreferences,
+    private val timetableSharedPreferences: TimetableSharedPreferences
 ): TimetableRepository {
 
-    override fun createTimetable(typeWeek: TypeWeek): Single<Timetable> {
+    override fun createTimetable(typeWeek: TypeWeek): Completable {
         return timetableApi.createTimetable(TimetableNetModel.Request(typeWeek.number))
             .map(TimetableNetModel::toDomain)
+            .doOnSuccess{
+                saveTimetableInfo(it)
+                authSharedPreferences.currentTimetableId = it.id
+            }
+            .ignoreElement()
     }
 
-    override fun joinTimetable(link: String): Single<Timetable> {
+    override fun joinTimetable(link: String): Completable {
         return timetableApi.joinTimetable(link)
             .map(TimetableNetModel::toDomain)
+            .doOnSuccess{
+                saveTimetableInfo(it)
+                authSharedPreferences.currentTimetableId = it.id
+            }
+            .ignoreElement()
     }
 
     override fun fetchTimetable(): Completable {
@@ -53,11 +65,11 @@ class TimetableRepositoryImpl(
             oneTimeClassDao.getOneTimeClasses(),
             { multipleClasses, oneTimeClasses ->
                 Timetable(
-                    id = sharedPreferences.id,
-                    creatorUsername = sharedPreferences.creatorUsername ?: "",
-                    link = sharedPreferences.link ?: "",
-                    typeWeek = sharedPreferences.typeWeek,
-                    dateUpdate = sharedPreferences.dateUpdate ?: "",
+                    id = timetableSharedPreferences.id,
+                    creatorUsername = timetableSharedPreferences.creatorUsername ?: "",
+                    link = timetableSharedPreferences.link ?: "",
+                    typeWeek = timetableSharedPreferences.typeWeek,
+                    dateUpdate = timetableSharedPreferences.dateUpdate ?: "",
                     multipleClasses = MultipleClassDbModel.toDomain(multipleClasses),
                     oneTimeClasses = OneTimeClassDbModel.toDomain(oneTimeClasses)
                 )
@@ -66,40 +78,16 @@ class TimetableRepositoryImpl(
     }
 
     override fun saveTimetableInfo(timetable: Timetable) {
-        sharedPreferences.id = timetable.id
-        sharedPreferences.creatorUsername = timetable.creatorUsername
-        sharedPreferences.link = timetable.link
-        sharedPreferences.typeWeek = timetable.typeWeek
-        sharedPreferences.dateUpdate = timetable.dateUpdate
-    }
-
-    override fun getTimetableInfo(): Timetable {
-        return Timetable(
-            id = sharedPreferences.id,
-            creatorUsername = sharedPreferences.creatorUsername ?: "",
-            link = sharedPreferences.link ?: "",
-            typeWeek = sharedPreferences.typeWeek,
-            dateUpdate = sharedPreferences.dateUpdate ?: ""
-        )
-    }
-
-    override fun getTimetableLink(): String {
-        return "${TimetableApi.BASE_URL}${sharedPreferences.link}"
+        timetableSharedPreferences.id = timetable.id
+        timetableSharedPreferences.creatorUsername = timetable.creatorUsername
+        timetableSharedPreferences.link = timetable.link
+        timetableSharedPreferences.typeWeek = timetable.typeWeek
+        timetableSharedPreferences.dateUpdate = timetable.dateUpdate
     }
 
     override fun getTypeWeekForDate(date: LocalDate): TypeWeek {
-        var startTypeWeek = sharedPreferences.typeWeek
-        var startUpdateDate = LocalDate.parse(sharedPreferences.dateUpdate!!)
-
-        while (round(startUpdateDate.dayOfYear.toDouble()/7) != round(date.dayOfYear.toDouble()/7)){
-            startUpdateDate = startUpdateDate.plusWeeks(1)
-            startTypeWeek = TypeWeek.switch(startTypeWeek)
-        }
-
-        return startTypeWeek
-    }
-
-    override fun clearAllInformationAboutTimetable() {
-        sharedPreferences.clearAll()
+        val typeWeek = timetableSharedPreferences.typeWeek
+        val updateDate = timetableSharedPreferences.dateUpdate!!
+        return TypeWeek.getTypeWeekForDate(date, typeWeek, updateDate)
     }
 }

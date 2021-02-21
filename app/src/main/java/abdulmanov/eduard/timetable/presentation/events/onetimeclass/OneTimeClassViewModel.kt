@@ -18,10 +18,6 @@ class OneTimeClassViewModel @Inject constructor(
     private val oneTimeClassInteractor: OneTimeClassInteractor
 ): BaseViewModel() {
 
-    private val _showMessageEvent = LiveEvent<String>()
-    val showMessageEvent: LiveData<String>
-        get() = _showMessageEvent
-
     private val _showApplyProgress = MutableLiveData(false)
     val showApplyProgress: LiveData<Boolean>
         get() = _showApplyProgress

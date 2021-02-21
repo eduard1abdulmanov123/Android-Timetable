@@ -1,7 +1,6 @@
 package abdulmanov.eduard.timetable.presentation.timetable.helpers.speed_dial
 
 import abdulmanov.eduard.timetable.R
-import abdulmanov.eduard.timetable.domain.interactors.LawInteractor
 import abdulmanov.eduard.timetable.presentation._common.provides.LawProvider
 import androidx.core.content.ContextCompat
 import com.leinardi.android.speeddial.SpeedDialActionItem

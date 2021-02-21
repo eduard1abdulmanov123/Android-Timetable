@@ -1,13 +1,11 @@
 package abdulmanov.eduard.timetable.data.repositories
 
 import abdulmanov.eduard.timetable.data.local.database.dao.OneTimeClassDao
-import abdulmanov.eduard.timetable.data.local.database.models.OneTimeClassDbModel
 import abdulmanov.eduard.timetable.data.remote.TimetableApi
 import abdulmanov.eduard.timetable.data.remote.models.OneTimeClassNetModel
 import abdulmanov.eduard.timetable.domain.models.OneTimeClass
 import abdulmanov.eduard.timetable.domain.repositories.OneTimeClassRepository
 import io.reactivex.Completable
-import io.reactivex.Observable
 
 class OneTimeClassRepositoryImpl(
     private val timetableApi: TimetableApi,

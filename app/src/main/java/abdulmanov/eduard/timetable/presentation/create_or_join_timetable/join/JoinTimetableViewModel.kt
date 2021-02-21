@@ -21,28 +21,25 @@ class JoinTimetableViewModel @Inject constructor(
     val showApplyProgress: LiveData<Boolean>
         get() = _showApplyProgress
 
-    private val _showMessageEvent = LiveEvent<String>()
-    val showMessageEvent: LiveData<String>
-        get() = _showMessageEvent
-
     fun openScreenCreateTimetable() = router.replaceScreen(Screens.createTimetable())
 
     fun joinTimetable(link: String){
         if(link.isEmpty()){
             _showMessageEvent.value = stringProvider.getString(R.string.join_timetable_error_empty_link)
         }else if(_showApplyProgress.value == false){
-            _showApplyProgress.value = true
-
-            timetableInteractor.joinTimetable(link).safeSubscribe(
-                {
-                    _showApplyProgress.value = false
-                    router.newRootScreen(Screens.main())
-                },
-                {
-                    _showApplyProgress.value = false
-                    _showMessageEvent.value = it.message.toString()
-                }
-            )
+            timetableInteractor.joinTimetable(link)
+                .addDispatchers()
+                .doOnSubscribe { _showApplyProgress.value = true }
+                .doOnTerminate { _showApplyProgress.value = false }
+                .subscribe(
+                    {
+                        router.newRootScreen(Screens.main())
+                    },
+                    {
+                        _showMessageEvent.value = it.message.toString()
+                    }
+                )
+                .connect()
         }
     }
 }

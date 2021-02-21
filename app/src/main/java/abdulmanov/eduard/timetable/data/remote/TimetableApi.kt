@@ -23,7 +23,7 @@ interface TimetableApi {
     fun getTimetable(): Single<TimetableNetModel.Response>
 
     @POST("/api/v1/timetable/changeTypeWeek")
-    fun changeTypeWeekTheTimetable(@Body timetable: TimetableNetModel.Request): Completable
+    fun changeTypeWeekTheTimetable(@Body timetable: TimetableNetModel.Request): Single<TimetableNetModel.Response>
 
     /*MultipleClass*/
 

@@ -8,23 +8,21 @@ import io.reactivex.Single
 
 class AuthInteractor(
     private val authRepository: AuthRepository,
-    private val timetableRepository: TimetableRepository,
+    private val timetableInteractor: TimetableInteractor
 ) {
 
     fun signUp(login: String, password: String): Completable {
         return authRepository.signUp(login, password)
-            .doOnSuccess { authRepository.saveUser(it) }
             .ignoreElement()
     }
 
     fun signIn(login: String, password: String): Single<User> {
         return authRepository.signIn(login, password)
-            .doOnSuccess { authRepository.saveUser(it) }
             .flatMap { user ->
-                if(user.currentTimetableId != null) {
-                    timetableRepository.fetchTimetable()
+                if (user.currentTimetableId != null) {
+                    timetableInteractor.fetchTimetableAndNote()
                         .andThen(Single.just(user))
-                }else{
+                } else {
                     Single.fromCallable { user }
                 }
             }
@@ -32,5 +30,9 @@ class AuthInteractor(
 
     fun getUser(): User {
         return authRepository.getUser()
+    }
+
+    fun haveAccess():Boolean{
+        return authRepository.haveAccess()
     }
 }

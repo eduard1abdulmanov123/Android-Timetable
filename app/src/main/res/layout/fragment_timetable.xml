@@ -43,24 +43,17 @@
 
     <ImageView
         android:id="@+id/emptyItemsImageView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginBottom="100dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:src="@drawable/ic_relax"
+        app:layout_constraintDimensionRatio="h, 1:1"
         app:layout_constraintTop_toBottomOf="@id/customCalendarView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="ContentDescription" />
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/customCalendarView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.leinardi.android.speeddial.SpeedDialOverlayLayout
         android:id="@+id/speedDialOverlayLayout"

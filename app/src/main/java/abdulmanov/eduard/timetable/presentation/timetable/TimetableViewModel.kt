@@ -36,10 +36,6 @@ class TimetableViewModel @Inject constructor(
     val state: LiveData<TimetableState>
         get() = _state
 
-    private val _showMessageEvent = LiveEvent<String>()
-    val showMessageEvent: LiveData<String>
-        get() = _showMessageEvent
-
     fun onBackCommandClick() = router.exit()
 
     fun openScreenSetting() = router.navigateTo(Screens.setting())

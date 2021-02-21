@@ -1,6 +1,7 @@
 package abdulmanov.eduard.timetable.data.repositories
 
 import abdulmanov.eduard.timetable.data.local.sharedpreferences.AuthSharedPreferences
+import abdulmanov.eduard.timetable.data.local.sharedpreferences.TimetableSharedPreferences
 import abdulmanov.eduard.timetable.data.remote.models.UserNetModel
 import abdulmanov.eduard.timetable.data.remote.TimetableApi
 import abdulmanov.eduard.timetable.domain.models.User
@@ -9,34 +10,37 @@ import io.reactivex.Single
 
 class AuthRepositoryImpl(
     private val timetableApi: TimetableApi,
-    private val sharedPreferences: AuthSharedPreferences
+    private val authSharedPreferences: AuthSharedPreferences,
+    private val timetableSharedPreferences: TimetableSharedPreferences
 ): AuthRepository {
 
     override fun signUp(login: String, password: String): Single<User> {
         return timetableApi.signUp(UserNetModel.Request(login, password))
             .map(UserNetModel::toDomain)
+            .doOnSuccess(::saveUser)
     }
 
     override fun signIn(login: String, password: String): Single<User> {
         return timetableApi.signIn(UserNetModel.Request(login, password))
             .map(UserNetModel::toDomain)
+            .doOnSuccess(::saveUser)
     }
 
     override fun saveUser(user: User) {
-        sharedPreferences.token = user.token
-        sharedPreferences.userName = user.userName
-        sharedPreferences.currentTimetableId = user.currentTimetableId
+        authSharedPreferences.token = user.token
+        authSharedPreferences.userName = user.userName
+        authSharedPreferences.currentTimetableId = user.currentTimetableId
     }
 
     override fun getUser(): User {
         return User(
-            userName = sharedPreferences.userName,
-            token = sharedPreferences.token,
-            currentTimetableId = sharedPreferences.currentTimetableId
+            userName = authSharedPreferences.userName,
+            token = authSharedPreferences.token,
+            currentTimetableId = authSharedPreferences.currentTimetableId
         )
     }
 
-    override fun clearAllInformationAboutUser() {
-        sharedPreferences.clearAll()
+    override fun haveAccess(): Boolean {
+        return authSharedPreferences.userName == timetableSharedPreferences.creatorUsername
     }
 }
