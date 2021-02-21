@@ -1,6 +1,7 @@
 package abdulmanov.eduard.timetable.presentation._common.extensions
 
 import java.time.DayOfWeek
+import java.time.YearMonth
 import java.time.format.TextStyle
 import java.time.temporal.WeekFields
 import java.util.*
@@ -19,7 +20,6 @@ fun getDaysOfWeekFromLocale(): Array<DayOfWeek> {
     return daysOfWeek
 }
 
-
 fun getFullTitlesDaysOfWeekFromLocale(): List<String> {
     val daysOfWeek = getDaysOfWeekFromLocale()
 
@@ -37,4 +37,13 @@ fun getFullTitleDayOfWeekForNumber(number: Int): String {
 fun getNumberForFullTitleDayOfWeek(dayOfWeek: String): Int {
     val fullTitles = getFullTitlesDaysOfWeekFromLocale()
     return fullTitles.indexOf(dayOfWeek) + 1
+}
+
+fun getMonthsForCalendar(): Pair<YearMonth, YearMonth> {
+    val currentMonth = YearMonth.now()
+
+    val startYear = if(currentMonth.monthValue >= 9) currentMonth.year else currentMonth.year - 1
+    val endYear = if(currentMonth.monthValue >= 9) currentMonth.year + 1 else currentMonth.year
+
+    return Pair(YearMonth.of(startYear, 9), YearMonth.of(endYear,8))
 }

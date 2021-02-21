@@ -7,30 +7,26 @@ import abdulmanov.eduard.timetable.presentation._common.base.BaseFragment
 import abdulmanov.eduard.timetable.presentation._common.provides.LawProvider
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
 import abdulmanov.eduard.timetable.presentation._common.extensions.getDaysOfWeekFromLocale
-import abdulmanov.eduard.timetable.presentation._common.extensions.getScreenSize
+import abdulmanov.eduard.timetable.presentation._common.extensions.getMonthsForCalendar
 import abdulmanov.eduard.timetable.presentation.timetable.adapters.MultipleClassesDelegateAdapter
-import abdulmanov.eduard.timetable.presentation.timetable.helpers.caledar.TimetableDayBinder
-import abdulmanov.eduard.timetable.presentation.timetable.helpers.caledar.TimetableMonthHeaderBinder
 import abdulmanov.eduard.timetable.presentation.timetable.helpers.speed_dial.SpeedDialDelegate
 import abdulmanov.eduard.timetable.presentation.events.multipleclass.models.MultipleClassPresentationModel
 import abdulmanov.eduard.timetable.presentation.events.note.models.NotePresentationModel
 import abdulmanov.eduard.timetable.presentation.events.onetimeclass.models.OneTimeClassPresentationModel
 import abdulmanov.eduard.timetable.presentation.timetable.adapters.NotesDelegateAdapter
 import abdulmanov.eduard.timetable.presentation.timetable.adapters.OneTimeClassesDelegateAdapter
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import androidx.core.content.ContextCompat
+import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kizitonwose.calendarview.model.InDateStyle
-import com.kizitonwose.calendarview.model.OutDateStyle
-import com.kizitonwose.calendarview.utils.Size
-import com.kizitonwose.calendarview.utils.yearMonth
 import com.livermor.delegateadapter.delegate.CompositeDelegateAdapter
 import java.time.LocalDate
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
@@ -43,9 +39,6 @@ class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
 
     private val viewModel by initViewModel<TimetableViewModel>()
 
-    private val selectionFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
-    private var isCollapse = true
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity().application as App).appComponent.inject(this)
@@ -56,7 +49,14 @@ class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
         super.onViewCreated(view, savedInstanceState)
         initUI()
 
-        viewModel.classes.observe(viewLifecycleOwner, { (binding.recyclerView.adapter as CompositeDelegateAdapter).swapData(it)})
+        viewModel.selectedDate.observe(viewLifecycleOwner, Observer(::selectDate))
+        viewModel.isCollapse.observe(viewLifecycleOwner, Observer(::setIsCollapse))
+        viewModel.state.observe(viewLifecycleOwner, Observer(::setState))
+        viewModel.showMessageEvent.observe(viewLifecycleOwner, Observer(::showMessage))
+
+        if(viewModel.selectedDate.value == null){
+            viewModel.setSelectedDate(LocalDate.now())
+        }
     }
 
     private fun onBackPressed(){
@@ -93,25 +93,10 @@ class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
             setOnMenuItemClickListener(this@TimetableFragment::onOptionsItemSelected)
         }
 
-        binding.dateTextView.run {
-            text = selectionFormatter.format(LocalDate.now())
-            setOnClickListener {
-                collapseOrExpandCalendar()
-            }
-        }
-
-        binding.calendarView.run {
-            val screenSize = context.getScreenSize()
-            daySize = Size(screenSize.x/7,screenSize.x/10)
-
-            val daysOfWeek = getDaysOfWeekFromLocale()
-            val currentMonth = YearMonth.now()
-
-            setup(currentMonth.minusMonths(10), currentMonth.plusMonths(10), daysOfWeek.first())
-            scrollToDate(LocalDate.now())
-            dayBinder = TimetableDayBinder(daySize.height) { selectDate(it.date) }
-            monthHeaderBinder = TimetableMonthHeaderBinder(daysOfWeek)
-            setMonthScrollListener()
+        binding.customCalendarView.run {
+            selectedListener = viewModel::setSelectedDate
+            collapseListener = viewModel::setIsCollapse
+            initialize(getDaysOfWeekFromLocale(), getMonthsForCalendar())
         }
 
         binding.speedDialView.run {
@@ -127,6 +112,8 @@ class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
             }
         }
 
+        binding.swipeRefresh.setOnRefreshListener(viewModel::refresh)
+
         binding.recyclerView.run {
             layoutManager = LinearLayoutManager(context)
             adapter = CompositeDelegateAdapter(
@@ -137,74 +124,59 @@ class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun selectDate(date: LocalDate){
-        val dayBinder = binding.calendarView.dayBinder as TimetableDayBinder
-
-        if(date != dayBinder.selectedDate){
-            val oldDate = dayBinder.selectedDate
-            dayBinder.selectedDate = date
-            binding.calendarView.notifyDateChanged(oldDate)
-            binding.calendarView.notifyDateChanged(date)
-            binding.dateTextView.text = selectionFormatter.format(date)
-            viewModel.getClassesForSelectedDate(date)
+        binding.customCalendarView.run {
+            selectDate(date)
+            scrollToDate(date)
+            dateTextView.text =  "${dateTextView.text.split(",").first()}, ${viewModel.getTypeWeekForDate(date)}"
         }
     }
 
-    private fun collapseOrExpandCalendar(){
-        binding.calendarView.monthScrollListener = {}
-
-        isCollapse = !isCollapse
-
-        val selectedDate = (binding.calendarView.dayBinder as TimetableDayBinder).selectedDate
-
-        if(!isCollapse){
-            binding.calendarView.updateMonthConfiguration(
-                inDateStyle = InDateStyle.ALL_MONTHS,
-                outDateStyle = OutDateStyle.END_OF_GRID,
-                maxRowCount = 6,
-                hasBoundaries = true,
-            )
-            binding.calendarView.scrollToMonth(selectedDate.yearMonth)
-            binding.dateTextView.setCompoundDrawablesWithIntrinsicBounds(
-                null,
-                null,
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_up),
-                null
-            )
-        }else{
-            binding.calendarView.updateMonthConfiguration(
-                inDateStyle = InDateStyle.FIRST_MONTH,
-                outDateStyle = OutDateStyle.END_OF_ROW,
-                maxRowCount = 1,
-                hasBoundaries = false
-            )
-            binding.calendarView.scrollToDate(selectedDate)
-            binding.dateTextView.setCompoundDrawablesWithIntrinsicBounds(
-                null,
-                null,
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_down),
-                null
-            )
-        }
-        selectDate(selectedDate)
-        setMonthScrollListener()
+    private fun setIsCollapse(isCollapse: Boolean){
+        binding.customCalendarView.collapseOrExpandCalendar(isCollapse)
     }
 
-    private fun setMonthScrollListener(){
-        binding.calendarView.postDelayed({
-            binding.calendarView.monthScrollListener = {
-                if(binding.calendarView.maxRowCount == 6){
-                    if(it.yearMonth == LocalDate.now().yearMonth){
-                        selectDate(LocalDate.now())
-                    }else{
-                        selectDate(it.yearMonth.atDay(1))
-                    }
-                }else{
-                    selectDate(binding.calendarView.findFirstVisibleDay()!!.date)
-                }
+    private fun setState(state: TimetableState){
+        when(state){
+            is TimetableState.Progress -> {
+                binding.progressBar.isVisible = true
+                binding.emptyItemsImageView.isVisible = false
+                binding.swipeRefresh.isVisible = false
+                binding.swipeRefresh.isRefreshing = false
+                binding.recyclerView.isVisible = false
             }
-        },500)
+            is TimetableState.Empty -> {
+                binding.progressBar.isVisible = false
+                binding.emptyItemsImageView.isVisible = true
+                binding.swipeRefresh.isVisible = true
+                binding.swipeRefresh.isRefreshing = false
+                binding.recyclerView.isVisible = false
+            }
+            is TimetableState.Error -> {
+                binding.progressBar.isVisible = false
+                binding.emptyItemsImageView.isVisible = false
+                binding.swipeRefresh.isVisible = true
+                binding.swipeRefresh.isRefreshing = false
+                binding.recyclerView.isVisible = false
+            }
+            is TimetableState.Refresh -> {
+                binding.swipeRefresh.isRefreshing = true
+            }
+            is TimetableState.Data -> {
+                binding.progressBar.isVisible = false
+                binding.emptyItemsImageView.isVisible = false
+                binding.swipeRefresh.isVisible = true
+                binding.swipeRefresh.isRefreshing = false
+                binding.recyclerView.isVisible = true
+                (binding.recyclerView.adapter as CompositeDelegateAdapter).swapData(state.items)
+                binding.recyclerView.scrollToPosition(0)
+            }
+        }
+    }
 
+    fun showMessage(message: String){
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     companion object{

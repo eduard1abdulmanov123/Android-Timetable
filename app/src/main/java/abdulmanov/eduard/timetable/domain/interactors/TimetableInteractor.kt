@@ -55,6 +55,10 @@ class TimetableInteractor(
         )
     }
 
+    fun getTypeWeekForDate(date: LocalDate): TypeWeek {
+        return timetableRepository.getTypeWeekForDate(date)
+    }
+
     private fun getMultipleClassesForSelectedDate(timetable: Timetable, date: LocalDate): List<MultipleClass> {
         return timetable.multipleClasses
             .filter {

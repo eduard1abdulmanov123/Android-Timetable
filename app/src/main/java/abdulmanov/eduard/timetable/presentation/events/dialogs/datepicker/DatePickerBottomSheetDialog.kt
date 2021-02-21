@@ -4,6 +4,7 @@ import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.BottomDialogDatePickerBinding
 import abdulmanov.eduard.timetable.presentation._common.extensions.getDaysOfWeekFromLocale
 import abdulmanov.eduard.timetable.presentation._common.extensions.dpToPx
+import abdulmanov.eduard.timetable.presentation._common.extensions.getMonthsForCalendar
 import abdulmanov.eduard.timetable.presentation._common.extensions.getScreenSize
 import abdulmanov.eduard.timetable.presentation.events.dialogs.datepicker.helpers.DatePickerDayBinder
 import abdulmanov.eduard.timetable.presentation.events.dialogs.datepicker.helpers.DatePickerMonthHeaderBinder
@@ -54,9 +55,10 @@ class DatePickerBottomSheetDialog: BottomSheetDialogFragment() {
             daySize = Size(((screenSize.x -64.dpToPx())/7).toInt(),screenSize.x/10)
 
             val daysOfWeek = getDaysOfWeekFromLocale()
+            val monthForCalendar = getMonthsForCalendar()
             val currentMonth = YearMonth.now()
 
-            setup(currentMonth.minusMonths(10), currentMonth.plusMonths(10), daysOfWeek.first())
+            setup(monthForCalendar.first, monthForCalendar.second, daysOfWeek.first())
             dayBinder = DatePickerDayBinder(daySize.height) { selectDate(it.date) }
             monthHeaderBinder = DatePickerMonthHeaderBinder(daysOfWeek)
 

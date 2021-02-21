@@ -10,6 +10,7 @@ import abdulmanov.eduard.timetable.presentation.events.onetimeclass.OneTimeClass
 import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.create.CreateTimetableViewModel
 import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.join.JoinTimetableViewModel
 import abdulmanov.eduard.timetable.presentation.setting.SettingViewModel
+import abdulmanov.eduard.timetable.presentation.splash.SplashViewModel
 import abdulmanov.eduard.timetable.presentation.timetable.TimetableViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +23,11 @@ abstract class ViewModelModule {
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SplashViewModel::class)
+    abstract fun bindSplashViewModel(viewModel: SplashViewModel): ViewModel
 
     @Binds
     @IntoMap

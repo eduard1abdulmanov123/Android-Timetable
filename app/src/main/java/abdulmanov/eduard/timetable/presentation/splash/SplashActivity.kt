@@ -1,36 +1,31 @@
-package abdulmanov.eduard.timetable.presentation.login
+package abdulmanov.eduard.timetable.presentation.splash
 
-import abdulmanov.eduard.timetable.R
+import abdulmanov.eduard.timetable.databinding.ActivitySplashBinding
 import abdulmanov.eduard.timetable.domain.interactors.AuthInteractor
 import abdulmanov.eduard.timetable.presentation.App
-import abdulmanov.eduard.timetable.presentation.Screens
-import android.content.Context
-import android.content.Intent
+import abdulmanov.eduard.timetable.presentation._common.base.BaseActivity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import javax.inject.Inject
 
-class LoginActivity : AppCompatActivity() {
-    
+class SplashActivity : BaseActivity<ActivitySplashBinding>() {
+
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
 
     @Inject
     lateinit var router: Router
 
-    private val navigator = AppNavigator(this, R.id.loginFragmentContainerView)
+    private val navigator = AppNavigator(this, -1)
+
+    private val viewModel by initViewModel<SplashViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as App).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-
-        if (savedInstanceState == null) {
-            router.replaceScreen(Screens.signIn())
-        }
+        viewModel.executeTransitionProcessing()
     }
 
     override fun onResumeFragments() {
@@ -41,9 +36,5 @@ class LoginActivity : AppCompatActivity() {
     override fun onPause() {
         navigatorHolder.removeNavigator()
         super.onPause()
-    }
-
-    companion object {
-        fun newIntent(context: Context) = Intent(context, LoginActivity::class.java)
     }
 }

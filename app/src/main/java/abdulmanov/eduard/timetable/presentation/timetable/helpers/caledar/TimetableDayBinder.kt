@@ -3,6 +3,7 @@ package abdulmanov.eduard.timetable.presentation.timetable.helpers.caledar
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.ItemTimetableCalendarDayBinding
 import abdulmanov.eduard.timetable.presentation._common.extensions.setTextColorRes
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.view.updateLayoutParams
@@ -14,10 +15,10 @@ import java.time.LocalDate
 
 class TimetableDayBinder(
     private val size: Int,
-    private val clickListener: (CalendarDay) -> Unit
+    private val clickListener: ((LocalDate) -> Unit)? = null
 ) : DayBinder<TimetableDayBinder.DayViewContainer>{
 
-    var selectedDate: LocalDate = LocalDate.now()
+    var selectedDate: LocalDate = LocalDate.MIN
 
     override fun create(view: View): DayViewContainer {
         return DayViewContainer(view, size, clickListener)
@@ -43,7 +44,7 @@ class TimetableDayBinder(
         }
     }
 
-    class DayViewContainer(view: View, size:Int, clickListener: (CalendarDay) -> Unit): ViewContainer(view) {
+    class DayViewContainer(view: View, size:Int, clickListener: ((LocalDate) -> Unit)?): ViewContainer(view) {
 
         val textView = (ItemTimetableCalendarDayBinding.bind(view).oneDayFrameLayout.getChildAt(0) as TextView)
 
@@ -57,7 +58,7 @@ class TimetableDayBinder(
 
             view.setOnClickListener {
                 if(day.owner == DayOwner.THIS_MONTH) {
-                    clickListener.invoke(day)
+                    clickListener?.invoke(day.date)
                 }
             }
         }

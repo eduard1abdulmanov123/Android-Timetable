@@ -33,12 +33,14 @@
     <string name="join_timetable_join">Подключиться к расписанию</string>
     <string name="join_timetable_create">Создать свое расписание</string>
     <string name="join_timetable_error_empty_link">Пожалуйста, вставьте или введите ссылку на полученное расписание!</string>
-    
+
     <!--timetable-->
     <string name="timetable_toolbar_title">Расписание</string>
     <string name="timetable_note">Заметка</string>
     <string name="timetable_one_time_class">Одноразовое занятие</string>
     <string name="timetable_multiple_class">Многоразовое занятие</string>
+    <string name="timetable_type_week_odd">нечетная</string>
+    <string name="timetable_type_week_even">четная</string>
 
     <!--setting-->
     <string name="setting_toolbar_title">Настройки</string>

@@ -12,6 +12,7 @@ import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.CreateO
 import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.create.CreateTimetableFragment
 import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.join.JoinTimetableFragment
 import abdulmanov.eduard.timetable.presentation.setting.SettingFragment
+import abdulmanov.eduard.timetable.presentation.splash.SplashActivity
 import abdulmanov.eduard.timetable.presentation.timetable.TimetableFragment
 import android.content.Context
 import dagger.BindsInstance
@@ -35,6 +36,8 @@ interface AppComponent{
     interface Factory {
         fun create(@BindsInstance context: Context): AppComponent
     }
+
+    fun inject(splashActivity: SplashActivity)
 
     fun inject(loginActivity: LoginActivity)
 
