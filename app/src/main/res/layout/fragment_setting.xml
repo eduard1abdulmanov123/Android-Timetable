@@ -149,6 +149,50 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/containerClearTimetableConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:background="?attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/clearTimetableTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:textSize="@dimen/font_few_big"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorTextPrimary"
+                    android:text="@string/setting_clear_timetable_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/clearTimetableSubtitleTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="@dimen/font_small"
+                    android:textColor="@color/colorTextSecondary"
+                    android:text="@string/setting_clear_timetable_subtitle"
+                    app:layout_constraintEnd_toEndOf="@id/clearTimetableTitleTextView"
+                    app:layout_constraintStart_toStartOf="@id/clearTimetableTitleTextView"
+                    app:layout_constraintTop_toBottomOf="@id/clearTimetableTitleTextView" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorSeparator"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clearTimetableSubtitleTextView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/containerSendLinkFeedbackConstraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

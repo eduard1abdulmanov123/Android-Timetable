@@ -11,6 +11,8 @@ interface SettingRepository {
 
     fun getTypeWeek(date: LocalDate): TypeWeek
 
+    fun clearTimetable(): Completable
+
     fun getTimetableLink(): String
 
     fun getFeedbackData(): FeedbackData

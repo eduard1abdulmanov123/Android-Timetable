@@ -35,6 +35,15 @@ class SettingRepositoryImpl(
         return TypeWeek.getTypeWeekForDate(date, typeWeek, updateDate)
     }
 
+    override fun clearTimetable(): Completable {
+        return timetableApi.clearTimetable()
+            .doOnComplete {
+                database.oneTimeClassDao.deleteAll()
+                database.multipleClassDao.deleteAll()
+                database.noteDao.deleteAllIsVisibility()
+            }
+    }
+
     override fun getTimetableLink(): String {
         return "${TimetableApi.BASE_URL}${timetableSharedPreferences.link}"
     }

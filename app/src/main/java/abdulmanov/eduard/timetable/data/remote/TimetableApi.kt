@@ -25,6 +25,9 @@ interface TimetableApi {
     @POST("/api/v1/timetable/changeTypeWeek")
     fun changeTypeWeekTheTimetable(@Body timetable: TimetableNetModel.Request): Single<TimetableNetModel.Response>
 
+    @POST("/api/v1/timetable/removeAll")
+    fun clearTimetable(): Completable
+
     /*MultipleClass*/
 
     @POST("/api/v1/multiple_class/create")

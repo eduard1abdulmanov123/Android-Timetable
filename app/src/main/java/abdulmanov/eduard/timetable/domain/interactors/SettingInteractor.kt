@@ -16,6 +16,10 @@ class SettingInteractor(private val settingRepository: SettingRepository) {
         return settingRepository.getTypeWeek(date)
     }
 
+    fun clearTimetable(): Completable {
+        return settingRepository.clearTimetable()
+    }
+
     fun getTimetableLink(): String {
         return settingRepository.getTimetableLink()
     }

@@ -25,6 +25,9 @@ abstract class NoteDao {
     @Query("DELETE FROM ${NoteDbModel.TABLE_NAME}")
     abstract fun deleteAll()
 
+    @Query("DELETE FROM ${NoteDbModel.TABLE_NAME} WHERE ${NoteDbModel.COLUMN_VISIBILITY} = 1")
+    abstract fun deleteAllIsVisibility()
+
     @Query("DELETE FROM ${NoteDbModel.TABLE_NAME} WHERE ${NoteDbModel.COLUMN_ID} = :id")
     abstract fun deleteById(id: Int)
 

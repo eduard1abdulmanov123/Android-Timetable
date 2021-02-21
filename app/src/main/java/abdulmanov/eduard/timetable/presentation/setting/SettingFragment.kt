@@ -52,6 +52,11 @@ class SettingFragment: BaseFragment<FragmentSettingBinding>() {
             }
         }
 
+        lawProvider.showIfYouHaveLaw(binding.containerClearTimetableConstraintLayout)
+        binding.containerClearTimetableConstraintLayout.setOnClickListener {
+            viewModel.clearTimetable()
+        }
+
         lawProvider.showIfYouHaveLaw(binding.containerSendLinkFeedbackConstraintLayout)
         binding.containerSendLinkFeedbackConstraintLayout.setOnClickListener {
             viewModel.onOpenScreenSendLink()

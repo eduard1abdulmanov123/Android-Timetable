@@ -42,6 +42,17 @@ class SettingViewModel @Inject constructor(
         return settingInteractor.getTypeWeek(LocalDate.now())
     }
 
+    fun clearTimetable() {
+        return settingInteractor.clearTimetable().safeSubscribe(
+            {
+                _showMessageEvent.value = stringProvider.getString(R.string.setting_clear_timetable_success)
+            },
+            {
+                _showMessageEvent.value = stringProvider.getString(R.string.setting_clear_timetable_error)
+            }
+        )
+    }
+
     fun onOpenScreenSendLink(){
         val link = settingInteractor.getTimetableLink()
         router.navigateTo(Screens.sendLink(link))

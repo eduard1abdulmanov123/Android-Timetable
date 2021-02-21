@@ -54,6 +54,10 @@
     <string name="setting_type_week_odd_week">Сейчас нечетная неделя</string>
     <string name="setting_type_week_success">Тип текущей недели успешно изменен</string>
     <string name="setting_type_week_error">Не получилось изменить тип текущей недели</string>
+    <string name="setting_clear_timetable_title">Очистить расписание</string>
+    <string name="setting_clear_timetable_subtitle">Очистите расписание, чтобы заполнить его снова. Групповые заметки также будут удалены!</string>
+    <string name="setting_clear_timetable_success">Расписание успешно очищено</string>
+    <string name="setting_clear_timetable_error">Произошла ошибка при очистки расписания</string>
     <string name="setting_send_link_title">Поделиться расписанием</string>
     <string name="setting_send_link_subtitle">Поделитесь расписанием с одногруппниками, чтобы предоставить им доступ!</string>
     <string name="setting_feedback_title">Обратная связь</string>
