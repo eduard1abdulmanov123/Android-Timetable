@@ -1,5 +1,6 @@
 package abdulmanov.eduard.timetable.data.remote.models
 
+import abdulmanov.eduard.timetable.data.local.database.models.OneTimeClassDbModel
 import abdulmanov.eduard.timetable.domain.models.OneTimeClass
 import com.google.gson.annotations.SerializedName
 
@@ -42,6 +43,19 @@ class OneTimeClassNetModel {
     )
 
     companion object {
+
+        fun toDatabase(oneTimeClass: Response): OneTimeClassDbModel {
+            return OneTimeClassDbModel(
+                id = oneTimeClass.id,
+                nameSubject = oneTimeClass.nameSubject,
+                nameTeacher = oneTimeClass.nameTeacher,
+                audience = oneTimeClass.audience,
+                typeClass = oneTimeClass.typeClass,
+                startOfClass = oneTimeClass.startOfClass,
+                endOfClass = oneTimeClass.endOfClass,
+                dateOfClass = oneTimeClass.dateOfClass
+            )
+        }
 
         fun toDomain(oneTimeClass: Response): OneTimeClass {
             return OneTimeClass(

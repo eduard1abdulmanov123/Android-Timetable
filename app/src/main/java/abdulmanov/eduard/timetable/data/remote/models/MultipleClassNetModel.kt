@@ -1,5 +1,6 @@
 package abdulmanov.eduard.timetable.data.remote.models
 
+import abdulmanov.eduard.timetable.data.local.database.models.MultipleClassDbModel
 import abdulmanov.eduard.timetable.domain.models.MultipleClass
 import com.google.gson.annotations.SerializedName
 
@@ -46,6 +47,20 @@ class MultipleClassNetModel {
     )
 
     companion object {
+
+        fun toDatabase(multipleClass: Response): MultipleClassDbModel {
+            return MultipleClassDbModel(
+                id = multipleClass.id,
+                nameSubject = multipleClass.nameSubject,
+                nameTeacher = multipleClass.nameTeacher,
+                audience = multipleClass.audience,
+                typeClass = multipleClass.typeClass,
+                startOfClass = multipleClass.startOfClass,
+                endOfClass = multipleClass.endOfClass,
+                dayOfWeek = multipleClass.dayOfWeek,
+                periodicity = multipleClass.periodicity
+            )
+        }
 
         fun toDomain(multipleClass: Response): MultipleClass {
             return MultipleClass(

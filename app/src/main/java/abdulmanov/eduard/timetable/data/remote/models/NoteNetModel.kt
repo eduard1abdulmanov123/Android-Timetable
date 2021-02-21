@@ -1,5 +1,6 @@
 package abdulmanov.eduard.timetable.data.remote.models
 
+import abdulmanov.eduard.timetable.data.local.database.models.NoteDbModel
 import abdulmanov.eduard.timetable.domain.models.Note
 import com.google.gson.annotations.SerializedName
 
@@ -30,6 +31,16 @@ class NoteNetModel {
     )
 
     companion object {
+
+        fun toDatabase(note: Response): NoteDbModel {
+            return NoteDbModel(
+                id = note.id,
+                content = note.content,
+                date = note.date,
+                time = note.time,
+                visibility = note.visibility
+            )
+        }
 
         fun toDomain(note: Response): Note {
             return Note(
