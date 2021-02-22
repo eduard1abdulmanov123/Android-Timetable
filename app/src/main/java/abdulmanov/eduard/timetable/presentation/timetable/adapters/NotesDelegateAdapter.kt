@@ -2,6 +2,7 @@ package abdulmanov.eduard.timetable.presentation.timetable.adapters
 
 import abdulmanov.eduard.timetable.databinding.ItemNoteBinding
 import abdulmanov.eduard.timetable.presentation.events.note.models.NotePresentationModel
+import androidx.core.view.isVisible
 import com.livermor.delegateadapter.delegate.ViewBindingDelegateAdapter
 
 class NotesDelegateAdapter(
@@ -13,6 +14,7 @@ class NotesDelegateAdapter(
 
         contentTextView.text = item.content
         timeTextView.text = item.time
+        isGroupingTextView.isVisible = item.visibility
     }
 
     override fun isForViewType(item: Any) = item is NotePresentationModel

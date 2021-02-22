@@ -31,8 +31,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/timeTextView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Сходить в кино" />
+
+    <TextView
+        android:id="@+id/isGroupingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="@dimen/font_normal"
+        android:text="@string/timetable_note_is_grouping"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contentTextView"/>
 
     <TextView
         android:id="@+id/timeTextView"
@@ -48,7 +59,9 @@
     <View
         android:layout_width="0dp"
         android:layout_height="0.5dp"
+        android:layout_marginTop="16dp"
         android:background="@color/colorSeparate"
+        app:layout_constraintTop_toBottomOf="@id/isGroupingTextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

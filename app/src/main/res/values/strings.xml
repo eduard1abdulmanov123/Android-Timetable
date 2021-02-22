@@ -44,6 +44,7 @@
     <string name="timetable_multiple_class">Многоразовое занятие</string>
     <string name="timetable_type_week_odd">нечетная</string>
     <string name="timetable_type_week_even">четная</string>
+    <string name="timetable_note_is_grouping">Групповая</string>
 
     <!--setting-->
     <string name="setting_toolbar_title">Настройки</string>

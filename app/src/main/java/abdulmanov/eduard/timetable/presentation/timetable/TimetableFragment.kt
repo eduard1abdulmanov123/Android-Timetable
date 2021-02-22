@@ -72,15 +72,21 @@ class TimetableFragment: BaseFragment<FragmentTimetableBinding>(),
     }
 
     override fun onMultipleClassClick(multipleClass: MultipleClassPresentationModel) {
-        viewModel.openScreenMultipleClass(multipleClass)
+        if(lawProvider.haveAccess()) {
+            viewModel.openScreenMultipleClass(multipleClass)
+        }
     }
 
     override fun onOneTimeClassClick(oneTimeClass: OneTimeClassPresentationModel) {
-        viewModel.openScreenOneTimeClass(oneTimeClass)
+        if(lawProvider.haveAccess()) {
+            viewModel.openScreenOneTimeClass(oneTimeClass)
+        }
     }
 
     override fun onNoteClick(note: NotePresentationModel) {
-        viewModel.openScreenNote(note)
+        if(lawProvider.haveAccessToNote(note)) {
+            viewModel.openScreenNote(note)
+        }
     }
 
     private fun initUI(){

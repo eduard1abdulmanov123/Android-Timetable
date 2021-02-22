@@ -5,5 +5,6 @@ data class Note(
     val content: String,
     val date: String,
     val time: String,
-    val visibility: Boolean
+    val visibility: Boolean,
+    val username: String = ""
 )

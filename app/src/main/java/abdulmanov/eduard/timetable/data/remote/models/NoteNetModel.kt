@@ -16,7 +16,9 @@ class NoteNetModel {
         @SerializedName("time")
         val time: String,
         @SerializedName("visibility")
-        val visibility: Boolean
+        val visibility: Boolean,
+        @SerializedName("username")
+        val username: String
     )
 
     data class Request(
@@ -42,7 +44,8 @@ class NoteNetModel {
                 content = note.content,
                 date = note.date,
                 time = note.time,
-                visibility = note.visibility
+                visibility = note.visibility,
+                userName = note.username
             )
         }
 

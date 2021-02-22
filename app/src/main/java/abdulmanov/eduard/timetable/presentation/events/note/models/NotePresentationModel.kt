@@ -13,7 +13,8 @@ data class NotePresentationModel(
     var content: String = "",
     var date: String = "",
     var time: String = "",
-    var visibility: Boolean = false
+    var visibility: Boolean = false,
+    val username: String = ""
 ): Parcelable, ItemToBeSortedByTime {
 
     override val timeToSort get() = time
@@ -34,7 +35,8 @@ data class NotePresentationModel(
                 content = note.content,
                 date = DATE_FORMATTER_PRESENTER.format(LocalDate.parse(note.date)),
                 time = note.time,
-                visibility = note.visibility
+                visibility = note.visibility,
+                username = note.username
             )
         }
 

@@ -17,7 +17,9 @@ data class NoteDbModel(
     @ColumnInfo(name = COLUMN_TIME)
     val time: String,
     @ColumnInfo(name = COLUMN_VISIBILITY)
-    val visibility: Boolean
+    val visibility: Boolean,
+    @ColumnInfo(name = COLUMN_USER_NAME)
+    val userName: String
 ) {
     companion object {
         const val TABLE_NAME = "note"
@@ -27,6 +29,7 @@ data class NoteDbModel(
         const val COLUMN_DATE = "note_date"
         const val COLUMN_TIME = "note_tme"
         const val COLUMN_VISIBILITY = "note_visibility"
+        const val COLUMN_USER_NAME = "user_name"
 
         fun toDomain(notes: List<NoteDbModel>): List<Note> {
             return notes.map(::toDomain)
@@ -38,7 +41,8 @@ data class NoteDbModel(
                 content = note.content,
                 date = note.date,
                 time = note.time,
-                visibility = note.visibility
+                visibility = note.visibility,
+                username = note.userName
             )
         }
     }
