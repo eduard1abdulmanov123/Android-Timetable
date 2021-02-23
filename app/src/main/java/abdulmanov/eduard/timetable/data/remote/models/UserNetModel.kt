@@ -10,6 +10,8 @@ class UserNetModel {
         val userName: String,
         @SerializedName("token")
         val token: String,
+        @SerializedName("refreshToken")
+        val refreshToken: String,
         @SerializedName("currentTimetableId")
         val currentTimetableId: Int?
     )
@@ -27,6 +29,7 @@ class UserNetModel {
             return User(
                 userName = user.userName,
                 token = user.token,
+                refreshToken = user.refreshToken,
                 currentTimetableId = user.currentTimetableId
             )
         }

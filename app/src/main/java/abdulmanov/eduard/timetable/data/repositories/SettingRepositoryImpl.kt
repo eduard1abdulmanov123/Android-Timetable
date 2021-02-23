@@ -55,12 +55,4 @@ class SettingRepositoryImpl(
     override fun getUserName(): String {
         return authSharedPreferences.userName ?: ""
     }
-
-    override fun logout(): Completable {
-        return Completable.fromCallable {
-            authSharedPreferences.clearAll()
-            timetableSharedPreferences.clearAll()
-            database.clearAll()
-        }
-    }
 }

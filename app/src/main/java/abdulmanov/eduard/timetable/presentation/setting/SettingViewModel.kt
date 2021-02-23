@@ -1,6 +1,7 @@
 package abdulmanov.eduard.timetable.presentation.setting
 
 import abdulmanov.eduard.timetable.R
+import abdulmanov.eduard.timetable.domain.interactors.AuthInteractor
 import abdulmanov.eduard.timetable.domain.interactors.SettingInteractor
 import abdulmanov.eduard.timetable.domain.models.TypeWeek
 import abdulmanov.eduard.timetable.presentation.Screens
@@ -13,7 +14,8 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 class SettingViewModel @Inject constructor(
-    private val router: Router,
+    override val router: Router,
+    override val authInteractor: AuthInteractor,
     private val stringProvider: StringProvider,
     private val settingInteractor: SettingInteractor
 ): BaseViewModel() {
@@ -32,8 +34,10 @@ class SettingViewModel @Inject constructor(
                 _showMessageEvent.value = stringProvider.getString(R.string.setting_type_week_success)
             },
             {
-                _changeTypeWeekEvent.value = settingInteractor.getTypeWeek(LocalDate.now())
-                _showMessageEvent.value = stringProvider.getString(R.string.setting_type_week_error)
+                onError(it) {
+                    _changeTypeWeekEvent.value = settingInteractor.getTypeWeek(LocalDate.now())
+                    _showMessageEvent.value = stringProvider.getString(R.string.setting_type_week_error)
+                }
             }
         )
     }
@@ -48,7 +52,9 @@ class SettingViewModel @Inject constructor(
                 _showMessageEvent.value = stringProvider.getString(R.string.setting_clear_timetable_success)
             },
             {
-                _showMessageEvent.value = stringProvider.getString(R.string.setting_clear_timetable_error)
+                onError(it) {
+                    _showMessageEvent.value = stringProvider.getString(R.string.setting_clear_timetable_error)
+                }
             }
         )
     }
@@ -64,10 +70,7 @@ class SettingViewModel @Inject constructor(
     }
 
     fun onOpenScreenLogin() {
-        settingInteractor.logout()
-            .addDispatchers()
-            .subscribe{ router.replaceScreen(Screens.login()) }
-            .connect()
+        logout()
     }
 
     fun getUserName(): String {

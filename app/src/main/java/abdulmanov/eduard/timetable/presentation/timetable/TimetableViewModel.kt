@@ -1,6 +1,7 @@
 package abdulmanov.eduard.timetable.presentation.timetable
 
 import abdulmanov.eduard.timetable.R
+import abdulmanov.eduard.timetable.domain.interactors.AuthInteractor
 import abdulmanov.eduard.timetable.domain.interactors.TimetableInteractor
 import abdulmanov.eduard.timetable.domain.models.TypeWeek
 import abdulmanov.eduard.timetable.presentation.Screens
@@ -18,7 +19,8 @@ import java.time.LocalTime
 import javax.inject.Inject
 
 class TimetableViewModel @Inject constructor(
-    private val router: Router,
+    override val router: Router,
+    override val authInteractor: AuthInteractor,
     private val stringProvider: StringProvider,
     private val timetableInteractor: TimetableInteractor
 ):BaseViewModel() {
@@ -80,7 +82,7 @@ class TimetableViewModel @Inject constructor(
                     }
                 },
                 {
-                    _showMessageEvent.value = it.message.toString()
+                    onError(it)
                 }
             )
     }
@@ -92,7 +94,10 @@ class TimetableViewModel @Inject constructor(
                     getClassesForSelectedDate(_selectedDate.value!!)
                 },
                 {
-                    _showMessageEvent.value = it.message.toString()
+                    onError(it) {
+                        _state.value = _state.value
+                        _showMessageEvent.value = it.message.toString()
+                    }
                 }
             )
     }

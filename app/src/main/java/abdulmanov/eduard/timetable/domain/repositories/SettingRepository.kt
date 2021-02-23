@@ -18,6 +18,4 @@ interface SettingRepository {
     fun getFeedbackData(): FeedbackData
 
     fun getUserName(): String
-
-    fun logout(): Completable
 }

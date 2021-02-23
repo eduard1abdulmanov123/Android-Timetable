@@ -1,15 +1,18 @@
 package abdulmanov.eduard.timetable.data.repositories
 
+import abdulmanov.eduard.timetable.data.local.database.AppDatabase
 import abdulmanov.eduard.timetable.data.local.sharedpreferences.AuthSharedPreferences
 import abdulmanov.eduard.timetable.data.local.sharedpreferences.TimetableSharedPreferences
 import abdulmanov.eduard.timetable.data.remote.models.UserNetModel
 import abdulmanov.eduard.timetable.data.remote.TimetableApi
 import abdulmanov.eduard.timetable.domain.models.User
 import abdulmanov.eduard.timetable.domain.repositories.AuthRepository
+import io.reactivex.Completable
 import io.reactivex.Single
 
 class AuthRepositoryImpl(
     private val timetableApi: TimetableApi,
+    private val database: AppDatabase,
     private val authSharedPreferences: AuthSharedPreferences,
     private val timetableSharedPreferences: TimetableSharedPreferences
 ): AuthRepository {
@@ -26,8 +29,17 @@ class AuthRepositoryImpl(
             .doOnSuccess(::saveUser)
     }
 
+    override fun logout(): Completable {
+        return Completable.fromCallable {
+            authSharedPreferences.clearAll()
+            timetableSharedPreferences.clearAll()
+            database.clearAll()
+        }
+    }
+
     override fun saveUser(user: User) {
         authSharedPreferences.token = user.token
+        authSharedPreferences.refreshToken = user.refreshToken
         authSharedPreferences.userName = user.userName
         authSharedPreferences.currentTimetableId = user.currentTimetableId
     }
@@ -36,6 +48,7 @@ class AuthRepositoryImpl(
         return User(
             userName = authSharedPreferences.userName,
             token = authSharedPreferences.token,
+            refreshToken = authSharedPreferences.refreshToken,
             currentTimetableId = authSharedPreferences.currentTimetableId
         )
     }

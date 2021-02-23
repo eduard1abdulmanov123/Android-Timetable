@@ -1,6 +1,7 @@
 package abdulmanov.eduard.timetable.presentation.create_or_join_timetable.join
 
 import abdulmanov.eduard.timetable.R
+import abdulmanov.eduard.timetable.domain.interactors.AuthInteractor
 import abdulmanov.eduard.timetable.domain.interactors.TimetableInteractor
 import abdulmanov.eduard.timetable.presentation.Screens
 import abdulmanov.eduard.timetable.presentation._common.provides.StringProvider
@@ -12,7 +13,8 @@ import com.hadilq.liveevent.LiveEvent
 import javax.inject.Inject
 
 class JoinTimetableViewModel @Inject constructor(
-    private val router: Router,
+    override val router: Router,
+    override val authInteractor: AuthInteractor,
     private val stringProvider: StringProvider,
     private val timetableInteractor: TimetableInteractor
 ): BaseViewModel() {
@@ -36,7 +38,7 @@ class JoinTimetableViewModel @Inject constructor(
                         router.newRootScreen(Screens.main())
                     },
                     {
-                        _showMessageEvent.value = it.message.toString()
+                        onError(it)
                     }
                 )
                 .connect()

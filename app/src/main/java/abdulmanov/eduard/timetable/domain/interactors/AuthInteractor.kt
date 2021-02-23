@@ -28,6 +28,10 @@ class AuthInteractor(
             }
     }
 
+    fun logout(): Completable {
+        return authRepository.logout()
+    }
+
     fun getUser(): User {
         return authRepository.getUser()
     }

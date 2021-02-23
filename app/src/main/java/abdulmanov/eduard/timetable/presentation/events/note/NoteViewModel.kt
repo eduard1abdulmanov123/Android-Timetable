@@ -1,6 +1,7 @@
 package abdulmanov.eduard.timetable.presentation.events.note
 
 import abdulmanov.eduard.timetable.R
+import abdulmanov.eduard.timetable.domain.interactors.AuthInteractor
 import abdulmanov.eduard.timetable.domain.interactors.NoteInteractor
 import abdulmanov.eduard.timetable.presentation._common.provides.StringProvider
 import abdulmanov.eduard.timetable.presentation._common.viewmodel.BaseViewModel
@@ -13,7 +14,8 @@ import io.reactivex.Completable
 import javax.inject.Inject
 
 class NoteViewModel @Inject constructor(
-    private val router: Router,
+    override val router: Router,
+    override val authInteractor: AuthInteractor,
     private val stringProvider: StringProvider,
     private val noteInteractor: NoteInteractor
 ): BaseViewModel() {
@@ -50,7 +52,7 @@ class NoteViewModel @Inject constructor(
                         onBackCommandClick()
                     },
                     {
-                        _showMessageEvent.value = it.message.toString()
+                        onError(it)
                     }
                 )
                 .connect()
@@ -64,7 +66,7 @@ class NoteViewModel @Inject constructor(
                     onBackCommandClick()
                 },
                 {
-                    _showMessageEvent.value = it.message.toString()
+                    onError(it)
                 }
             )
     }

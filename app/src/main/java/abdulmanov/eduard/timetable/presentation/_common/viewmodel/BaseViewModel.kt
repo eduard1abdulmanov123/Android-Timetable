@@ -1,7 +1,12 @@
 package abdulmanov.eduard.timetable.presentation._common.viewmodel
 
+import abdulmanov.eduard.timetable.domain.interactors.AuthInteractor
+import abdulmanov.eduard.timetable.presentation.Screens
+import abdulmanov.eduard.timetable.presentation._common.extensions.getCode
+import abdulmanov.eduard.timetable.presentation._common.extensions.getStatus
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.github.terrakok.cicerone.Router
 import com.hadilq.liveevent.LiveEvent
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -14,7 +19,10 @@ import org.json.JSONObject
 import retrofit2.HttpException
 
 @Suppress("PropertyName")
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel() : ViewModel() {
+
+    protected abstract val router: Router
+    protected abstract val authInteractor: AuthInteractor
 
     protected val _showMessageEvent = LiveEvent<String>()
     val showMessageEvent: LiveData<String>
@@ -53,5 +61,20 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun Disposable.connect() {
         compositeDisposable.add(this)
+    }
+
+    protected fun onError(error:Throwable, action: () -> Unit = { _showMessageEvent.value = error.message.toString() }) {
+        if(error.getCode() == 401 || error.getStatus() == "user_is_not_connect"){
+            logout()
+        } else {
+            action()
+        }
+    }
+
+    protected fun logout(){
+        authInteractor.logout()
+            .addDispatchers()
+            .subscribe { router.replaceScreen(Screens.login()) }
+            .connect()
     }
 }

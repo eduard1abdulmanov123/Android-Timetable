@@ -10,8 +10,8 @@ import com.hadilq.liveevent.LiveEvent
 import javax.inject.Inject
 
 class SignUpViewModel @Inject constructor(
-    private val router: Router,
-    private val authInteractor: AuthInteractor
+    override val router: Router,
+    override val authInteractor: AuthInteractor
 ): BaseViewModel(){
 
     private val _showRegistrationInApp = MutableLiveData(false)
@@ -32,7 +32,7 @@ class SignUpViewModel @Inject constructor(
                         router.replaceScreen(Screens.createOrJoinTimetable())
                     },
                     {
-                        _showMessageEvent.value = it.message.toString()
+                        onError(it)
                     }
                 )
                 .connect()

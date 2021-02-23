@@ -2,6 +2,7 @@ package abdulmanov.eduard.timetable.domain.interactors
 
 import abdulmanov.eduard.timetable.domain.models.FeedbackData
 import abdulmanov.eduard.timetable.domain.models.TypeWeek
+import abdulmanov.eduard.timetable.domain.repositories.AuthRepository
 import abdulmanov.eduard.timetable.domain.repositories.SettingRepository
 import io.reactivex.Completable
 import java.time.LocalDate
@@ -30,9 +31,5 @@ class SettingInteractor(private val settingRepository: SettingRepository) {
 
     fun getUserName(): String {
         return settingRepository.getUserName()
-    }
-
-    fun logout(): Completable {
-        return settingRepository.logout()
     }
 }

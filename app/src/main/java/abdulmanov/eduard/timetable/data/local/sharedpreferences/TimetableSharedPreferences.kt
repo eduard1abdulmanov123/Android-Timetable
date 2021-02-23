@@ -29,7 +29,6 @@ class TimetableSharedPreferences(context: Context) {
         set(value) = sharedPreferences.edit { putString(PREF_DATE_UPDATE, value) }
         get() = sharedPreferences.getString(PREF_DATE_UPDATE, null)
 
-
     fun clearAll() = sharedPreferences.edit { clear() }
 
     companion object{

@@ -3,6 +3,7 @@ package abdulmanov.eduard.timetable.data.remote
 import abdulmanov.eduard.timetable.data.remote.models.*
 import io.reactivex.Completable
 import io.reactivex.Single
+import retrofit2.Call
 import retrofit2.http.*
 
 interface TimetableApi {
@@ -12,6 +13,8 @@ interface TimetableApi {
 
     @POST("api/v1/auth/sing-in")
     fun signIn(@Body user: UserNetModel.Request): Single<UserNetModel.Response>
+
+    /*timetable*/
 
     @POST("/api/v1/timetable/create")
     fun createTimetable(@Body timetable: TimetableNetModel.Request): Single<TimetableNetModel.Response>

@@ -13,11 +13,10 @@ import com.github.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class SplashViewModel @Inject constructor(
-    private val router: Router,
+    override val router: Router,
+    override val authInteractor: AuthInteractor,
     private val stringProvider: StringProvider,
-    private val authInteractor: AuthInteractor,
     private val timetableInteractor: TimetableInteractor,
-    private val settingInteractor: SettingInteractor,
 ): BaseViewModel() {
 
     fun executeTransitionProcessing() {
@@ -31,9 +30,7 @@ class SplashViewModel @Inject constructor(
                         router.replaceScreen(Screens.main())
                     },
                     {
-                        if(it.getStatus() == "user_is_not_connect"){
-                            logout()
-                        }else {
+                        onError(it){
                             router.replaceScreen(Screens.main())
                             _showMessageEvent.value = stringProvider.getString(R.string.splash_error)
                         }
@@ -43,12 +40,5 @@ class SplashViewModel @Inject constructor(
         } else {
             router.replaceScreen(Screens.login())
         }
-    }
-
-    private fun logout(){
-        settingInteractor.logout()
-            .addDispatchers()
-            .subscribe { router.replaceScreen(Screens.login()) }
-            .connect()
     }
 }

@@ -12,6 +12,10 @@ class AuthSharedPreferences(context: Context) {
         set(value) = sharedPreferences.edit { putString(PREF_TOKEN, value) }
         get() = sharedPreferences.getString(PREF_TOKEN, null)
 
+    var refreshToken: String?
+        set(value) = sharedPreferences.edit { putString(PREF_REFRESH_TOKEN, value) }
+        get() = sharedPreferences.getString(PREF_REFRESH_TOKEN, null)
+
     var userName: String?
         set(value) = sharedPreferences.edit { putString(PREF_USER_NAME, value) }
         get() = sharedPreferences.getString(PREF_USER_NAME, null)
@@ -28,6 +32,7 @@ class AuthSharedPreferences(context: Context) {
         private const val PREFERENCES_NAME = "${BuildConfig.APPLICATION_ID}_auth"
 
         private const val PREF_TOKEN = "token"
+        private const val PREF_REFRESH_TOKEN = "refresh_token"
         private const val PREF_USER_NAME = "user_name"
         private const val PREF_CURRENT_TIMETABLE_ID = "current_timetable_id"
     }

@@ -1,6 +1,7 @@
 package abdulmanov.eduard.timetable.presentation.create_or_join_timetable.create
 
 import abdulmanov.eduard.timetable.R
+import abdulmanov.eduard.timetable.domain.interactors.AuthInteractor
 import abdulmanov.eduard.timetable.domain.interactors.TimetableInteractor
 import abdulmanov.eduard.timetable.domain.models.TypeWeek
 import abdulmanov.eduard.timetable.presentation.Screens
@@ -12,7 +13,8 @@ import com.github.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class CreateTimetableViewModel @Inject constructor(
-    private val router: Router,
+    override val router: Router,
+    override val authInteractor: AuthInteractor,
     private val stringProvider: StringProvider,
     private val timetableInteractor: TimetableInteractor
 ): BaseViewModel() {
@@ -38,7 +40,7 @@ class CreateTimetableViewModel @Inject constructor(
                         router.newRootChain(Screens.main())
                     },
                     {
-                        _showMessageEvent.value = it.message.toString()
+                        onError(it)
                     }
                 )
                 .connect()

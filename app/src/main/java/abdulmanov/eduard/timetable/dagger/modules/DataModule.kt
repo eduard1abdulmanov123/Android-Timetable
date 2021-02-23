@@ -20,10 +20,11 @@ class DataModule {
     @Provides
     fun provideAuthRepository(
         timetableApi: TimetableApi,
+        database: AppDatabase,
         authSharedPreferences: AuthSharedPreferences,
         timetableSharedPreferences: TimetableSharedPreferences
     ): AuthRepository{
-        return AuthRepositoryImpl(timetableApi, authSharedPreferences,timetableSharedPreferences)
+        return AuthRepositoryImpl(timetableApi, database, authSharedPreferences,timetableSharedPreferences)
     }
 
     @Singleton
