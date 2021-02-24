@@ -19,6 +19,7 @@ class TimetableInteractor(
 
     fun joinTimetable(link: String): Completable {
         return timetableRepository.joinTimetable(link)
+            .andThen(fetchTimetableAndNote())
     }
 
     fun fetchTimetableAndNote(): Completable {
