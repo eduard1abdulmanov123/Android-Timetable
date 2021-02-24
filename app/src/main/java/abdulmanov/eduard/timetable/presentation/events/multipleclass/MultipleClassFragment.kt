@@ -8,6 +8,7 @@ import abdulmanov.eduard.timetable.presentation._common.base.BaseFragment
 import abdulmanov.eduard.timetable.presentation._common.extensions.addOnBackPressedCallback
 import abdulmanov.eduard.timetable.presentation._common.extensions.getFullTitlesDaysOfWeekFromLocale
 import abdulmanov.eduard.timetable.presentation._common.extensions.bind
+import abdulmanov.eduard.timetable.presentation.events.dialogs.datepicker.MultipleDatePickerBottomSheetDialog
 import abdulmanov.eduard.timetable.presentation.events.dialogs.timepicker.TimePickerBottomSheetDialog
 import abdulmanov.eduard.timetable.presentation.events.multipleclass.models.MultipleClassPresentationModel
 import android.content.Context
@@ -20,7 +21,9 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 
-class MultipleClassFragment: BaseFragment<FragmentMultipleClassBinding>(), TimePickerBottomSheetDialog.TimePickerCallback {
+class MultipleClassFragment: BaseFragment<FragmentMultipleClassBinding>(),
+    TimePickerBottomSheetDialog.TimePickerCallback,
+    MultipleDatePickerBottomSheetDialog.MultipleDatePickerCallback {
 
     private val viewModel by initViewModel<MultipleClassViewModel>()
 
@@ -57,11 +60,16 @@ class MultipleClassFragment: BaseFragment<FragmentMultipleClassBinding>(), TimeP
         }
     }
 
+    override fun onChangeDates(dates: String) {
+        binding.canceledDatesTextInputEditText.setText(dates)
+    }
+
     private fun initUI() {
         initFields()
         initToolbar()
         initSpinnersFields()
         initTimesFields()
+        initDatesFields()
         initApplyButton()
 
         binding.subjectTextInputEditText.bind(viewModel.multipleClass::nameSubject)
@@ -72,6 +80,7 @@ class MultipleClassFragment: BaseFragment<FragmentMultipleClassBinding>(), TimeP
         binding.startTextInputEditText.bind(viewModel.multipleClass::startOfClass)
         binding.endTextInputEditText.bind(viewModel.multipleClass::endOfClass)
         binding.periodicityTextView.bind(viewModel.multipleClass::periodicity)
+        binding.canceledDatesTextInputEditText.bind(viewModel.multipleClass::canceledClasses)
     }
 
     private fun initFields() {
@@ -84,6 +93,7 @@ class MultipleClassFragment: BaseFragment<FragmentMultipleClassBinding>(), TimeP
             binding.startTextInputEditText.setText(startOfClass)
             binding.endTextInputEditText.setText(endOfClass)
             binding.periodicityTextView.setText(periodicity)
+            binding.canceledDatesTextInputEditText.setText(canceledClasses)
         }
     }
 
@@ -130,6 +140,14 @@ class MultipleClassFragment: BaseFragment<FragmentMultipleClassBinding>(), TimeP
                 binding.endTextInputEditText.text?.toString(),
                 binding.endTextInputEditText.id
             )
+        }
+    }
+
+    private fun initDatesFields(){
+        binding.canceledDatesTextInputEditText.setOnClickListener {
+            val dates = binding.canceledDatesTextInputEditText.text.toString()
+            val dialog = MultipleDatePickerBottomSheetDialog.newInstance(dates)
+            dialog.show(childFragmentManager, MultipleDatePickerBottomSheetDialog.TAG)
         }
     }
 

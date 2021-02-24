@@ -51,7 +51,8 @@ class TimetableInteractor(
             .filter {
                 val isPeriodicity = (it.periodicity == 0 || it.periodicity == timetableRepository.getTypeWeekForDate(date).number)
                 val isDayOfWeek = (it.dayOfWeek == date.dayOfWeek.value)
-                isPeriodicity && isDayOfWeek
+                val canceledDates = it.canceledClasses.split(";")
+                isPeriodicity && isDayOfWeek && date.toString() !in canceledDates
             }
     }
 

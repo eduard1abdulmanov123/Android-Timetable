@@ -27,6 +27,8 @@ data class MultipleClassDbModel(
     val dayOfWeek: Int,
     @ColumnInfo(name = COLUMN_PERIODICITY)
     val periodicity: Int,
+    @ColumnInfo(name = COLUMN_CANCELED_CLASSES)
+    val canceledClasses: String,
 ) {
     companion object {
         const val TABLE_NAME = "multiple_class"
@@ -40,6 +42,7 @@ data class MultipleClassDbModel(
         const val COLUMN_END_OF_CLASS = "end_of_class"
         const val COLUMN_DAY_OF_WEEK = "day_of_week"
         const val COLUMN_PERIODICITY = "periodicity"
+        const val COLUMN_CANCELED_CLASSES = "canceled_classes"
 
         fun toDomain(multipleClasses: List<MultipleClassDbModel>): List<MultipleClass> {
             return multipleClasses.map(::toDomain)
@@ -55,7 +58,8 @@ data class MultipleClassDbModel(
                 startOfClass = multipleClass.startOfClass,
                 endOfClass = multipleClass.endOfClass,
                 dayOfWeek = multipleClass.dayOfWeek,
-                periodicity = multipleClass.periodicity
+                periodicity = multipleClass.periodicity,
+                canceledClasses = multipleClass.canceledClasses
             )
         }
     }

@@ -9,5 +9,6 @@ data class MultipleClass(
     val startOfClass: String,
     val endOfClass: String,
     val dayOfWeek: Int,
-    val periodicity: Int
+    val periodicity: Int,
+    val canceledClasses: String
 )

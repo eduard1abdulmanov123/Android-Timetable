@@ -5,8 +5,11 @@ import abdulmanov.eduard.timetable.domain.models.Periodicity
 import abdulmanov.eduard.timetable.presentation._common.extensions.getFullTitleDayOfWeekForNumber
 import abdulmanov.eduard.timetable.presentation._common.extensions.getNumberForFullTitleDayOfWeek
 import abdulmanov.eduard.timetable.presentation.events.common.ItemToBeSortedByTime
+import abdulmanov.eduard.timetable.presentation.events.onetimeclass.models.OneTimeClassPresentationModel
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Parcelize
 data class MultipleClassPresentationModel(
@@ -18,7 +21,8 @@ data class MultipleClassPresentationModel(
     var startOfClass: String = "",
     var endOfClass: String = "",
     var dayOfWeek: String = "",
-    var periodicity: String = ""
+    var periodicity: String = "",
+    var canceledClasses: String = ""
 ): Parcelable, ItemToBeSortedByTime {
 
     override val timeToSort get() =  startOfClass
@@ -26,6 +30,8 @@ data class MultipleClassPresentationModel(
     fun isNew(): Boolean = id == -1
 
     companion object {
+
+        private val DATE_FORMATTER_PRESENTER = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")
 
         fun fromDomain(multipleClasses: List<MultipleClass>): List<MultipleClassPresentationModel>{
             return multipleClasses.map(::fromDomain)
@@ -41,7 +47,12 @@ data class MultipleClassPresentationModel(
                 startOfClass = multipleClass.startOfClass,
                 endOfClass = multipleClass.endOfClass,
                 dayOfWeek = getFullTitleDayOfWeekForNumber(multipleClass.dayOfWeek),
-                periodicity = Periodicity.fromNumber(multipleClass.periodicity)
+                periodicity = Periodicity.fromNumber(multipleClass.periodicity),
+                canceledClasses = multipleClass.canceledClasses.ifNotEmpty {
+                    split(";").joinToString("\n", "", "") {
+                        DATE_FORMATTER_PRESENTER.format(LocalDate.parse(it))
+                    }
+                }
             )
         }
 
@@ -55,8 +66,17 @@ data class MultipleClassPresentationModel(
                 startOfClass = multipleClass.startOfClass,
                 endOfClass = multipleClass.endOfClass,
                 dayOfWeek = getNumberForFullTitleDayOfWeek(multipleClass.dayOfWeek),
-                periodicity = Periodicity.fromString(multipleClass.periodicity)
+                periodicity = Periodicity.fromString(multipleClass.periodicity),
+                canceledClasses = multipleClass.canceledClasses.ifNotEmpty {
+                    split("\n").joinToString(";", "", "") {
+                        LocalDate.parse(it, DATE_FORMATTER_PRESENTER).toString()
+                    }
+                }
             )
+        }
+
+        private fun String.ifNotEmpty(block: String.() -> String): String {
+            return if(this.isEmpty()) "" else block(this)
         }
     }
 }

@@ -33,7 +33,6 @@ class DatePickerBottomSheetDialog: BottomSheetDialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         callback = parentFragment as DatePickerCallback
     }
 
@@ -56,7 +55,6 @@ class DatePickerBottomSheetDialog: BottomSheetDialogFragment() {
 
             val daysOfWeek = getDaysOfWeekFromLocale()
             val monthForCalendar = getMonthsForCalendar()
-            val currentMonth = YearMonth.now()
 
             setup(monthForCalendar.first, monthForCalendar.second, daysOfWeek.first())
             dayBinder = DatePickerDayBinder(daySize.height) { selectDate(it.date) }

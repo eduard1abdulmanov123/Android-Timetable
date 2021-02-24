@@ -24,7 +24,9 @@ class MultipleClassNetModel {
         @SerializedName("dayOfWeek")
         val dayOfWeek: Int,
         @SerializedName("periodicity")
-        val periodicity: Int
+        val periodicity: Int,
+        @SerializedName("canceledClasses")
+        val canceledClasses: String
     )
 
     data class Request(
@@ -43,7 +45,9 @@ class MultipleClassNetModel {
         @SerializedName("dayOfWeek")
         val dayOfWeek: Int,
         @SerializedName("periodicity")
-        val periodicity: Int
+        val periodicity: Int,
+        @SerializedName("canceledClasses")
+        val canceledClasses: String
     )
 
     companion object {
@@ -62,7 +66,8 @@ class MultipleClassNetModel {
                 startOfClass = multipleClass.startOfClass,
                 endOfClass = multipleClass.endOfClass,
                 dayOfWeek = multipleClass.dayOfWeek,
-                periodicity = multipleClass.periodicity
+                periodicity = multipleClass.periodicity,
+                canceledClasses = multipleClass.canceledClasses
             )
         }
 
@@ -75,7 +80,8 @@ class MultipleClassNetModel {
                 startOfClass = multipleClass.startOfClass,
                 endOfClass = multipleClass.endOfClass,
                 dayOfWeek = multipleClass.dayOfWeek,
-                periodicity = multipleClass.periodicity
+                periodicity = multipleClass.periodicity,
+                canceledClasses = multipleClass.canceledClasses
             )
         }
     }
