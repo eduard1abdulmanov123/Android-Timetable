@@ -120,4 +120,8 @@
 
     <!--time_picker-->
     <string name="time_picker_select_time">Выберите время</string>
+
+    <!--notification-->
+    <string name="notification_channel_id">fcm_default_channel</string>
+    <string name="notification_channel_name">Расписание</string>
 </resources>

@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -46,6 +47,11 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinStdlibJdk7"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinReflectVersion"
+
+    //Firebase
+    implementation platform("com.google.firebase:firebase-bom:$firebaseBomVersion")
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging-ktx'
 
     //leakCanary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"

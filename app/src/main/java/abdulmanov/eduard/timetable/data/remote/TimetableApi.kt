@@ -8,11 +8,18 @@ import retrofit2.http.*
 
 interface TimetableApi {
 
+    /*auth*/
+
     @POST("api/v1/auth/sing-up")
     fun signUp(@Body user: UserNetModel.Request): Single<UserNetModel.Response>
 
     @POST("api/v1/auth/sing-in")
     fun signIn(@Body user: UserNetModel.Request): Single<UserNetModel.Response>
+
+    /*fcm*/
+
+    @POST("api/v1/fcm/add_token")
+    fun addFcmToken(@Body token: FcmTokenNetModel): Call<Unit>
 
     /*timetable*/
 

@@ -2,9 +2,11 @@ package abdulmanov.eduard.timetable.data.repositories
 
 import abdulmanov.eduard.timetable.data.local.database.AppDatabase
 import abdulmanov.eduard.timetable.data.local.sharedpreferences.AuthSharedPreferences
+import abdulmanov.eduard.timetable.data.local.sharedpreferences.FcmSharedPreferences
 import abdulmanov.eduard.timetable.data.local.sharedpreferences.TimetableSharedPreferences
 import abdulmanov.eduard.timetable.data.remote.models.UserNetModel
 import abdulmanov.eduard.timetable.data.remote.TimetableApi
+import abdulmanov.eduard.timetable.data.remote.models.FcmTokenNetModel
 import abdulmanov.eduard.timetable.domain.models.User
 import abdulmanov.eduard.timetable.domain.repositories.AuthRepository
 import io.reactivex.Completable
@@ -13,6 +15,7 @@ import io.reactivex.Single
 class AuthRepositoryImpl(
     private val timetableApi: TimetableApi,
     private val database: AppDatabase,
+    private val fcmSharedPreferences: FcmSharedPreferences,
     private val authSharedPreferences: AuthSharedPreferences,
     private val timetableSharedPreferences: TimetableSharedPreferences
 ): AuthRepository {
@@ -21,12 +24,14 @@ class AuthRepositoryImpl(
         return timetableApi.signUp(UserNetModel.Request(login, password))
             .map(UserNetModel::toDomain)
             .doOnSuccess(::saveUser)
+            .doOnSuccess { addFcmToken() }
     }
 
     override fun signIn(login: String, password: String): Single<User> {
         return timetableApi.signIn(UserNetModel.Request(login, password))
             .map(UserNetModel::toDomain)
             .doOnSuccess(::saveUser)
+            .doOnSuccess { addFcmToken() }
     }
 
     override fun logout(): Completable {
@@ -55,5 +60,12 @@ class AuthRepositoryImpl(
 
     override fun haveAccess(): Boolean {
         return authSharedPreferences.userName == timetableSharedPreferences.creatorUsername
+    }
+
+    private fun addFcmToken(){
+        if(fcmSharedPreferences.fcmToken != null) {
+            val fcmToken = FcmTokenNetModel(fcmSharedPreferences.fcmToken!!)
+            timetableApi.addFcmToken(fcmToken).execute()
+        }
     }
 }

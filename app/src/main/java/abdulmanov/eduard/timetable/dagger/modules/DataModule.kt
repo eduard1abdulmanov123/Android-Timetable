@@ -5,6 +5,7 @@ import abdulmanov.eduard.timetable.data.local.database.dao.MultipleClassDao
 import abdulmanov.eduard.timetable.data.local.database.dao.NoteDao
 import abdulmanov.eduard.timetable.data.local.database.dao.OneTimeClassDao
 import abdulmanov.eduard.timetable.data.local.sharedpreferences.AuthSharedPreferences
+import abdulmanov.eduard.timetable.data.local.sharedpreferences.FcmSharedPreferences
 import abdulmanov.eduard.timetable.data.local.sharedpreferences.TimetableSharedPreferences
 import abdulmanov.eduard.timetable.data.remote.TimetableApi
 import abdulmanov.eduard.timetable.data.repositories.*
@@ -21,10 +22,11 @@ class DataModule {
     fun provideAuthRepository(
         timetableApi: TimetableApi,
         database: AppDatabase,
+        fcmSharedPreferences: FcmSharedPreferences,
         authSharedPreferences: AuthSharedPreferences,
         timetableSharedPreferences: TimetableSharedPreferences
     ): AuthRepository{
-        return AuthRepositoryImpl(timetableApi, database, authSharedPreferences,timetableSharedPreferences)
+        return AuthRepositoryImpl(timetableApi, database, fcmSharedPreferences, authSharedPreferences,timetableSharedPreferences)
     }
 
     @Singleton

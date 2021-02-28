@@ -11,6 +11,7 @@ import abdulmanov.eduard.timetable.presentation.events.onetimeclass.OneTimeClass
 import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.CreateOrJoinTimetableActivity
 import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.create.CreateTimetableFragment
 import abdulmanov.eduard.timetable.presentation.create_or_join_timetable.join.JoinTimetableFragment
+import abdulmanov.eduard.timetable.presentation.notification.MyFirebaseMessagingService
 import abdulmanov.eduard.timetable.presentation.setting.SettingFragment
 import abdulmanov.eduard.timetable.presentation.splash.SplashActivity
 import abdulmanov.eduard.timetable.presentation.timetable.TimetableFragment
@@ -37,6 +38,8 @@ interface AppComponent{
     interface Factory {
         fun create(@BindsInstance context: Context): AppComponent
     }
+
+    fun inject(myFirebaseMessagingService: MyFirebaseMessagingService)
 
     fun inject(splashActivity: SplashActivity)
 

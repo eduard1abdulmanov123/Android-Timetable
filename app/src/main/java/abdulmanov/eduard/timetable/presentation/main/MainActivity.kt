@@ -5,10 +5,15 @@ import abdulmanov.eduard.timetable.databinding.ActivityMainBinding
 import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation.Screens
 import abdulmanov.eduard.timetable.presentation._common.base.BaseActivity
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import com.github.terrakok.cicerone.androidx.AppNavigator
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
