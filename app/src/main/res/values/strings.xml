@@ -23,11 +23,13 @@
     <!--onboarding_create_timetable-->
     <string name="create_timetable_create_title">Создание расписания</string>
     <string name="create_timetable_select_type_week">Выберите какая неделя сейчас по счету</string>
+    <string name="create_timetable_select_time_zone">Выберите часовой пояс университета</string>
+    <string name="create_timetable_time_zone">Часовой пояс</string>
     <string name="create_timetable_even_week">Сейчас четная неделя</string>
     <string name="create_timetable_odd_week">Сейчас нечетная неделя</string>
     <string name="create_timetable_create">Создать расписание</string>
     <string name="create_timetable_join">Подключиться к существующему расписанию</string>
-    <string name="create_timetable_error_select_type_week">Вы не выбрали, какая сегодня неделя!</string>
+    <string name="create_timetable_error">Вы заполнили не все поля!</string>
 
     <!--onboarding_join_timetable-->
     <string name="join_timetable_join_title">Подключение к расписанию</string>

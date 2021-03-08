@@ -16,7 +16,6 @@ import abdulmanov.eduard.timetable.domain.repositories.TimetableRepository
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.time.LocalDate
-import kotlin.math.round
 
 class TimetableRepositoryImpl(
     private val timetableApi: TimetableApi,
@@ -26,8 +25,10 @@ class TimetableRepositoryImpl(
     private val timetableSharedPreferences: TimetableSharedPreferences
 ): TimetableRepository {
 
-    override fun createTimetable(typeWeek: TypeWeek): Completable {
-        return timetableApi.createTimetable(TimetableNetModel.Request(typeWeek.number))
+    override fun createTimetable(typeWeek: TypeWeek, timeZone: String): Completable {
+        val netModel = TimetableNetModel.Request(typeWeek.number, timeZone)
+
+        return timetableApi.createTimetable(netModel)
             .map(TimetableNetModel::toDomain)
             .doOnSuccess{
                 saveTimetableInfo(it)
@@ -69,6 +70,7 @@ class TimetableRepositoryImpl(
                     creatorUsername = timetableSharedPreferences.creatorUsername ?: "",
                     link = timetableSharedPreferences.link ?: "",
                     typeWeek = timetableSharedPreferences.typeWeek,
+                    timeZone = timetableSharedPreferences.timeZone ?: "",
                     dateUpdate = timetableSharedPreferences.dateUpdate ?: "",
                     multipleClasses = MultipleClassDbModel.toDomain(multipleClasses),
                     oneTimeClasses = OneTimeClassDbModel.toDomain(oneTimeClasses)
@@ -83,6 +85,7 @@ class TimetableRepositoryImpl(
         timetableSharedPreferences.link = timetable.link
         timetableSharedPreferences.typeWeek = timetable.typeWeek
         timetableSharedPreferences.dateUpdate = timetable.dateUpdate
+        timetableSharedPreferences.timeZone = timetable.timeZone
     }
 
     override fun getTypeWeekForDate(date: LocalDate): TypeWeek {

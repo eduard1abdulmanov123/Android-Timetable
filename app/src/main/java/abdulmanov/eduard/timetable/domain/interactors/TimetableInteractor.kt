@@ -1,7 +1,6 @@
 package abdulmanov.eduard.timetable.domain.interactors
 
 import abdulmanov.eduard.timetable.domain.models.*
-import abdulmanov.eduard.timetable.domain.repositories.AuthRepository
 import abdulmanov.eduard.timetable.domain.repositories.NotesRepository
 import abdulmanov.eduard.timetable.domain.repositories.TimetableRepository
 import io.reactivex.Completable
@@ -13,8 +12,8 @@ class TimetableInteractor(
     private val notesRepository: NotesRepository
 ) {
 
-    fun createTimetable(typeWeek: TypeWeek): Completable{
-        return timetableRepository.createTimetable(typeWeek)
+    fun createTimetable(typeWeek: TypeWeek, timeZone: String): Completable{
+        return timetableRepository.createTimetable(typeWeek, timeZone)
     }
 
     fun joinTimetable(link: String): Completable {

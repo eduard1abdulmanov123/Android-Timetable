@@ -25,6 +25,10 @@ class TimetableSharedPreferences(context: Context) {
         set(value) = sharedPreferences.edit { putInt(PREF_TYPE_WEEK, value.number) }
         get() = TypeWeek.numberToTypeWeek(sharedPreferences.getInt(PREF_TYPE_WEEK, 0))
 
+    var timeZone: String?
+        set(value) = sharedPreferences.edit { putString(PREF_TIME_ZONE, value) }
+        get() = sharedPreferences.getString(PREF_TIME_ZONE, null)
+
     var dateUpdate: String?
         set(value) = sharedPreferences.edit { putString(PREF_DATE_UPDATE, value) }
         get() = sharedPreferences.getString(PREF_DATE_UPDATE, null)
@@ -38,6 +42,7 @@ class TimetableSharedPreferences(context: Context) {
         private const val PREF_CREATOR_USERNAME = "creator_username"
         private const val PREF_LINK = "link"
         private const val PREF_TYPE_WEEK = "type_week"
+        private const val PREF_TIME_ZONE = "time_zone"
         private const val PREF_DATE_UPDATE = "date_update"
     }
 }

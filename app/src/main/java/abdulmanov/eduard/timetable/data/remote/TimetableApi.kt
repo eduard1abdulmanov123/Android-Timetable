@@ -87,6 +87,6 @@ interface TimetableApi {
     fun getNotes(): Single<List<NoteNetModel.Response>>
 
     companion object{
-        const val BASE_URL = "http://192.168.0.103:8080/"
+        const val BASE_URL = "http://192.168.0.104:8080/"
     }
 }

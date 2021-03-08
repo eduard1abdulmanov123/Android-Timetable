@@ -8,7 +8,9 @@ class TimetableNetModel{
 
     data class Request(
         @SerializedName("typeWeek")
-        val typeWeek: Int
+        val typeWeek: Int,
+        @SerializedName("timeZone")
+        val timeZone: String = ""
     )
 
     data class Response(
@@ -22,6 +24,8 @@ class TimetableNetModel{
         val typeWeek: Int,
         @SerializedName("dateUpdate")
         val dateUpdate: String,
+        @SerializedName("timeZone")
+        val timeZone: String,
         @SerializedName("multipleClasses")
         val multipleClasses: List<MultipleClassNetModel.Response>,
         @SerializedName("oneTimeClasses")
@@ -36,7 +40,8 @@ class TimetableNetModel{
                 creatorUsername = timetable.creatorUsername,
                 link = timetable.link,
                 dateUpdate = timetable.dateUpdate,
-                typeWeek = TypeWeek.numberToTypeWeek(timetable.typeWeek)
+                typeWeek = TypeWeek.numberToTypeWeek(timetable.typeWeek),
+                timeZone = timetable.timeZone
             )
         }
     }

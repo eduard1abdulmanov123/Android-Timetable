@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="time_zone">
+        <item>UTC+2 (MSK-1)</item>
+        <item>UTC+3 (MSK)</item>
+        <item>UTC+4 (MSK+1)</item>
+        <item>UTC+5 (MSK+2)</item>
+        <item>UTC+6 (MSK+3)</item>
+        <item>UTC+7 (MSK+4)</item>
+        <item>UTC+8 (MSK+5)</item>
+        <item>UTC+9 (MSK+6)</item>
+        <item>UTC+10 (MSK+7)</item>
+        <item>UTC+11 (MSK+8)</item>
+        <item>UTC+12 (MSK+9)</item>
+    </string-array>
+</resources>

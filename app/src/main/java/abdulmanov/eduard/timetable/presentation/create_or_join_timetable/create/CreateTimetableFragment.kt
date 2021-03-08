@@ -2,6 +2,7 @@ package abdulmanov.eduard.timetable.presentation.create_or_join_timetable.create
 
 import abdulmanov.eduard.timetable.R
 import abdulmanov.eduard.timetable.databinding.FragmentCreateTimetableBinding
+import abdulmanov.eduard.timetable.domain.models.Periodicity
 import abdulmanov.eduard.timetable.domain.models.TypeWeek
 import abdulmanov.eduard.timetable.presentation.App
 import abdulmanov.eduard.timetable.presentation._common.base.BaseFragment
@@ -10,8 +11,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -44,6 +47,13 @@ class CreateTimetableFragment: BaseFragment<FragmentCreateTimetableBinding>() {
                 R.id.evenWeekRadioButton -> viewModel.currentSelectTypeWeek = TypeWeek.EVEN
             }
         }
+
+        binding.timeZoneTextView.run {
+            val items = context.resources.getStringArray(R.array.time_zone)
+            val adapter = ArrayAdapter(context, R.layout.item_spinner, items)
+            setAdapter(adapter)
+        }
+        binding.timeZoneTextView.addTextChangedListener { viewModel.currentSelectTimeZone = it.toString() }
 
         binding.applyContainer.setOnClickListener {
             viewModel.createTimetable()

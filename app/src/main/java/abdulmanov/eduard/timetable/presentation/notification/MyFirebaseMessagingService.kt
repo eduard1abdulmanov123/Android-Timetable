@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import javax.inject.Inject
+import kotlin.random.Random
 
 class MyFirebaseMessagingService: FirebaseMessagingService() {
 
@@ -59,6 +60,6 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        notificationManager.notify(0, notificationBuilder.build())
+        notificationManager.notify(Random.nextInt(0, 1000), notificationBuilder.build())
     }
 }

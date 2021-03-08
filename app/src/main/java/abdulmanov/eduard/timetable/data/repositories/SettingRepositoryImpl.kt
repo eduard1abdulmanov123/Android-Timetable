@@ -21,7 +21,9 @@ class SettingRepositoryImpl(
 ): SettingRepository {
 
     override fun setTypeWeek(typeWeek: TypeWeek): Completable {
-        return timetableApi.changeTypeWeekTheTimetable(TimetableNetModel.Request(typeWeek.number))
+        val netModel = TimetableNetModel.Request(typeWeek.number)
+
+        return timetableApi.changeTypeWeekTheTimetable(netModel)
             .doOnSuccess {
                 timetableSharedPreferences.typeWeek = typeWeek
                 timetableSharedPreferences.dateUpdate = it.dateUpdate

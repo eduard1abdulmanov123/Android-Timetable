@@ -6,6 +6,7 @@ data class Timetable(
     val link: String,
     val dateUpdate: String,
     val typeWeek: TypeWeek,
+    val timeZone: String,
     val multipleClasses: List<MultipleClass> = listOf(),
     val oneTimeClasses: List<OneTimeClass> = listOf()
 )

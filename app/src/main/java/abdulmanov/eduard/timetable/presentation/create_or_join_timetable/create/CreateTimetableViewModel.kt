@@ -24,14 +24,15 @@ class CreateTimetableViewModel @Inject constructor(
         get() = _showApplyProgress
 
     var currentSelectTypeWeek: TypeWeek? = null
+    var currentSelectTimeZone: String? = null
 
     fun openScreenJoinTimetable() = router.replaceScreen(Screens.joinTimetable())
 
     fun createTimetable(){
-        if(currentSelectTypeWeek == null){
-            _showMessageEvent.value = stringProvider.getString(R.string.create_timetable_error_select_type_week)
+        if(currentSelectTypeWeek == null || currentSelectTimeZone == null){
+            _showMessageEvent.value = stringProvider.getString(R.string.create_timetable_error)
         }else if(_showApplyProgress.value == false){
-            timetableInteractor.createTimetable(currentSelectTypeWeek!!)
+            timetableInteractor.createTimetable(currentSelectTypeWeek!!, currentSelectTimeZone!!)
                 .addDispatchers()
                 .doOnSubscribe { _showApplyProgress.value = true }
                 .doOnTerminate { _showApplyProgress.value = false }
